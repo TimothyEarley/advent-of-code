@@ -4,5 +4,5 @@ import de.earley.adventofcode2021.testDay
 import io.kotest.core.spec.style.WordSpec
 
 class Day1Test : WordSpec({
-	include(testDay(Day1, 0, 0))
+	include(testDay(Day1, 7, 5))
 })
