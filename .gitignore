@@ -1,3 +1,5 @@
 .idea
 .gradle
 build
+
+/adventofcode.com_cookies.txt
