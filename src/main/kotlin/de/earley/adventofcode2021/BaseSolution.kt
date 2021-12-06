@@ -1,6 +1,6 @@
 package de.earley.adventofcode2021
 
-abstract class BaseSolution<T> {
+abstract class BaseSolution<In, Out> {
 
 	fun start() {
 		val day = this::class.java.simpleName.takeLastWhile(Char::isDigit).toInt()
@@ -12,7 +12,7 @@ abstract class BaseSolution<T> {
 		printResult(one, two, day)
 	}
 
-	private fun printResult(one: Int, two: Int, day: Int) {
+	private fun printResult(one: Out, two: Out, day: Int) {
 		val width = maxOf(one.toString().length, two.toString().length)
 		val totalWidth = width + 11
 		val bar = "═".repeat(totalWidth)
@@ -33,7 +33,7 @@ abstract class BaseSolution<T> {
 		)
 	}
 
-	abstract fun parseInput(input: Sequence<String>): T
-	abstract fun partOne(data: T): Int
-	abstract fun partTwo(data: T): Int
+	abstract fun parseInput(input: Sequence<String>): In
+	abstract fun partOne(data: In): Out
+	abstract fun partTwo(data: In): Out
 }

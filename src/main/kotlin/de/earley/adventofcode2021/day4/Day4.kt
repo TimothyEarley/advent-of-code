@@ -47,7 +47,7 @@ data class MutableBingoBoard(private val grid: MutableList<Int?>) {
 	fun sumNumbersLeft(): Int = grid.filterNotNull().sum()
 }
 
-object Day4 : BaseSolution<State>() {
+object Day4 : BaseSolution<State, Int>() {
 
 	override fun parseInput(input: Sequence<String>): State = input.toList().let {
 		State(

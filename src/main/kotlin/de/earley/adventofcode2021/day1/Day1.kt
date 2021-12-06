@@ -4,7 +4,7 @@ import de.earley.adventofcode2021.BaseSolution
 
 fun main() = Day1.start()
 
-object Day1 : BaseSolution<List<Int>>() {
+object Day1 : BaseSolution<List<Int>, Int>() {
 
 	override fun parseInput(input: Sequence<String>): List<Int> = input.map { it.toInt() }.toList()
 
