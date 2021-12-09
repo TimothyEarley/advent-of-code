@@ -13,3 +13,5 @@ fun <A, B> ((A) -> B).cache(): (A) -> B {
 		}
 	}
 }
+
+fun <A, B> Sequence<A>.mapToList(f: (A) -> B): List<B> = map(f).toList()

@@ -1,51 +1,46 @@
 package de.earley.adventofcode2021.day4
 
 import de.earley.adventofcode2021.BaseSolution
+import de.earley.adventofcode2021.Grid
+import de.earley.adventofcode2021.MutableGrid
+import de.earley.adventofcode2021.toMutableGrid
 
 fun main() = Day4.start()
 
 data class State(val numbers: List<Int>, val boards: List<Board>)
 
-data class Board(val grid: List<Int>) // 5 x 5
+typealias Board = Grid<Int>
+typealias MutableBingoBoard = MutableGrid<Int?>
 
-data class MutableBingoBoard(private val grid: MutableList<Int?>) {
-	constructor(board: Board) : this(board.grid.toMutableList())
+fun MutableBingoBoard.update(number: Int): Boolean {
 
-	fun update(number: Int): Boolean {
-		val pos = grid.indexOf(number)
-		if (pos == -1) return false
+	val pos = indexOf(number) ?: return false
 
-		grid[pos] = null
+	this[pos] = null
 
-		// pos = x + y * width
-		// y = p
-		val y = pos.floorDiv(5)
-		val x = pos.mod(5)
-
-		// check row
-		var rowCheck = true
-		for (x2 in 0..4) {
-			if (grid[x2 + y * 5] != null) {
-				rowCheck = false
-				break
-			}
+	// check row
+	var rowCheck = true
+	for (x2 in 0..4) {
+		if (this[x2, pos.y] != null) {
+			rowCheck = false
+			break
 		}
-		if (rowCheck) return true
+	}
+	if (rowCheck) return true
 
-		// check col
-		var colCheck = true
-		for (y2 in 0..4) {
-			if (grid[x + y2 * 5] != null) {
-				colCheck = false
-				break
-			}
+	// check col
+	var colCheck = true
+	for (y2 in 0..4) {
+		if (this[pos.x, y2] != null) {
+			colCheck = false
+			break
 		}
-
-		return colCheck
 	}
 
-	fun sumNumbersLeft(): Int = grid.filterNotNull().sum()
+	return colCheck
 }
+
+fun MutableBingoBoard.sumNumbersLeft(): Int = values().filterNotNull().sum()
 
 object Day4 : BaseSolution<State, Int>() {
 
@@ -53,13 +48,18 @@ object Day4 : BaseSolution<State, Int>() {
 		State(
 			numbers = it.first().split(',').map(String::toInt),
 			boards = it.drop(1).chunked(6).map { b ->
-				Board(b.drop(1).joinToString(" ").split(" ").filter { it.isNotBlank() }.map { it.toInt() })
+				Board(
+					5,
+					5,
+					b.drop(1).joinToString(" ")
+						.split(" ").filter(String::isNotBlank).map(String::toInt)
+				)
 			}
 		)
 	}
 
 	override fun partOne(data: State): Int {
-		val boards = data.boards.map(::MutableBingoBoard)
+		val boards: List<MutableBingoBoard> = data.boards.map(Board::toMutableGrid)
 
 		for (number in data.numbers) {
 			for (board in boards) {
@@ -74,7 +74,7 @@ object Day4 : BaseSolution<State, Int>() {
 	}
 
 	override fun partTwo(data: State): Int {
-		val boards = data.boards.map(::MutableBingoBoard).toMutableList()
+		val boards = data.boards.map<Board, MutableBingoBoard>(Board::toMutableGrid).toMutableList()
 
 		for (number in data.numbers) {
 			val iter = boards.iterator()
