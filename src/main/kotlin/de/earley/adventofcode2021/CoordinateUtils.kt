@@ -12,11 +12,17 @@ data class Point(val x: Int, val y: Int) {
 	operator fun plus(other: Point) = Point(x + other.x, y + other.y)
 }
 
-fun Point.neighbours(): Sequence<Point> = sequence {
+fun Point.neighbours(diagonal: Boolean = false): Sequence<Point> = sequence {
 	yield(Point(x - 1, y))
 	yield(Point(x + 1, y))
 	yield(Point(x, y + 1))
 	yield(Point(x, y - 1))
+	if (diagonal) {
+		yield(Point(x + 1, y + 1))
+		yield(Point(x + 1, y - 1))
+		yield(Point(x - 1, y + 1))
+		yield(Point(x - 1, y - 1))
+	}
 }
 
 open class Grid<T>(val width: Int, val height: Int, protected open val data: List<T>) {
@@ -41,6 +47,8 @@ open class Grid<T>(val width: Int, val height: Int, protected open val data: Lis
 	private fun indexToPoint(i: Int): Point = Point(i.mod(width), i.floorDiv(width))
 
 	fun indexOf(t: T): Point? = data.indexOf(t).takeIf { it != -1 }?.let(this::indexToPoint)
+
+	fun <B> map(f: (T) -> B): Grid<B> = Grid(width, height, data.map(f))
 }
 
 fun <A, B> Grid<A>.toMutableGrid(): MutableGrid<B> where A : B = MutableGrid(width, height, values().toMutableList())
@@ -51,4 +59,10 @@ class MutableGrid<T>(width: Int, height: Int, override val data: MutableList<T>)
 	}
 
 	operator fun set(p: Point, t: T) = set(p.x, p.y, t)
+
+	fun mutate(f: (T) -> T) {
+		for (i in data.indices) {
+			data[i] = f(data[i])
+		}
+	}
 }
