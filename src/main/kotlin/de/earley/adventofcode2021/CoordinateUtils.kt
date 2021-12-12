@@ -25,7 +25,11 @@ fun Point.neighbours(diagonal: Boolean = false): Sequence<Point> = sequence {
 	}
 }
 
-open class Grid<T>(val width: Int, val height: Int, protected open val data: List<T>) {
+open class Grid<T>(
+	val width: Int,
+	val height: Int,
+	protected open val data: List<T>
+) {
 
 	fun contains(x: Int, y: Int) = x in 0 until width && y in 0 until height
 	operator fun contains(p: Point) = contains(p.x, p.y)
@@ -53,7 +57,11 @@ open class Grid<T>(val width: Int, val height: Int, protected open val data: Lis
 
 fun <A, B> Grid<A>.toMutableGrid(): MutableGrid<B> where A : B = MutableGrid(width, height, values().toMutableList())
 
-class MutableGrid<T>(width: Int, height: Int, override val data: MutableList<T>) : Grid<T>(width, height, data) {
+class MutableGrid<T>(
+	width: Int,
+	height: Int,
+	override val data: MutableList<T>
+) : Grid<T>(width, height, data) {
 	operator fun set(x: Int, y: Int, t: T) {
 		data[x + y * width] = t
 	}

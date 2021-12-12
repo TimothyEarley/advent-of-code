@@ -26,8 +26,8 @@ object Day11 : BaseSolution<Grid<Int>, Int>() {
 	}
 
 	/**
-		* @return number of flashes
-		*/
+	 * @return number of flashes
+	 */
 	private fun step(data: MutableGrid<Int>): Int {
 		// increase by one
 		data.mutate { it + 1 }

@@ -1,0 +1,5 @@
+[{*.kt, *.kts}]
+indent_style = tab
+
+# noinspection EditorConfigKeyCorrectness
+disabled_rules = parameter-list-wrapping # see e.g. https://github.com/pinterest/ktlint/pull/1284

@@ -19,10 +19,14 @@ tasks.test {
 
 spotless {
     kotlin {
-        ktlint("0.43.0").userData(mapOf("indent_style" to "tab"))
+        ktlint("0.43.0").userData(
+            mapOf(
+                "indent_style" to "tab",
+                "disabled_rules" to "parameter-list-wrapping"
+            )
+        )
     }
 }
-
 
 // Benchmark stuff
 

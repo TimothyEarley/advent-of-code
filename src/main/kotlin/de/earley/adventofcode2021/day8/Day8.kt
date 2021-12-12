@@ -48,8 +48,8 @@ data class Reading(val signal: List<Digit>, val output: List<Digit>) {
 		val two = bySize[5]!!.single { it.intersect(four).size == 2 }
 
 		// the 6 segment ones
-		val zero = bySize[6]!!.single { ! it.containsAll(five) }
-		val six = bySize[6]!!.single { ! it.containsAll(one) }
+		val zero = bySize[6]!!.single { !it.containsAll(five) }
+		val six = bySize[6]!!.single { !it.containsAll(one) }
 		val nine = bySize[6]!!.single { it.containsAll(seven) && it.containsAll(four) }
 
 		// now decode the output

@@ -21,9 +21,9 @@ object Day10 : BaseSolution<List<String>, Long>() {
 	}
 
 	/**
-		* @return the wrong closing char (if any) and the unmatched tail (in correct order to close things,
-		* but opening brackets instead of closing)
-		*/
+	 * @return the wrong closing char (if any) and the unmatched tail (in correct order to close things,
+	 * but opening brackets instead of closing)
+	 */
 	private fun String.findFirstError(): Pair<Char?, List<Char>> {
 		val stack = ArrayDeque<Char>()
 
