@@ -1,0 +1,8 @@
+package de.earley.adventofcode2021.day16
+
+import de.earley.adventofcode2021.testDay
+import io.kotest.core.spec.style.WordSpec
+
+class Day16Test : WordSpec({
+	include(testDay(Day16, 31, 54))
+})
