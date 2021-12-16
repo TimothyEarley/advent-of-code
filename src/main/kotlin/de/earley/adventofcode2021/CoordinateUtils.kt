@@ -1,5 +1,7 @@
 package de.earley.adventofcode2021
 
+import kotlin.math.abs
+
 data class Point(val x: Int, val y: Int) {
 	companion object {
 		// x,y
@@ -25,11 +27,22 @@ fun Point.neighbours(diagonal: Boolean = false): Sequence<Point> = sequence {
 	}
 }
 
+fun Point.manhattanDistanceTo(to: Point): Int = abs(x - to.x) + abs(y - to.y)
+
 open class Grid<T>(
 	val width: Int,
 	val height: Int,
 	protected open val data: List<T>
 ) {
+
+	val indices: Sequence<Point>
+		get() = sequence {
+			for (x in 0 until width) {
+				for (y in 0 until height) {
+					yield(Point(x, y))
+				}
+			}
+		}
 
 	fun contains(x: Int, y: Int) = x in 0 until width && y in 0 until height
 	operator fun contains(p: Point) = contains(p.x, p.y)
@@ -38,13 +51,7 @@ open class Grid<T>(
 
 	operator fun get(point: Point): T? = get(point.x, point.y)
 
-	fun pointValues(): Sequence<Pair<Point, T>> = sequence {
-		for (x in 0 until width) {
-			for (y in 0 until height) {
-				yield(Point(x, y) to get(x, y)!!)
-			}
-		}
-	}
+	fun pointValues(): Sequence<Pair<Point, T>> = indices.map { it to get(it)!! }
 
 	fun values(): List<T> = data
 
@@ -54,6 +61,14 @@ open class Grid<T>(
 
 	fun <B> map(f: (T) -> B): Grid<B> = Grid(width, height, data.map(f))
 }
+
+fun <T> grid(width: Int, height: Int, content: (Point) -> T): Grid<T> =
+	Grid(
+		width, height,
+		List(width * height) {
+			content(Point(it.mod(width), it.floorDiv(width)))
+		}
+	)
 
 fun <A, B> Grid<A>.toMutableGrid(): MutableGrid<B> where A : B = MutableGrid(width, height, values().toMutableList())
 
