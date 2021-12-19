@@ -11,7 +11,8 @@ class Day19Test : WordSpec({
 	"configurations" should {
 
 		val scanner = Scanner(
-			setOf(
+			-1,
+			listOf(
 				Point3(-1, -1, 1),
 				Point3(-2, -2, 2),
 				Point3(-3, -3, 3),
@@ -23,9 +24,9 @@ class Day19Test : WordSpec({
 
 		"include" {
 
-			val options = Configuration.all().map {
-				scanner.adjust(it)
-			}.toList().map { it.beacons }
+			val options = orientations.map { o ->
+				scanner.beacons.map { o(it) }.toSet()
+			}
 
 			setOf(
 				Point3(1, -1, 1),
