@@ -60,7 +60,6 @@ open class Grid<T>(
 	fun indexOf(t: T): Point? = data.indexOf(t).takeIf { it != -1 }?.let(this::indexToPoint)
 
 	fun <B> map(f: (T) -> B): Grid<B> = Grid(width, height, data.map(f))
-
 }
 
 fun <T> Grid<T>.prettyPrint() {

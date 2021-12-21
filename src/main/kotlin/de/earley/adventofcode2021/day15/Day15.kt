@@ -4,6 +4,7 @@ import de.earley.adventofcode2021.BaseSolution
 import de.earley.adventofcode2021.Grid
 import de.earley.adventofcode2021.Point
 import de.earley.adventofcode2021.manhattanDistanceTo
+import de.earley.adventofcode2021.modStart1
 import de.earley.adventofcode2021.neighbours
 import java.util.PriorityQueue
 
@@ -35,7 +36,7 @@ object Day15 : BaseSolution<Grid<Int>, Int>() {
 				val tileY = it.y.floorDiv(grid.height)
 				val newValue = originalValue + tileX + tileY
 				// wrap around to be in 1..9
-				(newValue + 8).mod(9) + 1
+				newValue modStart1 9
 			}
 		}
 	}

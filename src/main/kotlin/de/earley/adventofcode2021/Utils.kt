@@ -35,3 +35,5 @@ fun <A> List<A>.split(splitOn: (A) -> Boolean): List<List<A>> =
 
 // see https://youtrack.jetbrains.com/issue/KT-9992 why a + b does not work
 private fun <A> List<List<A>>.addElement(l: List<A>): List<List<A>> = toMutableList().apply { add(l) }
+
+infix fun Int.modStart1(m: Int): Int = (this + m - 1) % m + 1
