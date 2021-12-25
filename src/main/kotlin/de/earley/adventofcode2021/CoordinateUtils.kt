@@ -51,7 +51,7 @@ open class Grid<T>(
 
 	operator fun get(point: Point): T? = get(point.x, point.y)
 
-	fun pointValues(): Sequence<Pair<Point, T>> = indices.map { it to get(it)!! }
+	fun pointValues(): Sequence<Pair<Point, T>> = indices.map { it to get(it) as T }
 
 	fun values(): List<T> = data
 

@@ -3,8 +3,6 @@ package de.earley.adventofcode2021.day24
 import de.earley.adventofcode2021.BaseSolution
 import de.earley.adventofcode2021.mapToList
 import de.earley.adventofcode2021.split
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTimedValue
 
 fun main() = Day24.start()
 
@@ -34,9 +32,7 @@ object Day24 : BaseSolution<List<Instruction>, Long>() {
 		findMaxSolution(9 downTo 1, State(0, 0, 0, 0), 0, data, 0, mutableSetOf())!!
 
 	override fun partTwo(data: List<Instruction>): Long =
-		findMaxSolution(1 .. 9, State(0, 0, 0, 0), 0, data, 0, mutableSetOf())!!
-
-
+		findMaxSolution(1..9, State(0, 0, 0, 0), 0, data, 0, mutableSetOf())!!
 
 	private fun findMaxSolution(
 		range: IntProgression,
@@ -68,10 +64,7 @@ object Day24 : BaseSolution<List<Instruction>, Long>() {
 		}
 
 		return usedInput.takeIf { currentState.z == 0 }
-
 	}
-
-
 }
 
 sealed interface Argument
@@ -118,7 +111,7 @@ operator fun State.get(a: Argument): Int = when (a) {
 fun OpInstruction.eval(s: State): State = when (this) {
 	is AddInstruction -> s.set(a, s[a] + s[b])
 	is DivInstruction -> s.set(a, s[a] / s[b])
-	is EqlInstruction -> s.set(a, if (s[a]==s[b]) 1 else 0)
+	is EqlInstruction -> s.set(a, if (s[a] == s[b]) 1 else 0)
 	is ModInstruction -> s.set(a, s[a] % s[b])
 	is MulInstruction -> s.set(a, s[a] * s[b])
 }
