@@ -1,6 +1,6 @@
 package de.earley.adventofcode2021.day1
 
-import de.earley.adventofcode2021.BaseSolution
+import de.earley.adventofcode.BaseSolution
 
 fun main() = Day1.start()
 

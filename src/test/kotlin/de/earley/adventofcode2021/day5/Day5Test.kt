@@ -1,6 +1,6 @@
 package de.earley.adventofcode2021.day5
 
-import de.earley.adventofcode2021.testDay
+import de.earley.adventofcode.testDay
 import io.kotest.core.spec.style.WordSpec
 
 class Day5Test : WordSpec({

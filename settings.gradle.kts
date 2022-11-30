@@ -1,4 +1,4 @@
-rootProject.name = "advent-of-code-2021"
+rootProject.name = "advent-of-code"
 
 plugins {
 	// See https://jmfayard.github.io/refreshVersions

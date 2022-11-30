@@ -1,4 +1,6 @@
-package de.earley.adventofcode2021
+package de.earley.adventofcode
+
+import de.earley.adventofcode2021.readResource
 
 abstract class BaseSolution<In, Out> {
 

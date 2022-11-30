@@ -1,7 +1,7 @@
 package de.earley.adventofcode2021.day19
 
 import de.earley.adventofcode2021.Point3
-import de.earley.adventofcode2021.testDay
+import de.earley.adventofcode.testDay
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.collections.shouldBeIn
 

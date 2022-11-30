@@ -1,6 +1,6 @@
 package de.earley.adventofcode2021.day22
 
-import de.earley.adventofcode2021.BaseSolution
+import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode2021.mapToList
 
 fun main() = Day22.start()

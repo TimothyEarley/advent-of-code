@@ -1,6 +1,6 @@
 package de.earley.adventofcode2021.day7
 
-import de.earley.adventofcode2021.BaseSolution
+import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode2021.cache
 import kotlin.math.abs
 import kotlin.math.roundToInt

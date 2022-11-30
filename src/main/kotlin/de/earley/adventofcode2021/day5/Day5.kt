@@ -1,6 +1,6 @@
 package de.earley.adventofcode2021.day5
 
-import de.earley.adventofcode2021.BaseSolution
+import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode2021.Point
 import kotlin.math.sign
 

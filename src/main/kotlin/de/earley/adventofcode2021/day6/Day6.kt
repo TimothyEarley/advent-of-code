@@ -1,6 +1,6 @@
 package de.earley.adventofcode2021.day6
 
-import de.earley.adventofcode2021.BaseSolution
+import de.earley.adventofcode.BaseSolution
 
 const val startingCycleTime = 6 // 7 days
 

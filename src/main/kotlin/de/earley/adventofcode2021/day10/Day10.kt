@@ -1,6 +1,6 @@
 package de.earley.adventofcode2021.day10
 
-import de.earley.adventofcode2021.BaseSolution
+import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode2021.median
 
 fun main() = Day10.start()

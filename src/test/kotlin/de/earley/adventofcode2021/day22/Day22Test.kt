@@ -1,6 +1,6 @@
 package de.earley.adventofcode2021.day22
 
-import de.earley.adventofcode2021.testDay
+import de.earley.adventofcode.testDay
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
 

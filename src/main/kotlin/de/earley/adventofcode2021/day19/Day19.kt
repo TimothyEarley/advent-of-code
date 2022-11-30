@@ -1,6 +1,6 @@
 package de.earley.adventofcode2021.day19
 
-import de.earley.adventofcode2021.BaseSolution
+import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode2021.Point3
 import de.earley.adventofcode2021.manhattanTo
 import de.earley.adventofcode2021.split

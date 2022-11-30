@@ -1,6 +1,6 @@
 package de.earley.adventofcode2021.day4
 
-import de.earley.adventofcode2021.BaseSolution
+import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode2021.Grid
 import de.earley.adventofcode2021.MutableGrid
 import de.earley.adventofcode2021.toMutableGrid

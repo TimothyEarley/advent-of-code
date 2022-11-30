@@ -1,6 +1,6 @@
 package de.earley.adventofcode2021.day18
 
-import de.earley.adventofcode2021.BaseSolution
+import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode2021.mapToList
 import kotlin.math.ceil
 
