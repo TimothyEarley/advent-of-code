@@ -32,30 +32,55 @@ import org.openjdk.jmh.annotations.State
 @State(Scope.Benchmark)
 class AllBench {
 
-	@Benchmark fun day1() = Day1.start()
-	@Benchmark fun day2() = Day2.start()
-	@Benchmark fun day3() = Day3.start()
-	@Benchmark fun day4() = Day4.start()
-	@Benchmark fun day5() = Day5.start()
-	@Benchmark fun day6() = Day6.start()
-	@Benchmark fun day7() = Day7.start()
-	@Benchmark fun day8() = Day8.start()
-	@Benchmark fun day9() = Day9.start()
-	@Benchmark fun day10() = Day10.start()
-	@Benchmark fun day11() = Day11.start()
-	@Benchmark fun day12() = Day12.start()
-	@Benchmark fun day13() = Day13.start()
-	@Benchmark fun day14() = Day14.start()
-	@Benchmark fun day15() = Day15.start()
-	@Benchmark fun day16() = Day16.start()
-	@Benchmark fun day17() = Day17.start()
-	@Benchmark fun day18() = Day18.start()
-	@Benchmark fun day19() = Day19.start()
-	@Benchmark fun day20() = Day20.start()
-	@Benchmark fun day21() = Day21.start()
-	@Benchmark fun day22() = Day22.start()
-	@Benchmark fun day23() = Day23.start()
-	@Benchmark fun day24() = Day24.start()
-	@Benchmark fun day25() = Day25.start()
+	@Benchmark
+	fun day1() = Day1.start()
+	@Benchmark
+	fun day2() = Day2.start()
+	@Benchmark
+	fun day3() = Day3.start()
+	@Benchmark
+	fun day4() = Day4.start()
+	@Benchmark
+	fun day5() = Day5.start()
+	@Benchmark
+	fun day6() = Day6.start()
+	@Benchmark
+	fun day7() = Day7.start()
+	@Benchmark
+	fun day8() = Day8.start()
+	@Benchmark
+	fun day9() = Day9.start()
+	@Benchmark
+	fun day10() = Day10.start()
+	@Benchmark
+	fun day11() = Day11.start()
+	@Benchmark
+	fun day12() = Day12.start()
+	@Benchmark
+	fun day13() = Day13.start()
+	@Benchmark
+	fun day14() = Day14.start()
+	@Benchmark
+	fun day15() = Day15.start()
+	@Benchmark
+	fun day16() = Day16.start()
+	@Benchmark
+	fun day17() = Day17.start()
+	@Benchmark
+	fun day18() = Day18.start()
+	@Benchmark
+	fun day19() = Day19.start()
+	@Benchmark
+	fun day20() = Day20.start()
+	@Benchmark
+	fun day21() = Day21.start()
+	@Benchmark
+	fun day22() = Day22.start()
+	@Benchmark
+	fun day23() = Day23.start()
+	@Benchmark
+	fun day24() = Day24.start()
+	@Benchmark
+	fun day25() = Day25.start()
 
 }

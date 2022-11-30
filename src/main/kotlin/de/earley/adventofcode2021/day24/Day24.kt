@@ -2,7 +2,6 @@ package de.earley.adventofcode2021.day24
 
 import de.earley.adventofcode2021.BaseSolution
 import de.earley.adventofcode2021.mapToList
-import de.earley.adventofcode2021.split
 
 fun main() = Day24.start()
 
@@ -54,9 +53,19 @@ object Day24 : BaseSolution<List<Instruction>, Long>() {
 						// already seen
 						null
 					} else {
-						range.firstNotNullOfOrNull { findMaxSolution(range, currentState.set(ins.v, it), i, instructions, usedInput * 10 + it, seen) }
+						range.firstNotNullOfOrNull {
+							findMaxSolution(
+								range,
+								currentState.set(ins.v, it),
+								i,
+								instructions,
+								usedInput * 10 + it,
+								seen
+							)
+						}
 					}
 				}
+
 				else -> {
 					currentState = (ins as OpInstruction).eval(currentState)
 				}

@@ -55,7 +55,12 @@ object Day17 : BaseSolution<TargetArea, Int>() {
 	/**
 	 * @return max y reached or null if not hit
 	 */
-	private tailrec fun simulateShot(position: Point, direction: Point, targetArea: TargetArea, maxY: Int = position.y): Int? {
+	private tailrec fun simulateShot(
+		position: Point,
+		direction: Point,
+		targetArea: TargetArea,
+		maxY: Int = position.y
+	): Int? {
 		if (position.y < targetArea.bottomRight.y) return null
 		if (position in targetArea) return maxY
 		val newPosition = position + direction
@@ -69,7 +74,8 @@ object Day17 : BaseSolution<TargetArea, Int>() {
 }
 
 data class TargetArea(
-	val topLeft: Point, val bottomRight: Point
+	val topLeft: Point,
+	val bottomRight: Point
 ) {
 	operator fun contains(position: Point): Boolean =
 		position.x in topLeft.x..bottomRight.x && position.y in bottomRight.y..topLeft.y

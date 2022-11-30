@@ -45,6 +45,7 @@ object Day2 : BaseSolution<List<Day2.Command>, Int>() {
 				horizontal = s.horizontal + command.amount,
 				depth = s.depth + s.aim * command.amount
 			)
+
 			Direction.UP -> s.copy(aim = s.aim - command.amount)
 			Direction.DOWN -> s.copy(aim = s.aim + command.amount)
 		}

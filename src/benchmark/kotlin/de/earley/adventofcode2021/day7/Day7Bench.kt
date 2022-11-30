@@ -10,16 +10,16 @@ import kotlin.math.roundToInt
 @State(Scope.Benchmark)
 class Day7Bench {
 
-    /*
-    benchmark summary:
-    Benchmark                        Mode  Cnt     Score    Error  Units
-    Day7Bench.partOneBruteForce      avgt    5  2267.309 ± 37.064  us/op
-    Day7Bench.partOneStartAvg        avgt    5   299.140 ±  3.936  us/op
-    Day7Bench.partOneStartAvgCached  avgt    5   188.491 ±  4.662  us/op
-    Day7Bench.partTwoBruteForce      avgt    5  3392.379 ± 77.733  us/op
-    Day7Bench.partTwoStartAvg        avgt    5    10.899 ±  0.480  us/op
-    Day7Bench.partTwoStartAvgCached  avgt    5     7.106 ±  0.116  us/op
-     */
+	/*
+	benchmark summary:
+	Benchmark                        Mode  Cnt     Score    Error  Units
+	Day7Bench.partOneBruteForce      avgt    5  2267.309 ± 37.064  us/op
+	Day7Bench.partOneStartAvg        avgt    5   299.140 ±  3.936  us/op
+	Day7Bench.partOneStartAvgCached  avgt    5   188.491 ±  4.662  us/op
+	Day7Bench.partTwoBruteForce      avgt    5  3392.379 ± 77.733  us/op
+	Day7Bench.partTwoStartAvg        avgt    5    10.899 ±  0.480  us/op
+	Day7Bench.partTwoStartAvgCached  avgt    5     7.106 ±  0.116  us/op
+	 */
 
 	val data = Day7.readResource("input.txt").useLines(Day7::parseInput)
 

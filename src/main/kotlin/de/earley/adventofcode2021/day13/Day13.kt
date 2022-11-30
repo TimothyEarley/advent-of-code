@@ -32,6 +32,7 @@ object Day13 : BaseSolution<Manual, Int>() {
 		is Horizontal -> points.map {
 			if (it.y < f.y) it else it.copy(y = 2 * f.y - it.y)
 		}.toSet()
+
 		is Vertical -> points.map {
 			if (it.x < f.x) it else it.copy(x = 2 * f.x - it.x)
 		}.toSet()
@@ -39,7 +40,6 @@ object Day13 : BaseSolution<Manual, Int>() {
 }
 
 private fun Set<Point>.prettyPrint(): Int {
-
 	val width = maxOf { it.x }
 	val height = maxOf { it.y }
 

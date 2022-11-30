@@ -16,7 +16,6 @@ fun <T> generalAStar(
 	useClosed: Boolean,
 	newNodeCallback: ((Node<T>) -> Unit)? = null
 ): Int {
-
 	val closed = mutableSetOf<T>()
 	val open = PriorityQueue(compareBy<Node<T>> { it.cost + it.heuristic }).apply {
 		add(Node(from, 0, heuristic(from)))
@@ -27,8 +26,9 @@ fun <T> generalAStar(
 
 		if (useClosed) closed.add(current.value)
 
-		if (goal(current.value))
+		if (goal(current.value)) {
 			return current.cost
+		}
 
 		// expand neighbours
 		for ((next, costToEnter) in current.value.neighbours()) {

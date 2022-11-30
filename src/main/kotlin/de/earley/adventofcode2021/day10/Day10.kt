@@ -41,6 +41,7 @@ object Day10 : BaseSolution<List<String>, Long>() {
 					}
 					if (!correct) return c to (stack.apply { addFirst(first) })
 				}
+
 				else -> error("Illegal char $c")
 			}
 		}

@@ -36,6 +36,7 @@ private class Parser(private val input: String) {
 			require(input[index++] == ']')
 			PairNumber(left, right)
 		}
+
 		else -> {
 			// parse number
 			require(c.isDigit())
@@ -73,20 +74,29 @@ private fun SnailfishNumber.reduce(): SnailfishNumber {
 			val right = exploding.right as RegularNumber
 
 			// add to left
-			if (nested[3].right == exploding) nested[3].left.findRegularNumberToRight().value += left.value
-			else if (nested[2].right == nested[3]) nested[2].left.findRegularNumberToRight().value += left.value
-			else if (nested[1].right == nested[2]) nested[1].left.findRegularNumberToRight().value += left.value
-			else if (nested[0].right == nested[1]) nested[0].left.findRegularNumberToRight().value += left.value
+			if (nested[3].right == exploding) {
+				nested[3].left.findRegularNumberToRight().value += left.value
+			} else if (nested[2].right == nested[3]) {
+				nested[2].left.findRegularNumberToRight().value += left.value
+			} else if (nested[1].right == nested[2]) {
+				nested[1].left.findRegularNumberToRight().value += left.value
+			} else if (nested[0].right == nested[1]) nested[0].left.findRegularNumberToRight().value += left.value
 
 			// add to right
-			if (nested[3].left == exploding) nested[3].right.findRegularNumberToLeft().value += right.value
-			else if (nested[2].left == nested[3]) nested[2].right.findRegularNumberToLeft().value += right.value
-			else if (nested[1].left == nested[2]) nested[1].right.findRegularNumberToLeft().value += right.value
-			else if (nested[0].left == nested[1]) nested[0].right.findRegularNumberToLeft().value += right.value
+			if (nested[3].left == exploding) {
+				nested[3].right.findRegularNumberToLeft().value += right.value
+			} else if (nested[2].left == nested[3]) {
+				nested[2].right.findRegularNumberToLeft().value += right.value
+			} else if (nested[1].left == nested[2]) {
+				nested[1].right.findRegularNumberToLeft().value += right.value
+			} else if (nested[0].left == nested[1]) nested[0].right.findRegularNumberToLeft().value += right.value
 
 			// replace with 0
-			if (nested[3].left == exploding) nested[3].left = RegularNumber(0)
-			else nested[3].right = RegularNumber(0)
+			if (nested[3].left == exploding) {
+				nested[3].left = RegularNumber(0)
+			} else {
+				nested[3].right = RegularNumber(0)
+			}
 
 			continue
 		}
@@ -121,12 +131,16 @@ private fun SnailfishNumber.deepCopy(): SnailfishNumber = when (this) {
 	is RegularNumber -> RegularNumber(value)
 }
 
-private fun SnailfishNumber.findTenOrGreater(parent: PairNumber? = null): Pair<PairNumber?, RegularNumber>? = when (this) {
-	is PairNumber -> left.findTenOrGreater(this) ?: right.findTenOrGreater(this)
-	is RegularNumber ->
-		if (value >= 10) parent to this
-		else null
-}
+private fun SnailfishNumber.findTenOrGreater(parent: PairNumber? = null): Pair<PairNumber?, RegularNumber>? =
+	when (this) {
+		is PairNumber -> left.findTenOrGreater(this) ?: right.findTenOrGreater(this)
+		is RegularNumber ->
+			if (value >= 10) {
+				parent to this
+			} else {
+				null
+			}
+	}
 
 private fun SnailfishNumber.findRegularNumberToLeft(): RegularNumber = when (this) {
 	is PairNumber -> left.findRegularNumberToLeft()
@@ -140,11 +154,15 @@ private fun SnailfishNumber.findRegularNumberToRight(): RegularNumber = when (th
 
 private fun SnailfishNumber.findNested(i: Int): List<PairNumber>? = when (this) {
 	is PairNumber -> {
-		if (i == 0) listOf(this)
-		else (left.findNested(i - 1) ?: right.findNested(i - 1))?.let {
-			listOf(this) + it
+		if (i == 0) {
+			listOf(this)
+		} else {
+			(left.findNested(i - 1) ?: right.findNested(i - 1))?.let {
+				listOf(this) + it
+			}
 		}
 	}
+
 	is RegularNumber -> null
 }
 

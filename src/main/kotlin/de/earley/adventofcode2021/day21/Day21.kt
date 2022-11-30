@@ -53,7 +53,7 @@ object Day21 : BaseSolution<State, Long>() {
 			// (3+3+2) 8
 			3 * nextState(8).playDiracDie(),
 			// 9 (3+3+3)
-			1 * nextState(9).playDiracDie(),
+			1 * nextState(9).playDiracDie()
 		).reduce { acc, pair -> acc.first + pair.first to acc.second + pair.second }
 	}
 }
@@ -69,7 +69,7 @@ data class State(
 	val player1: Int,
 	val player2: Int,
 	val player1Score: Int,
-	val player2Score: Int,
+	val player2Score: Int
 )
 
 private fun State.nextState(thrown: Int): State = when (turn) {
@@ -77,6 +77,7 @@ private fun State.nextState(thrown: Int): State = when (turn) {
 		val landOn = (player1 + thrown) modStart1 10
 		State(Player.Player2, landOn, player2, player1Score + landOn, player2Score)
 	}
+
 	Player.Player2 -> {
 		val landOn = (player2 + thrown) modStart1 10
 		State(Player.Player1, player1, landOn, player1Score, player2Score + landOn)

@@ -64,8 +64,10 @@ object Day23 : BaseSolution<State, Int>() {
 									0 -> getAtPosition(ampi.position.copy(space = 1))?.type == ampi.type &&
 											getAtPosition(ampi.position.copy(space = 2))?.type == ampi.type &&
 											getAtPosition(ampi.position.copy(space = 3))?.type == ampi.type
+
 									1 -> getAtPosition(ampi.position.copy(space = 2))?.type == ampi.type &&
 											getAtPosition(ampi.position.copy(space = 3))?.type == ampi.type
+
 									2 -> getAtPosition(ampi.position.copy(space = 3))?.type == ampi.type
 									3 -> true
 									else -> error("Invalid position")
@@ -162,6 +164,7 @@ object Day23 : BaseSolution<State, Int>() {
 				SideRoom(2, 0).takeIf { from.pos == 6 },
 				SideRoom(3, 0).takeIf { from.pos == 8 },
 			)
+
 			is SideRoom -> listOfNotNull(
 				SideRoom(from.room, from.space - 1).takeIf { it.space >= 0 },
 				SideRoom(from.room, from.space + 1).takeIf { it.space <= 1 || (unfolded && it.space <= 3) },
