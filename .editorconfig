@@ -2,6 +2,3 @@
 indent_style = tab
 
 ij_kotlin_name_count_to_use_star_import = 99
-
-# noinspection EditorConfigKeyCorrectness
-disabled_rules = parameter-list-wrapping # see e.g. https://github.com/pinterest/ktlint/pull/1284
