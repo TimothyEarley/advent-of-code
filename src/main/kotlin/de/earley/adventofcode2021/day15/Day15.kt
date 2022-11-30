@@ -2,11 +2,12 @@ package de.earley.adventofcode2021.day15
 
 import de.earley.adventofcode2021.BaseSolution
 import de.earley.adventofcode2021.Grid
+import de.earley.adventofcode2021.Node
 import de.earley.adventofcode2021.Point
+import de.earley.adventofcode2021.generalAStar
 import de.earley.adventofcode2021.manhattanDistanceTo
 import de.earley.adventofcode2021.modStart1
 import de.earley.adventofcode2021.neighbours
-import java.util.PriorityQueue
 
 fun main() = Day15.start()
 
@@ -42,43 +43,12 @@ object Day15 : BaseSolution<Grid<Int>, Int>() {
 	}
 }
 
-data class Node(
-	val point: Point,
-	val cost: Int,
-	val heuristic: Int
-)
-
-fun aStar(grid: (Point) -> Int?, from: Point, to: Point, newNodeCallback: ((Node) -> Unit)? = null): Int {
-
-	val closed = mutableSetOf<Point>()
-	val open = PriorityQueue(compareBy<Node> { it.cost + it.heuristic }).apply {
-		add(Node(from, 0, from.manhattanDistanceTo(to)))
-	}
-
-	while (open.isNotEmpty()) {
-		val current = open.remove()
-		open.remove(current)
-		closed.add(current.point)
-
-		if (current.point == to)
-			return current.cost
-
-		// expand neighbours
-		for (next in current.point.neighbours()) {
-			if (next in closed) continue // don't revisit closed nodes (the heuristic is admissible and consistent)
-
-			val costToEnter = grid(next) ?: continue
-			val thisCost = current.cost + costToEnter
-
-			val previousOpened = open.find { it.point == next }
-			// if new or better, add it to queue
-			if (previousOpened == null || previousOpened.cost >= thisCost) {
-				val newNode = Node(next, thisCost, next.manhattanDistanceTo(to))
-				open.add(newNode)
-				if (newNodeCallback != null) newNodeCallback(newNode)
-			}
-		}
-	}
-
-	error("No path found!")
-}
+fun aStar(grid: (Point) -> Int?, from: Point, to: Point, newNodeCallback: ((Node<Point>) -> Unit)? = null): Int =
+	generalAStar(
+		from,
+		{ it == to },
+		{ it.manhattanDistanceTo(to) },
+		{ neighbours().mapNotNull { n -> grid(n)?.let { n to it } } },
+		true,
+		newNodeCallback
+	)

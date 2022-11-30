@@ -35,7 +35,7 @@ fun main() {
 	var i = 0
 	aStar(bigGrid::get, Point(0, 0), Point(bigGrid.width - 1, bigGrid.height - 1)) {
 		val c = visitedColor[(it.cost + it.heuristic) % visitedMod]
-		image.setRGB(it.point.x, it.point.y, c)
+		image.setRGB(it.value.x, it.value.y, c)
 		if (i % 100 == 0)
 			ImageIO.write(image, "png", File(dir, "out${(i / 100).toString().padStart(6, '0')}.png"))
 		i++
