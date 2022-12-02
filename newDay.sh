@@ -71,7 +71,7 @@ function createInputFile() {
   fi
   echo "Creating input file"
   mkdir -p "$(dirname "$f")"
-  curl -sS --cookie "$cookieFile" "https://adventofcode.com/${year}/day/{$day}/input" -o "$f"
+  $curlCommand "https://adventofcode.com/${year}/day/{$day}/input" -o "$f"
 }
 
 function createTestInputFile() {
@@ -83,7 +83,7 @@ function createTestInputFile() {
 function createTaskFile() {
   echo "Creating task file"
 
-  curl -sS --cookie "$cookieFile" "https://adventofcode.com/${year}/day/{$day}" |
+  $curlCommand "https://adventofcode.com/${year}/day/{$day}" |
     pup --pre '.day-desc' |
     pandoc --from=html --to=gfm >src/main/kotlin/de/earley/adventofcode${year}/day${day}/task.md
 
@@ -111,5 +111,9 @@ if [ ! -f "$cookieFile" ]; then
   echo "The cookie file is missing! ($cookieFile)"
   exit 1
 fi
+
+userAgent=""
+
+curlCommand="curl -sS --cookie $cookieFile --user-agent github.com/TimothyEarley/advent-of-code"
 
 main
