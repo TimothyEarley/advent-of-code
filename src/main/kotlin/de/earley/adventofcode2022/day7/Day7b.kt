@@ -1,10 +1,12 @@
+@file:Suppress("DuplicatedCode")
+
 package de.earley.adventofcode2022.day7
 
 import de.earley.adventofcode.BaseSolution
 
-fun main() = Day7.start()
+fun main() = Day7a.start()
 
-object Day7 : BaseSolution<List<Day7.CommandExec>, Int>() {
+object Day7b : BaseSolution<List<Day7b.CommandExec>, Int>() {
 
 	override fun parseInput(input: Sequence<String>): List<CommandExec> =
 		input.joinToString("\n").split("$ ").map { it.trim() }.filterNot { it.isBlank() }.map { block ->
@@ -23,12 +25,16 @@ object Day7 : BaseSolution<List<Day7.CommandExec>, Int>() {
 			CommandExec(command, output)
 		}
 
-	override fun partOne(data: List<CommandExec>): Int = createDirTree(data).sumSizesAtMost(100000)
+	override fun partOne(data: List<CommandExec>): Int =
+		createDirTree(data)
+			.dirSizes()
+			.filter { it <= 100000 }
+			.sum()
 
 	override fun partTwo(data: List<CommandExec>): Int = createDirTree(data).let { root ->
 		val currentFreeSpace = 70000000 - root.size
 		val needToDelete = 30000000 - currentFreeSpace
-		root.findSmallestWithSizeAtLeast(needToDelete)!!
+		root.dirSizes().filter { it >= needToDelete }.min()
 	}
 
 
@@ -103,22 +109,9 @@ object Day7 : BaseSolution<List<Day7.CommandExec>, Int>() {
 			SizedDir(sizedChildren.sumOf { it.size }, dir, sizedChildren)
 		}
 	}
-	
-	private fun SizedDir.sumSizesAtMost(limit: Int): Int {
-		val contributingToTotal = if (size <= limit) size else 0
-		val childrenContributing = children.filterIsInstance<SizedDir>().sumOf { it.sumSizesAtMost(limit) }
-		return contributingToTotal + childrenContributing
-	}
 
-
-	private fun SizedDir.findSmallestWithSizeAtLeast(needToDelete: Int): Int? {
-		if (size < needToDelete) return null
-
-		// we can definitely satisfy the requirement. First check if any child can already do it
-		val childResult =
-			children.filterIsInstance<SizedDir>().mapNotNull { it.findSmallestWithSizeAtLeast(needToDelete) }
-				.minOrNull()
-
-		return childResult ?: size
+	private fun SizedFS.dirSizes(): List<Int> = when (this) {
+		is SizedDir -> children.flatMap { it.dirSizes() } + size
+		is SizedFileNode -> emptyList()
 	}
 }
