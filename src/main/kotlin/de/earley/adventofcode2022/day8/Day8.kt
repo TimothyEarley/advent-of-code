@@ -1,9 +1,9 @@
 package de.earley.adventofcode2022.day8
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode2021.Grid
-import de.earley.adventofcode2021.Point
-import de.earley.adventofcode2021.manhattanDistanceTo
+import de.earley.adventofcode.Grid
+import de.earley.adventofcode.Point
+import de.earley.adventofcode.manhattanDistanceTo
 
 fun main() = Day8.start()
 

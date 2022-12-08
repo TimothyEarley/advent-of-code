@@ -1,9 +1,9 @@
 package de.earley.adventofcode2021.day20
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode2021.Grid
-import de.earley.adventofcode2021.Point
-import de.earley.adventofcode2021.grid
+import de.earley.adventofcode.Grid
+import de.earley.adventofcode.Point
+import de.earley.adventofcode.grid
 import de.earley.adventofcode2021.split
 
 fun main() = Day20.start()

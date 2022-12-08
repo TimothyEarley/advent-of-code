@@ -1,7 +1,7 @@
 package de.earley.adventofcode2021.day5
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode2021.Point
+import de.earley.adventofcode.Point
 import kotlin.math.sign
 
 fun main() = Day5.start()

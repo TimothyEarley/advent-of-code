@@ -1,4 +1,4 @@
-package de.earley.adventofcode2021
+package de.earley.adventofcode
 
 import kotlin.math.abs
 

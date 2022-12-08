@@ -1,7 +1,7 @@
 package de.earley.adventofcode2021.day15
 
-import de.earley.adventofcode2021.Point
-import de.earley.adventofcode2021.grid
+import de.earley.adventofcode.Point
+import de.earley.adventofcode.grid
 import de.earley.adventofcode2021.readResource
 import java.awt.image.BufferedImage
 import java.io.File

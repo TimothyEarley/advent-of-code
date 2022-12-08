@@ -1,9 +1,9 @@
 package de.earley.adventofcode2021.day4
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode2021.Grid
-import de.earley.adventofcode2021.MutableGrid
-import de.earley.adventofcode2021.toMutableGrid
+import de.earley.adventofcode.Grid
+import de.earley.adventofcode.MutableGrid
+import de.earley.adventofcode.toMutableGrid
 
 fun main() = Day4.start()
 

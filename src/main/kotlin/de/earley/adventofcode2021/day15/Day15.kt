@@ -1,13 +1,13 @@
 package de.earley.adventofcode2021.day15
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode2021.Grid
+import de.earley.adventofcode.Grid
 import de.earley.adventofcode2021.Node
-import de.earley.adventofcode2021.Point
+import de.earley.adventofcode.Point
 import de.earley.adventofcode2021.generalAStar
-import de.earley.adventofcode2021.manhattanDistanceTo
+import de.earley.adventofcode.manhattanDistanceTo
 import de.earley.adventofcode2021.modStart1
-import de.earley.adventofcode2021.neighbours
+import de.earley.adventofcode.neighbours
 
 fun main() = Day15.start()
 
