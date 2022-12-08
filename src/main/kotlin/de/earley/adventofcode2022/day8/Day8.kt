@@ -16,16 +16,11 @@ object Day8 : BaseSolution<Grid<Int>, Int>() {
 			}
 
 	override fun partOne(data: Grid<Int>): Int = data.indices.count { p ->
-		checkDir(p, data, Point(0, 1)).first ||
-				checkDir(p, data, Point(0, -1)).first ||
-				checkDir(p, data, Point(1, 0)).first ||
-				checkDir(p, data, Point(-1, 0)).first
-
+		Point.cardinals().any { dir -> checkDir(p, data, dir).first }
 	}
 
 	override fun partTwo(data: Grid<Int>): Int = data.indices.maxOf { p ->
-		checkDir(p, data, Point(0, 1)).second * checkDir(p, data, Point(0, -1)).second *
-				checkDir(p, data, Point(1, 0)).second * checkDir(p, data, Point(-1, 0)).second
+		Point.cardinals().map { dir -> checkDir(p, data, dir).second }.reduce(Int::times)
 	}
 
 	private fun checkDir(from: Point, data: Grid<Int>, dir: Point): Pair<Boolean, Int> {

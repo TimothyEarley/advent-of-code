@@ -8,6 +8,13 @@ data class Point(val x: Int, val y: Int) {
 		fun parse(s: String): Point = s.split(",", limit = 2).let { (x, y) ->
 			Point(x.toInt(), y.toInt())
 		}
+
+		fun cardinals(): Sequence<Point> = sequenceOf(
+			Point(0, 1),
+			Point(0, -1),
+			Point(1, 0),
+			Point(-1, 0),
+		)
 	}
 
 	operator fun minus(other: Point): Point = Point(x - other.x, y - other.y)
