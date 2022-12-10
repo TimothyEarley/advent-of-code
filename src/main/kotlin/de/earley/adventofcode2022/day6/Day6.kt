@@ -4,7 +4,7 @@ import de.earley.adventofcode.BaseSolution
 
 fun main() = Day6.start()
 
-object Day6 : BaseSolution<String, Int>() {
+object Day6 : BaseSolution<String, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): String = input.toList().single()
 

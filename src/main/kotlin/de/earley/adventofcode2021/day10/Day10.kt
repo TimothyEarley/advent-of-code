@@ -5,7 +5,7 @@ import de.earley.adventofcode2021.median
 
 fun main() = Day10.start()
 
-object Day10 : BaseSolution<List<String>, Long>() {
+object Day10 : BaseSolution<List<String>, Long, Long>() {
 
 	override fun parseInput(input: Sequence<String>): List<String> = input.toList()
 

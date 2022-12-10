@@ -9,7 +9,7 @@ import de.earley.adventofcode.toMutableGrid
 
 fun main() = Day11.start()
 
-object Day11 : BaseSolution<Grid<Int>, Int>() {
+object Day11 : BaseSolution<Grid<Int>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): Grid<Int> =
 		Grid(10, 10, input.flatMap { it.toList().map(Char::digitToInt) }.toList())

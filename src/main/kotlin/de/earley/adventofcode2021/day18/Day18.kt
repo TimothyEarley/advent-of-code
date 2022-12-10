@@ -6,7 +6,7 @@ import kotlin.math.ceil
 
 fun main() = Day18.start()
 
-object Day18 : BaseSolution<List<SnailfishNumber>, Int>() {
+object Day18 : BaseSolution<List<SnailfishNumber>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): List<SnailfishNumber> = input.mapToList {
 		Parser(it).parse()

@@ -4,7 +4,7 @@ import de.earley.adventofcode.BaseSolution
 
 fun main() = Day2.start()
 
-object Day2 : BaseSolution<List<Day2.Command>, Int>() {
+object Day2 : BaseSolution<List<Day2.Command>, Int, Int>() {
 
 	enum class Direction {
 		FORWARD, UP, DOWN

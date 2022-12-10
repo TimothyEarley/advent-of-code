@@ -8,7 +8,7 @@ fun main() = Day5.start()
 
 data class Segment(val start: Point, val end: Point)
 
-object Day5 : BaseSolution<List<Segment>, Int>() {
+object Day5 : BaseSolution<List<Segment>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): List<Segment> = input.map {
 		val (from, to) = it.split(" -> ", limit = 2)

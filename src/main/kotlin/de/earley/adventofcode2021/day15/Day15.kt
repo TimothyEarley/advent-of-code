@@ -11,7 +11,7 @@ import de.earley.adventofcode.neighbours
 
 fun main() = Day15.start()
 
-object Day15 : BaseSolution<Grid<Int>, Int>() {
+object Day15 : BaseSolution<Grid<Int>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): Grid<Int> {
 		val l = input.toList()

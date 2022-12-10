@@ -42,7 +42,7 @@ fun MutableBingoBoard.update(number: Int): Boolean {
 
 fun MutableBingoBoard.sumNumbersLeft(): Int = values().filterNotNull().sum()
 
-object Day4 : BaseSolution<State, Int>() {
+object Day4 : BaseSolution<State, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): State = input.toList().let {
 		State(

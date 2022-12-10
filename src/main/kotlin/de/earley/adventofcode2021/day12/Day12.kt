@@ -10,7 +10,7 @@ value class Cave(val name: String) {
 		get() = name.all(Char::isLowerCase)
 }
 
-object Day12 : BaseSolution<Map<Cave, List<Cave>>, Int>() {
+object Day12 : BaseSolution<Map<Cave, List<Cave>>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): Map<Cave, List<Cave>> =
 		input.flatMap {

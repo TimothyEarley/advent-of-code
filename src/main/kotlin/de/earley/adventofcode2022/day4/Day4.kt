@@ -5,7 +5,7 @@ import de.earley.adventofcode2021.mapToList
 
 fun main() = Day4.start()
 
-object Day4 : BaseSolution<List<Pair<IntRange, IntRange>>, Int>() {
+object Day4 : BaseSolution<List<Pair<IntRange, IntRange>>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): List<Pair<IntRange, IntRange>> = input.mapToList {
 		fun parseRange(s: String): IntRange = s

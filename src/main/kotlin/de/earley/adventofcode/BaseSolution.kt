@@ -2,7 +2,7 @@ package de.earley.adventofcode
 
 import de.earley.adventofcode2021.readResource
 
-abstract class BaseSolution<In, Out> {
+abstract class BaseSolution<In, Out1, Out2> {
 
 	fun start() {
 		val day = this::class.java.simpleName.takeLastWhile(Char::isDigit).toInt()
@@ -14,7 +14,7 @@ abstract class BaseSolution<In, Out> {
 		printResult(one, two, day)
 	}
 
-	private fun printResult(one: Out, two: Out, day: Int) {
+	private fun printResult(one: Out1, two: Out2, day: Int) {
 		val width = maxOf(one.toString().length, two.toString().length)
 		val totalWidth = width + 11
 		val bar = "═".repeat(totalWidth)
@@ -36,6 +36,6 @@ abstract class BaseSolution<In, Out> {
 	}
 
 	abstract fun parseInput(input: Sequence<String>): In
-	abstract fun partOne(data: In): Out
-	abstract fun partTwo(data: In): Out
+	abstract fun partOne(data: In): Out1
+	abstract fun partTwo(data: In): Out2
 }

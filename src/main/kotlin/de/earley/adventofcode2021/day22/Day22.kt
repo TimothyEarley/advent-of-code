@@ -5,7 +5,7 @@ import de.earley.adventofcode2021.mapToList
 
 fun main() = Day22.start()
 
-object Day22 : BaseSolution<List<RebootStep>, Long>() {
+object Day22 : BaseSolution<List<RebootStep>, Long, Long>() {
 
 	private val lineRegex =
 		Regex("(on|off) x=(-?\\d+)\\.\\.(-?\\d+),y=(-?\\d+)\\.\\.(-?\\d+),z=(-?\\d+)\\.\\.(-?\\d+)")

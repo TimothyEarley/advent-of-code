@@ -6,7 +6,7 @@ import de.earley.adventofcode2021.mapToList
 
 fun main() = Day23.start()
 
-object Day23 : BaseSolution<State, Int>() {
+object Day23 : BaseSolution<State, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): State {
 		val (lineOne, lineTwo) = input.drop(2).take(2).mapToList {

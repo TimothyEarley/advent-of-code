@@ -31,7 +31,7 @@ import de.earley.adventofcode.BaseSolution
 
 fun main() = Day${day}.start()
 
-object Day${day} : BaseSolution<List<String>, Int>() {
+object Day${day} : BaseSolution<List<String>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): List<String> = input.toList()
 

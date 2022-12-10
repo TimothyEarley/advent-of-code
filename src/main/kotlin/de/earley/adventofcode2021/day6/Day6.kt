@@ -6,7 +6,7 @@ const val startingCycleTime = 6 // 7 days
 
 fun main() = Day6.start()
 
-object Day6 : BaseSolution<List<Int>, Long>() {
+object Day6 : BaseSolution<List<Int>, Long, Long>() {
 
 	override fun parseInput(input: Sequence<String>): List<Int> = input.flatMap {
 		it.split(',').map(String::toInt)

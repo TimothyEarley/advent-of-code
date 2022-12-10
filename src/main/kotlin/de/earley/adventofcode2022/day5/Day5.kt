@@ -7,7 +7,7 @@ fun main() = Day5.start()
 
 typealias Stack = List<Char>
 
-object Day5 : BaseSolution<Day5.State, String>() {
+object Day5 : BaseSolution<Day5.State, String, String>() {
 
 	override fun parseInput(input: Sequence<String>): State = input.toList().split(String::isBlank).let { (conf, ins) ->
 		val cols = conf.last().split(" ").last { it.isNotBlank() }.toInt()

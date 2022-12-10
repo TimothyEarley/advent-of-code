@@ -6,7 +6,7 @@ import de.earley.adventofcode.BaseSolution
 
 fun main() = Day7a.start()
 
-object Day7b : BaseSolution<List<Day7b.CommandExec>, Int>() {
+object Day7b : BaseSolution<List<Day7b.CommandExec>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): List<CommandExec> =
 		input.joinToString("\n").split("$ ").map { it.trim() }.filterNot { it.isBlank() }.map { block ->

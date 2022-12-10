@@ -7,7 +7,7 @@ import de.earley.adventofcode.manhattanDistanceTo
 
 fun main() = Day8.start()
 
-object Day8 : BaseSolution<Grid<Int>, Int>() {
+object Day8 : BaseSolution<Grid<Int>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): Grid<Int> =
 		input.toList()

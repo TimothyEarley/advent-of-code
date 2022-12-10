@@ -6,7 +6,7 @@ import kotlin.math.abs
 
 fun main() = Day10.start()
 
-object Day10 : BaseSolution<List<Day10.Instruction>, Int>() {
+object Day10 : BaseSolution<List<Day10.Instruction>, Int, String>() {
 
 	override fun parseInput(input: Sequence<String>): List<Instruction> = input.mapToList {
 		when {
@@ -21,13 +21,10 @@ object Day10 : BaseSolution<List<Day10.Instruction>, Int>() {
 
 	}
 
-	override fun partTwo(data: List<Instruction>): Int = runAndAccumulate(data, String::plus, "") { state ->
-		val pixel = if (abs((state.cycle - 1) % 40 - state.x) <= 1) "#" else "."
+	override fun partTwo(data: List<Instruction>): String = "\n" + runAndAccumulate(data, String::plus, "") { state ->
+		val pixel = if (abs((state.cycle - 1) % 40 - state.x) <= 1) "█" else " "
 		val newline = if (state.cycle % 40 == 0) "\n" else ""
 		pixel + newline
-	}.let {
-		println(it)
-		0
 	}
 
 	private fun <T> runAndAccumulate(

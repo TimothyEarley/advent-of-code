@@ -7,7 +7,7 @@ import kotlin.math.roundToInt
 
 fun main() = Day7.start()
 
-object Day7 : BaseSolution<List<Int>, Int>() {
+object Day7 : BaseSolution<List<Int>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): List<Int> =
 		input.flatMap { it.split(',').map(String::toInt) }.toList()

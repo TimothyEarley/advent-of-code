@@ -10,7 +10,7 @@ fun main() = Day17.start()
 /**
  * Assumes the target is in the bottom right section
  */
-object Day17 : BaseSolution<TargetArea, Int>() {
+object Day17 : BaseSolution<TargetArea, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): TargetArea =
 		input.single().removePrefix("target area: ").split(", ").let { (x, y) ->

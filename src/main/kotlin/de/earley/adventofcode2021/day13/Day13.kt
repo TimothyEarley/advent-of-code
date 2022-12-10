@@ -6,7 +6,7 @@ import de.earley.adventofcode2021.split
 
 fun main() = Day13.start()
 
-object Day13 : BaseSolution<Manual, Int>() {
+object Day13 : BaseSolution<Manual, Int, String>() {
 
 	override fun parseInput(input: Sequence<String>): Manual {
 		val (dots, instructions) = input.toList().split { it.isBlank() }
@@ -26,7 +26,7 @@ object Day13 : BaseSolution<Manual, Int>() {
 
 	override fun partOne(data: Manual): Int = applyFold(data.dots, data.folds.first()).size
 
-	override fun partTwo(data: Manual): Int = data.folds.fold(data.dots, ::applyFold).prettyPrint()
+	override fun partTwo(data: Manual): String = data.folds.fold(data.dots, ::applyFold).toPrettyString()
 
 	private fun applyFold(points: Set<Point>, f: Fold): Set<Point> = when (f) {
 		is Horizontal -> points.map {
@@ -39,17 +39,16 @@ object Day13 : BaseSolution<Manual, Int>() {
 	}
 }
 
-private fun Set<Point>.prettyPrint(): Int {
-	val width = maxOf { it.x }
-	val height = maxOf { it.y }
+private fun Set<Point>.toPrettyString(): String = buildString {
+	val width = this@toPrettyString.maxOf { it.x }
+	val height = this@toPrettyString.maxOf { it.y }
 
 	for (y in 0..height) {
 		for (x in 0..width) {
-			if (contains(Point(x, y))) print('█') else print(' ')
+			if (contains(Point(x, y))) append('█') else append(' ')
 		}
-		println()
+		this.appendLine()
 	}
-	return 0
 }
 
 data class Manual(

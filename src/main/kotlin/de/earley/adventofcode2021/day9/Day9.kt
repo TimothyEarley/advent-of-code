@@ -10,7 +10,7 @@ fun main() = Day9.start()
 
 typealias Heightmap = Grid<Int>
 
-object Day9 : BaseSolution<Heightmap, Int>() {
+object Day9 : BaseSolution<Heightmap, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): Heightmap {
 		val l = input.toList()

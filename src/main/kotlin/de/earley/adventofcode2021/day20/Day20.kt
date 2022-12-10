@@ -8,7 +8,7 @@ import de.earley.adventofcode2021.split
 
 fun main() = Day20.start()
 
-object Day20 : BaseSolution<Input, Int>() {
+object Day20 : BaseSolution<Input, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): Input = input.toList().split { it.isBlank() }.let { (rep, grid) ->
 		val width = grid.first().length

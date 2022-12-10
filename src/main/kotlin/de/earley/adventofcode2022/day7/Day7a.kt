@@ -4,7 +4,7 @@ import de.earley.adventofcode.BaseSolution
 
 fun main() = Day7a.start()
 
-object Day7a : BaseSolution<List<Day7a.CommandExec>, Int>() {
+object Day7a : BaseSolution<List<Day7a.CommandExec>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): List<CommandExec> =
 		input.joinToString("\n").split("$ ").map { it.trim() }.filterNot { it.isBlank() }.map { block ->

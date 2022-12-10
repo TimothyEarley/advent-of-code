@@ -6,7 +6,7 @@ fun main() {
 	Day16.start()
 }
 
-object Day16 : BaseSolution<Packet, Long>() {
+object Day16 : BaseSolution<Packet, Long, Long>() {
 
 	override fun parseInput(input: Sequence<String>): Packet = parsePacket(BitsReader(input.single()))
 

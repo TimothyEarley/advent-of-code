@@ -12,7 +12,7 @@ fun main() {
 	println("Time: " + measureTime { Day19.start() })
 }
 
-object Day19 : BaseSolution<List<Scanner>, Int>() {
+object Day19 : BaseSolution<List<Scanner>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): List<Scanner> =
 		input.toList()

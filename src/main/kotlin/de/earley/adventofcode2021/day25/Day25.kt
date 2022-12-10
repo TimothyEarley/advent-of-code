@@ -7,7 +7,7 @@ import de.earley.adventofcode.toMutableGrid
 
 fun main() = Day25.start()
 
-object Day25 : BaseSolution<Grid<SeaCucumber?>, Int>() {
+object Day25 : BaseSolution<Grid<SeaCucumber?>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): Grid<SeaCucumber?> {
 		val l = input.toList()

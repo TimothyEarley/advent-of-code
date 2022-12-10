@@ -5,7 +5,7 @@ import de.earley.adventofcode2021.split
 
 fun main() = Day14.start()
 
-object Day14 : BaseSolution<Input, Long>() {
+object Day14 : BaseSolution<Input, Long, Long>() {
 
 	override fun parseInput(input: Sequence<String>): Input =
 		input.toList().split { it.isBlank() }.let { (poly, rules) ->

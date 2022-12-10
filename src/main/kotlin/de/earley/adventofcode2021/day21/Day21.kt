@@ -5,7 +5,7 @@ import de.earley.adventofcode2021.modStart1
 
 fun main() = Day21.start()
 
-object Day21 : BaseSolution<State, Long>() {
+object Day21 : BaseSolution<State, Long, Long>() {
 
 	override fun parseInput(input: Sequence<String>): State = input.toList().let { (one, two) ->
 		State(

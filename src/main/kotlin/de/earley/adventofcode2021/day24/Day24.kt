@@ -5,7 +5,7 @@ import de.earley.adventofcode2021.mapToList
 
 fun main() = Day24.start()
 
-object Day24 : BaseSolution<List<Instruction>, Long>() {
+object Day24 : BaseSolution<List<Instruction>, Long, Long>() {
 
 	override fun parseInput(input: Sequence<String>): List<Instruction> = input.mapToList {
 		val (cmd, args) = it.split(' ', limit = 2)

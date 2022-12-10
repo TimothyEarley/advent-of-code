@@ -5,7 +5,7 @@ import de.earley.adventofcode2021.split
 
 fun main() = Day1.start()
 
-object Day1 : BaseSolution<List<Int>, Int>() {
+object Day1 : BaseSolution<List<Int>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): List<Int> =
 		input.toList()
