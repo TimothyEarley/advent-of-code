@@ -18,7 +18,10 @@ data class Point(val x: Int, val y: Int) {
 	}
 
 	operator fun minus(other: Point): Point = Point(x - other.x, y - other.y)
-	operator fun plus(other: Point) = Point(x + other.x, y + other.y)
+	operator fun plus(other: Point): Point = Point(x + other.x, y + other.y)
+	operator fun div(by: Int): Point = Point(x / by, y / by)
+	fun divRound(by: Int, round: Double.() -> Int): Point =
+		Point((x / by.toDouble()).round(), (y / by.toDouble()).round())
 }
 
 fun Point.neighbours(diagonal: Boolean = false): Sequence<Point> = sequence {
@@ -33,6 +36,9 @@ fun Point.neighbours(diagonal: Boolean = false): Sequence<Point> = sequence {
 		yield(Point(x - 1, y - 1))
 	}
 }
+
+fun Point.isNeighbourOrSameOf(other: Point, diagonal: Boolean = false): Boolean =
+	(this.manhattanDistanceTo(other) <= 1) || (diagonal && abs(x - other.x) <= 1 && abs(y - other.y) <= 1)
 
 fun Point.manhattanDistanceTo(to: Point): Int = abs(x - to.x) + abs(y - to.y)
 
