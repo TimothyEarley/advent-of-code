@@ -15,6 +15,6 @@ object Day1 : BaseSolution<List<Int>, Int>() {
 
 	override fun partOne(data: List<Int>): Int = data.max()
 
-	override fun partTwo(data: List<Int>): Int = data.sortedDescending().take(3).max()
+	override fun partTwo(data: List<Int>): Int = data.sortedDescending().take(3).sum()
 
 }
