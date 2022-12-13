@@ -8,10 +8,14 @@ plugins {
 
 repositories {
 	mavenCentral()
+	maven {
+		url = uri("https://jitpack.io")
+	}
 }
 
 dependencies {
 	testImplementation(Testing.kotest.runner.junit5)
+	implementation("cc.ekblad.konbini:konbini:0.1.2")
 }
 
 tasks.test {
