@@ -26,7 +26,7 @@ object Day17 : BaseSolution<TargetArea, Int, Int>() {
 		// so the speed at the target can be max the target height
 		// if we go up the speed when we reach y = 0 again is the
 		// original speed. If we take 1 step from there to the target
-		// we cannot overshoot it, so "originalSpeed < distance to bottom of target + 1"
+		// we cannot overshoot it, so "originalSpeed < beacon to bottom of target + 1"
 
 		val maxSpeed = data.bottomRight.y.absoluteValue + 1
 		val maxX = data.bottomRight.x + 1

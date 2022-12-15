@@ -41,6 +41,8 @@ fun Point.isNeighbourOrSameOf(other: Point, diagonal: Boolean = false): Boolean 
 	(this.manhattanDistanceTo(other) <= 1) || (diagonal && abs(x - other.x) <= 1 && abs(y - other.y) <= 1)
 
 fun Point.manhattanDistanceTo(to: Point): Int = abs(x - to.x) + abs(y - to.y)
+fun Point.manhattanLength(): Int = abs(x) + abs(y)
+
 
 open class Grid<T>(
 	val width: Int,
