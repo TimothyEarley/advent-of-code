@@ -1,8 +1,8 @@
 package de.earley.adventofcode2021.day19
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode2021.Point3
-import de.earley.adventofcode2021.manhattanTo
+import de.earley.adventofcode.Point3
+import de.earley.adventofcode.manhattanTo
 import de.earley.adventofcode2021.split
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
@@ -90,9 +90,9 @@ class Scanner(
 )
 
 class PositionedScanner(
-	val id: Int,
-	val position: Point3,
-	val beacons: Set<Point3>
+    val id: Int,
+    val position: Point3,
+    val beacons: Set<Point3>
 )
 
 typealias Orientation = (Point3) -> Point3

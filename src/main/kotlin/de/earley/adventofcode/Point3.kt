@@ -1,4 +1,4 @@
-package de.earley.adventofcode2021
+package de.earley.adventofcode
 
 import kotlin.math.abs
 
@@ -19,12 +19,22 @@ data class Point3(
 		z + other.z
 	)
 
+	operator fun rangeTo(to: Point3): Sequence<Point3> = sequence {
+		for (rx in x..to.x) {
+			for (ry in y..to.y) {
+				for (rz in z..to.z) {
+					yield(Point3(rx, ry, rz))
+				}
+			}
+		}
+	}
+
 	companion object {
 		fun parse(s: String): Point3 = s.split(",", limit = 3).map(String::toInt).let { (x, y, z) ->
 			Point3(x, y, z)
 		}
 
-		fun units() = sequence<Point3> {
+		fun units(): Sequence<Point3> = sequence {
 			yield(Point3(1, 0, 0))
 			yield(Point3(0, 1, 0))
 			yield(Point3(0, 0, 1))
