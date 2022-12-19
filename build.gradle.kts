@@ -16,6 +16,7 @@ repositories {
 dependencies {
 	testImplementation(Testing.kotest.runner.junit5)
 	implementation("cc.ekblad.konbini:konbini:0.1.2")
+	implementation(KotlinX.coroutines.core)
 }
 
 tasks.test {

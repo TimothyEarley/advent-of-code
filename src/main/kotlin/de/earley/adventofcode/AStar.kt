@@ -17,6 +17,7 @@ fun <T> generalAStarNode(
 	heuristic: (T) -> Int,
 	neighbours: T.() -> Sequence<Pair<T, Int>>,
 	useClosed: Boolean,
+	closedCheck: Set<T>.(T) -> Boolean = Set<T>::contains,
 	newNodeCallback: ((Node<T>) -> Unit)? = null
 ): Node<T> {
 	val closed = mutableSetOf<T>()
@@ -25,6 +26,8 @@ fun <T> generalAStarNode(
 	}
 
 	while (open.isNotEmpty()) {
+//		println(open)
+
 		val current = open.remove()
 
 		// if (useClosed) closed.add(current.value)
@@ -37,7 +40,7 @@ fun <T> generalAStarNode(
 		for ((next, costToEnter) in current.value.neighbours()) {
 			// don't revisit closed nodes (the heuristic is admissible and consistent)
 			if (useClosed) {
-				if (next in closed) continue
+				if (closed.closedCheck(next)) continue
 				closed.add(next)
 			}
 
@@ -56,5 +59,6 @@ fun <T> generalAStar(
 	heuristic: (T) -> Int,
 	neighbours: T.() -> Sequence<Pair<T, Int>>,
 	useClosed: Boolean,
+	closedCheck: Set<T>.(T) -> Boolean = Set<T>::contains,
 	newNodeCallback: ((Node<T>) -> Unit)? = null
-): Int = generalAStarNode(from, goal, heuristic, neighbours, useClosed, newNodeCallback).cost
+): Int = generalAStarNode(from, goal, heuristic, neighbours, useClosed, closedCheck, newNodeCallback).cost
