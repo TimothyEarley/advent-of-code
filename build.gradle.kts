@@ -15,12 +15,18 @@ repositories {
 
 dependencies {
 	testImplementation(Testing.kotest.runner.junit5)
-	implementation("cc.ekblad.konbini:konbini:0.1.2")
+	implementation("cc.ekblad.konbini:konbini:_")
 	implementation(KotlinX.coroutines.core)
 }
 
 tasks.test {
 	useJUnitPlatform()
+}
+
+kotlin {
+	jvmToolchain {
+		languageVersion.set(JavaLanguageVersion.of("17"))
+	}
 }
 
 // Benchmark stuff
@@ -52,12 +58,5 @@ benchmark {
 			mode = "AverageTime"
 			outputTimeUnit = "MICROSECONDS"
 		}
-	}
-}
-
-// Workaround for https://github.com/Kotlin/kotlinx-benchmark/issues/39
-afterEvaluate {
-	tasks.named<org.gradle.jvm.tasks.Jar>("benchmarkBenchmarkJar") {
-		duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 	}
 }

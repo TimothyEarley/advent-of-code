@@ -27,10 +27,20 @@ import de.earley.adventofcode2021.day8.Day8
 import de.earley.adventofcode2021.day9.Day9
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.Scope
+import org.openjdk.jmh.annotations.Setup
 import org.openjdk.jmh.annotations.State
+import java.io.OutputStream
+import java.io.PrintStream
 
 @State(Scope.Benchmark)
 class AllBench {
+
+	@Setup
+	fun setup() {
+		System.setOut(PrintStream(object : OutputStream() {
+			override fun write(b: Int) {}
+		}));
+	}
 
 	@Benchmark
 	fun day1() = Day1.start()
