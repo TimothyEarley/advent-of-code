@@ -8,6 +8,7 @@ plugins {
 
 repositories {
 	mavenCentral()
+	maven("https://repo.kotlin.link")
 	maven {
 		url = uri("https://jitpack.io")
 	}
@@ -17,6 +18,7 @@ dependencies {
 	testImplementation(Testing.kotest.runner.junit5)
 	implementation("cc.ekblad.konbini:konbini:_")
 	implementation(KotlinX.coroutines.core)
+	implementation("space.kscience:kmath-polynomial:_")
 }
 
 tasks.test {
@@ -28,6 +30,13 @@ kotlin {
 		languageVersion.set(JavaLanguageVersion.of("17"))
 	}
 }
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+	kotlinOptions {
+		freeCompilerArgs += "-Xcontext-receivers"
+	}
+}
+
 
 // Benchmark stuff
 
