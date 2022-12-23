@@ -1,6 +1,7 @@
 package de.earley.adventofcode
 
 import kotlin.math.abs
+import kotlin.math.sign
 
 data class Point(val x: Int, val y: Int) {
 	companion object {
@@ -115,5 +116,27 @@ class MutableGrid<T>(
 		for (i in data.indices) {
 			data[i] = f(data[i])
 		}
+	}
+}
+
+
+fun List<Point>.toGrid(padding: Point = Point(0, 0)): Grid<Boolean> {
+	val minX = minOf { it.x }
+	val maxX = maxOf { it.x }
+	val minY = minOf { it.y }
+	val maxY = maxOf { it.y }
+
+	// because 0 is also a coordinate
+	val extraPadding = Point(
+		if (maxX.sign != minX.sign) 1 else 0,
+		if (maxY.sign != minY.sign) 1 else 0
+	)
+
+	val width = maxX - minX + 2 * padding.x + extraPadding.x
+	val height = maxY - minY + 2 * padding.y + extraPadding.y
+	val adjust = Point(minX - padding.x, minY - padding.y)
+
+	return grid(width, height) { p ->
+		(p + adjust) in this
 	}
 }
