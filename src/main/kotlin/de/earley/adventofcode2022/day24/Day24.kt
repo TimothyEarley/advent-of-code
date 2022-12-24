@@ -1,12 +1,12 @@
 package de.earley.adventofcode2022.day24
 
 import de.earley.adventofcode.BaseSolution
+import de.earley.adventofcode.Direction
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.generalAStar
 import de.earley.adventofcode.grid
 import de.earley.adventofcode.manhattanDistanceTo
 import de.earley.adventofcode.neighbours
-import de.earley.adventofcode2022.day9.Day9
 
 fun main() = Day24.start()
 
@@ -26,13 +26,9 @@ object Day24 : BaseSolution<Day24.Input, Int, Int>() {
 			.map { it.drop(1).dropLast(1) }
 
 		val grid = grid(width, height) { p ->
-			when (content[p.y][p.x]) {
+			when (val c = content[p.y][p.x]) {
 				'.' -> null
-				'<' -> Blizzard(p, Day9.Direction.L)
-				'^' -> Blizzard(p, Day9.Direction.U)
-				'>' -> Blizzard(p, Day9.Direction.R)
-				'v' -> Blizzard(p, Day9.Direction.D)
-				else -> error("Unknown at $p: ${content[p.y][p.x]}")
+				else -> Blizzard(p, Direction.parseArrow(c))
 			}
 		}
 
@@ -68,7 +64,6 @@ object Day24 : BaseSolution<Day24.Input, Int, Int>() {
 		val out = Point(data.width - 1, data.height)
 
 		return waypoints.zipWithNext().fold(0) { currentTime, (from, to) ->
-			println("Pathing $from -> $to")
 			currentTime + generalAStar(
 				from = State(from, currentTime),
 				goal = { it.position == to },
@@ -97,12 +92,7 @@ object Day24 : BaseSolution<Day24.Input, Int, Int>() {
 				null -> {
 					val previous = getBlizzard(time - 1)
 					previous.map {
-						val newPosition = it.position + when (it.direction) {
-							Day9.Direction.R -> Point(1, 0)
-							Day9.Direction.L -> Point(-1, 0)
-							Day9.Direction.U -> Point(0, -1)
-							Day9.Direction.D -> Point(0, 1)
-						}
+						val newPosition = it.position + it.direction.point
 
 						val fixedPosition = Point(
 							(newPosition.x + input.width) % input.width,
@@ -132,7 +122,7 @@ object Day24 : BaseSolution<Day24.Input, Int, Int>() {
 
 	data class Blizzard(
 		val position: Point,
-		val direction: Day9.Direction
+		val direction: Direction
 	)
 
 }

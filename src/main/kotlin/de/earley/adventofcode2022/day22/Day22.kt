@@ -1,6 +1,7 @@
 package de.earley.adventofcode2022.day22
 
 import de.earley.adventofcode.BaseSolution
+import de.earley.adventofcode.Direction
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.grid
@@ -38,11 +39,11 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 		}
 
 	override fun partOne(data: Input): Int = solve(data) { position, facing ->
-		val newPosition = position + facing.dir
+		val newPosition = position + facing.point
 		//TODO cleanup
 		var newStart = Point(newPosition.x % data.grid.width, newPosition.y % data.grid.height)
 		while (data.grid[newStart] == MapItem.OffMap || data.grid[newStart] == null) {
-			newStart += facing.dir
+			newStart += facing.point
 			newStart = Point(
 				(newStart.x + data.grid.width) % data.grid.width,
 				(newStart.y + data.grid.height) % data.grid.height
@@ -72,87 +73,87 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 	private fun prodNet(
 		blockX: Int,
 		blockY: Int,
-		facing: Facing,
+		facing: Direction,
 		blockSize: Int,
 		position: Point
-	): Pair<Point, Facing> = when (Point(blockX, blockY)) {
+	): Pair<Point, Direction> = when (Point(blockX, blockY)) {
 		Point(1, 0) -> when (facing) {
-			Facing.Left -> Point(
+			Direction.Left -> Point(
 				x = 0,
 				y = 3 * blockSize - 1 - (position.y % blockSize)
-			) to Facing.Right
-			Facing.Right -> TODO()
-			Facing.Up -> Point(
+			) to Direction.Right
+			Direction.Right -> TODO()
+			Direction.Up -> Point(
 				x = 0,
 				y = 3 * blockSize + (position.x % blockSize)
-			) to Facing.Right
-			Facing.Down -> TODO()
+			) to Direction.Right
+			Direction.Down -> TODO()
 		}
 		Point(0, 2) -> when (facing) {
-			Facing.Left -> Point(
+			Direction.Left -> Point(
 				x = blockSize,
 				y = blockSize - 1 - (position.y % blockSize),
-			) to Facing.Right
-			Facing.Right -> TODO()
-			Facing.Up -> Point(
+			) to Direction.Right
+			Direction.Right -> TODO()
+			Direction.Up -> Point(
 				x = blockSize,
 				y = blockSize + (position.x % blockSize)
-			) to Facing.Right
-			Facing.Down -> TODO()
+			) to Direction.Right
+			Direction.Down -> TODO()
 		}
 		Point(0, 3) -> when (facing) {
-			Facing.Left -> Point(
+			Direction.Left -> Point(
 				x = blockSize + (position.y % blockSize),
 				y = 0
-			) to Facing.Down
-			Facing.Right -> Point(
+			) to Direction.Down
+			Direction.Right -> Point(
 				x = blockSize + (position.y % blockSize),
 				y = 3 * blockSize - 1
-			) to Facing.Up
-			Facing.Up -> TODO()
-			Facing.Down -> Point(
+			) to Direction.Up
+			Direction.Up -> TODO()
+			Direction.Down -> Point(
 				x = 2 * blockSize + (position.x % blockSize),
 				y = 0
-			) to Facing.Down
+			) to Direction.Down
 		}
 		Point(1, 2) -> when (facing) {
-			Facing.Left -> TODO()
-			Facing.Right -> Point(
+			Direction.Left -> TODO()
+			Direction.Right -> Point(
 				x = 3 * blockSize - 1,
 				y = blockSize - 1 - (position.y % blockSize)
-			) to Facing.Left
-			Facing.Up -> TODO()
-			Facing.Down -> Point(
+			) to Direction.Left
+			Direction.Up -> TODO()
+			Direction.Down -> Point(
 				x = blockSize - 1,
 				y = 3 * blockSize + (position.x % blockSize)
-			) to Facing.Left
+			) to Direction.Left
 		}
 		Point(2, 0) -> when (facing) {
-			Facing.Left -> TODO()
-			Facing.Right -> Point(
+			Direction.Left -> TODO()
+			Direction.Right -> Point(
 				x = 2 * blockSize - 1,
 				y = 3 * blockSize - 1 - (position.y % blockSize)
-			) to Facing.Left
-			Facing.Up -> Point(
+			) to Direction.Left
+			Direction.Up -> Point(
 				x = position.x % blockSize,
 				y = 4 * blockSize - 1
-			) to Facing.Up
-			Facing.Down -> Point(
+			) to Direction.Up
+			Direction.Down -> Point(
 				x = 2 * blockSize - 1,
 				y = blockSize + (position.x % blockSize)
-			) to Facing.Left
+			) to Direction.Left
 		}
 		Point(1, 1) -> when (facing) {
-			Facing.Left -> Point(
+			Direction.Left -> Point(
 				x = position.y % blockSize,
 				y = 2 * blockSize
-			) to Facing.Down
-			Facing.Right -> Point(
+			) to Direction.Down
+			Direction.Right -> Point(
 				x = 2 * blockSize + (position.y % blockSize),
 				y = blockSize - 1
-			) to Facing.Up
-			Facing.Up -> TODO()
-			Facing.Down -> TODO()
+			) to Direction.Up
+			Direction.Up -> TODO()
+			Direction.Down -> TODO()
 		}
 		else -> error("Unknown block $blockX, $blockY with $facing")
 	}
@@ -160,69 +161,69 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 	private fun testNet(
 		blockX: Int,
 		blockY: Int,
-		facing: Facing,
+		facing: Direction,
 		blockSize: Int,
 		position: Point
-	): Pair<Point, Facing> = when (Point(blockX, blockY)) {
+	): Pair<Point, Direction> = when (Point(blockX, blockY)) {
 		Point(2, 0) -> TODO()
 		Point(0, 1) -> TODO()
 		Point(1, 1) -> when (facing) {
-			Facing.Left -> TODO()
-			Facing.Right -> TODO()
-			Facing.Up -> Point(
+			Direction.Left -> TODO()
+			Direction.Right -> TODO()
+			Direction.Up -> Point(
 				x = 2 * blockSize,
 				y = position.x % blockSize
-			) to Facing.Right
+			) to Direction.Right
 
-			Facing.Down -> TODO()
+			Direction.Down -> TODO()
 		}
 
 		Point(2, 1) -> when (facing) {
-			Facing.Left -> TODO()
-			Facing.Right -> Point(
+			Direction.Left -> TODO()
+			Direction.Right -> Point(
 				x = 4 * blockSize - 1 - (position.y % blockSize),
 				y = 2 * blockSize
-			) to Facing.Down
+			) to Direction.Down
 
-			Facing.Up -> TODO()
-			Facing.Down -> TODO()
+			Direction.Up -> TODO()
+			Direction.Down -> TODO()
 		}
 
 		Point(2, 2) -> when (facing) {
-			Facing.Left -> TODO()
-			Facing.Right -> TODO()
-			Facing.Up -> TODO()
-			Facing.Down -> Point(
+			Direction.Left -> TODO()
+			Direction.Right -> TODO()
+			Direction.Up -> TODO()
+			Direction.Down -> Point(
 				x = blockSize - 1 - (position.x % blockSize),
 				y = 2 * blockSize - 1
-			) to Facing.Up
+			) to Direction.Up
 		}
 
 		Point(3, 2) -> TODO()
 		else -> error("Wrong block: $position - $blockX, $blockY with bs $blockSize")
 	}
 
-	private fun solve(data: Input, wrapAround: (Point, Facing) -> Pair<Point, Facing>): Int {
+	private fun solve(data: Input, wrapAround: (Point, Direction) -> Pair<Point, Direction>): Int {
 		val start = data.grid.indexOf(MapItem.Air)!!
-		val points: MutableMap<Point, Facing> = mutableMapOf(start to Facing.Right)
+		val points: MutableMap<Point, Direction> = mutableMapOf(start to Direction.Right)
 
-		val result = data.movement.fold(State(start, Facing.Right)) { acc, movementCommand ->
+		val result = data.movement.fold(State(start, Direction.Right)) { acc, movementCommand ->
 			when (movementCommand) {
 				TurnLeft -> acc.copy(
 					facing = when (acc.facing) {
-						Facing.Left -> Facing.Down
-						Facing.Right -> Facing.Up
-						Facing.Up -> Facing.Left
-						Facing.Down -> Facing.Right
+						Direction.Left -> Direction.Down
+						Direction.Right -> Direction.Up
+						Direction.Up -> Direction.Left
+						Direction.Down -> Direction.Right
 					}
 				)
 
 				TurnRight -> acc.copy(
 					facing = when (acc.facing) {
-						Facing.Left -> Facing.Up
-						Facing.Right -> Facing.Down
-						Facing.Up -> Facing.Right
-						Facing.Down -> Facing.Left
+						Direction.Left -> Direction.Up
+						Direction.Right -> Direction.Down
+						Direction.Up -> Direction.Right
+						Direction.Down -> Direction.Left
 					}
 				)
 
@@ -236,10 +237,10 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 	}
 
 	private fun State.decode(): Int = 1000 * (position.y + 1) + 4 * (position.x + 1) + when (facing) {
-		Facing.Left -> 2
-		Facing.Right -> 0
-		Facing.Up -> 3
-		Facing.Down -> 1
+		Direction.Left -> 2
+		Direction.Right -> 0
+		Direction.Up -> 3
+		Direction.Down -> 1
 	}.also {
 		println("Decoded: $position with $facing")
 	}
@@ -248,11 +249,11 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 	private fun doWalk(
 		state: State,
 		movementCommand: Walk,
-		points: MutableMap<Point, Facing>,
+		points: MutableMap<Point, Direction>,
 		data: Input,
-		wrapAround: (Point, Facing) -> Pair<Point, Facing>
+		wrapAround: (Point, Direction) -> Pair<Point, Direction>
 	): State = (1..movementCommand.steps).fold(state) { acc, _ ->
-		val newPosition = acc.position + acc.facing.dir
+		val newPosition = acc.position + acc.facing.point
 		when (data.grid[newPosition]) {
 			MapItem.Air -> acc.copy(position = newPosition)
 			MapItem.Wall -> {
@@ -278,14 +279,9 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 
 	data class State(
 		val position: Point,
-		val facing: Facing
+		val facing: Direction
 	)
-
-	//TODO extract common
-	enum class Facing(val dir: Point) {
-		Left(Point(-1, 0)), Right(Point(1, 0)), Up(Point(0, -1)), Down(Point(0, 1))
-	}
-
+	
 	enum class MapItem {
 		Air, Wall, OffMap
 	}

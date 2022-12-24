@@ -140,3 +140,25 @@ fun List<Point>.toGrid(padding: Point = Point(0, 0)): Grid<Boolean> {
 		(p + adjust) in this
 	}
 }
+
+enum class Direction(val point: Point) {
+	Left(Point(-1, 0)), Right(Point(1, 0)), Up(Point(0, -1)), Down(Point(0, 1));
+
+	companion object {
+		fun parseArrow(c : Char) = when (c) {
+			'<' -> Left
+			'>' -> Right
+			'^' -> Up
+			'v' -> Down
+			else -> error("Unknown direction $c")
+		}
+
+		fun parseInitial(c : Char) = when (c) {
+			'L' -> Left
+			'R' -> Right
+			'U' -> Up
+			'D' -> Down
+			else -> error("Unknown direction $c")
+		}
+	}
+}
