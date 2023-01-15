@@ -1,10 +1,12 @@
 @file:Suppress("GradlePackageUpdate")
 
+import de.fayard.refreshVersions.core.versionFor
+
 plugins {
 	kotlin("jvm")
 	id("org.jetbrains.kotlinx.benchmark")
 	id("org.jetbrains.kotlin.plugin.allopen")
-	id("com.diffplug.spotless") version "6.13.0"
+	id("com.diffplug.spotless")
 }
 
 repositories {
@@ -40,7 +42,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 spotless {
 	kotlin {
-		ktlint("0.48.1")
+		ktlint(versionFor("com.pinterest.ktlint:ktlint-core:_"))
 			.editorConfigOverride(
 				mapOf(
 					"ktlint_standard_trailing-comma-on-call-site" to "disabled"
