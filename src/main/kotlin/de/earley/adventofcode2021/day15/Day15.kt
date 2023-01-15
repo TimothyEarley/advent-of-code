@@ -6,8 +6,8 @@ import de.earley.adventofcode.Node
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.generalAStar
 import de.earley.adventofcode.manhattanDistanceTo
-import de.earley.adventofcode2021.modStart1
 import de.earley.adventofcode.neighbours
+import de.earley.adventofcode2021.modStart1
 
 fun main() = Day15.start()
 

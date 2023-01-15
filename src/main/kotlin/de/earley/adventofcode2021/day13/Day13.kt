@@ -53,7 +53,7 @@ private fun Set<Point>.toPrettyString(): String = buildString {
 
 data class Manual(
 	val dots: Set<Point>,
-	val folds: List<Fold>
+	val folds: List<Fold>,
 )
 
 sealed interface Fold

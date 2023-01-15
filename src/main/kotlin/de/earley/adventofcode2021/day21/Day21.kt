@@ -69,7 +69,7 @@ data class State(
 	val player1: Int,
 	val player2: Int,
 	val player1Score: Int,
-	val player2Score: Int
+	val player2Score: Int,
 )
 
 private fun State.nextState(thrown: Int): State = when (turn) {

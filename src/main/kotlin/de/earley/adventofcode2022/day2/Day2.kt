@@ -31,7 +31,6 @@ object Day2 : BaseSolution<List<Day2.Round>, Int, Int>() {
 
 	data class PlayedRound(val opponent: Type, val you: Type)
 
-
 	enum class Type(val score: Int) {
 		Rock(1), Paper(2), Scissors(3)
 	}
@@ -81,5 +80,4 @@ object Day2 : BaseSolution<List<Day2.Round>, Int, Int>() {
 		Type.Paper -> Type.Rock
 		Type.Scissors -> Type.Paper
 	}
-
 }

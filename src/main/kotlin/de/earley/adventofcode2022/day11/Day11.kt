@@ -39,15 +39,13 @@ object Day11 : BaseSolution<List<Day11.Monkey>, Int, Long>() {
 					{ old -> leftF(old).typeF(rightF(old)) }
 				}
 
-
 			Monkey(
 				startString.substringAfter("  Starting items: ").split(", ").map(String::toLong),
 				opFunction,
 				test.substringAfter("  Test: divisible by ").toInt(),
 				ifTrue.substringAfter("    If true: throw to monkey ").toInt(),
-				ifFalse.substringAfter("    If false: throw to monkey ").toInt(),
+				ifFalse.substringAfter("    If false: throw to monkey ").toInt()
 			)
-
 		}
 
 	override fun partOne(data: List<Monkey>): Int = run(data, true, 20).toInt()
@@ -56,7 +54,7 @@ object Day11 : BaseSolution<List<Day11.Monkey>, Int, Long>() {
 	private fun run(
 		data: List<Monkey>,
 		reduceWorry: Boolean,
-		times: Int
+		times: Int,
 	): Long {
 		val monkeys = data.map(Monkey::toMutable).toTypedArray()
 
@@ -85,7 +83,7 @@ object Day11 : BaseSolution<List<Day11.Monkey>, Int, Long>() {
 		return monkeys.map { it.inspectionCount }.sortedDescending().take(2).reduce(Long::times)
 	}
 
-	fun lcm(a : Int, b: Int): Int {
+	fun lcm(a: Int, b: Int): Int {
 		if (a == 0 || b == 0) return 0
 		val higher = max(abs(a), abs(b))
 		val lower = min(abs(a), abs(b))
@@ -112,9 +110,8 @@ object Day11 : BaseSolution<List<Day11.Monkey>, Int, Long>() {
 		val test: Int,
 		val ifTrue: MonkeyId,
 		val ifFalse: MonkeyId,
-		var inspectionCount: Long = 0
+		var inspectionCount: Long = 0,
 	)
-
 }
 
 private operator fun <E> List<E>.component6(): E = get(5)

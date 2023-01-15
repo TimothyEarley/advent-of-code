@@ -21,7 +21,7 @@ object Day9 : BaseSolution<List<Day9.Motion>, Int, Int>() {
 
 	override fun partTwo(data: List<Motion>): Int = simulateRope(data, 9)
 
-	fun simulateRope(data: List<Motion>, tails: Int, hook : (State) -> Unit = {}) = data.asSequence()
+	fun simulateRope(data: List<Motion>, tails: Int, hook: (State) -> Unit = {}) = data.asSequence()
 		.flatMap { motion ->
 			sequence {
 				repeat(motion.steps) {
@@ -36,9 +36,9 @@ object Day9 : BaseSolution<List<Day9.Motion>, Int, Int>() {
 					myPosition
 				} else {
 					// tail needs to move by half the delta
-					myPosition + ((connectedKnot - myPosition).divRound(2) {
+					myPosition + (connectedKnot - myPosition).divRound(2) {
 						this.toBigDecimal().setScale(0, RoundingMode.UP).toInt()
-					})
+					}
 				}
 			}.drop(1) // first is head
 			val newState = State(newHead, newTails)
@@ -49,8 +49,7 @@ object Day9 : BaseSolution<List<Day9.Motion>, Int, Int>() {
 	data class Motion(val direction: Direction, val steps: Int)
 	data class State(val head: Point, val tails: List<Point>) {
 		companion object {
-			fun initial(tails : Int) = State(Point(0, 0), List(tails) { Point(0, 0) })
+			fun initial(tails: Int) = State(Point(0, 0), List(tails) { Point(0, 0) })
 		}
 	}
-
 }

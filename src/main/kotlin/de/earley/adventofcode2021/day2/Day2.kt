@@ -36,7 +36,7 @@ object Day2 : BaseSolution<List<Day2.Command>, Int, Int>() {
 	data class State(
 		val horizontal: Int,
 		val depth: Int,
-		val aim: Int
+		val aim: Int,
 	)
 
 	override fun partTwo(data: List<Command>): Int = data.fold(State(0, 0, 0)) { s, command ->

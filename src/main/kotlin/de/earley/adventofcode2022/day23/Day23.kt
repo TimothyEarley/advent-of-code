@@ -70,11 +70,12 @@ object Day23 : BaseSolution<List<Point>, Int, Int>() {
 		}
 
 		val actual = desired.map { (current, desire) ->
-			if (desired.count { it.second == desire } > 1) current
-			else desire.also { if (current != desire) moved = true }
+			when {
+				desired.count { it.second == desire } > 1 -> current
+				else -> desire.also { if (current != desire) moved = true }
+			}
 		}
 
 		return actual to moved
 	}
-
 }

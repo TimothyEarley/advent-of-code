@@ -58,5 +58,5 @@ object Day14 : BaseSolution<Input, Long, Long>() {
 
 data class Input(
 	val startingPolymer: String,
-	val rules: Map<Pair<Char, Char>, Char>
+	val rules: Map<Pair<Char, Char>, Char>,
 )

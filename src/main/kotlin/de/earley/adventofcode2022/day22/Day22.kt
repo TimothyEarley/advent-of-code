@@ -40,7 +40,7 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 
 	override fun partOne(data: Input): Int = solve(data) { position, facing ->
 		val newPosition = position + facing.point
-		//TODO cleanup
+		// TODO cleanup
 		var newStart = Point(newPosition.x % data.grid.width, newPosition.y % data.grid.height)
 		while (data.grid[newStart] == MapItem.OffMap || data.grid[newStart] == null) {
 			newStart += facing.point
@@ -54,7 +54,6 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 
 	// use https://www.geogebra.org/m/pCv2EvwD
 	override fun partTwo(data: Input): Int {
-
 		val blockSizeSqr = data.grid.values().count {
 			it == MapItem.Wall || it == MapItem.Air
 		} / 6
@@ -65,8 +64,11 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 			val blockY = position.y / blockSize
 
 			// hardcoded
-			if (blockSize == 4) testNet(blockX, blockY, facing, blockSize, position)
-			else prodNet(blockX, blockY, facing, blockSize, position)
+			if (blockSize == 4) {
+				testNet(blockX, blockY, facing, blockSize, position)
+			} else {
+				prodNet(blockX, blockY, facing, blockSize, position)
+			}
 		}
 	}
 
@@ -75,7 +77,7 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 		blockY: Int,
 		facing: Direction,
 		blockSize: Int,
-		position: Point
+		position: Point,
 	): Pair<Point, Direction> = when (Point(blockX, blockY)) {
 		Point(1, 0) -> when (facing) {
 			Direction.Left -> Point(
@@ -92,7 +94,7 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 		Point(0, 2) -> when (facing) {
 			Direction.Left -> Point(
 				x = blockSize,
-				y = blockSize - 1 - (position.y % blockSize),
+				y = blockSize - 1 - (position.y % blockSize)
 			) to Direction.Right
 			Direction.Right -> TODO()
 			Direction.Up -> Point(
@@ -163,7 +165,7 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 		blockY: Int,
 		facing: Direction,
 		blockSize: Int,
-		position: Point
+		position: Point,
 	): Pair<Point, Direction> = when (Point(blockX, blockY)) {
 		Point(2, 0) -> TODO()
 		Point(0, 1) -> TODO()
@@ -245,13 +247,12 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 		println("Decoded: $position with $facing")
 	}
 
-
 	private fun doWalk(
 		state: State,
 		movementCommand: Walk,
 		points: MutableMap<Point, Direction>,
 		data: Input,
-		wrapAround: (Point, Direction) -> Pair<Point, Direction>
+		wrapAround: (Point, Direction) -> Pair<Point, Direction>,
 	): State = (1..movementCommand.steps).fold(state) { acc, _ ->
 		val newPosition = acc.position + acc.facing.point
 		when (data.grid[newPosition]) {
@@ -273,13 +274,12 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 			}
 		}.also { s ->
 			points[s.position] = s.facing
-
 		}
 	}
 
 	data class State(
 		val position: Point,
-		val facing: Direction
+		val facing: Direction,
 	)
 	
 	enum class MapItem {
@@ -288,12 +288,11 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 
 	data class Input(
 		val grid: Grid<MapItem>,
-		val movement: List<MovementCommand>
+		val movement: List<MovementCommand>,
 	)
 
 	sealed interface MovementCommand
 	object TurnLeft : MovementCommand
 	object TurnRight : MovementCommand
 	data class Walk(val steps: Int) : MovementCommand
-
 }

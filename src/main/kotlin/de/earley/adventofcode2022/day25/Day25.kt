@@ -58,7 +58,7 @@ object Day25 : BaseSolution<List<String>, String, Int>() {
 				}
 
 				else -> {
-					//nothing
+					// nothing
 				}
 			}
 		}
@@ -81,7 +81,8 @@ object Day25 : BaseSolution<List<String>, String, Int>() {
 						'-' -> -1
 						'=' -> -2
 						else -> error("Unknown digit $c")
-					}, worth
+					},
+					worth
 				)
 			)
 		}

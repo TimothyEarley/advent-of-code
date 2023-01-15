@@ -24,10 +24,10 @@ class Day15(private val maxRange: Int) : BaseSolution<List<Day15.BeaconInfo>, In
 
 		return (startX..endX).count { x ->
 			val p = Point(x, y)
-			(!data.none { sensor ->
+			!data.none { sensor ->
 				val distance = sensor.sensor - p
-				distance.manhattanLength() <= sensor.beaconDistance  && p != sensor.beacon
-			})
+				distance.manhattanLength() <= sensor.beaconDistance && p != sensor.beacon
+			}
 		}
 	}
 
@@ -57,7 +57,7 @@ class Day15(private val maxRange: Int) : BaseSolution<List<Day15.BeaconInfo>, In
 	 * $.x = r + S.x - |*.y - S.y|
 	 */
 	override fun partTwo(data: List<BeaconInfo>): Long {
-		for (y in 0 .. maxRange) {
+		for (y in 0..maxRange) {
 			var x = 0
 			while (x <= maxRange) {
 				val p = Point(x, y)
@@ -65,7 +65,7 @@ class Day15(private val maxRange: Int) : BaseSolution<List<Day15.BeaconInfo>, In
 				val s = data
 					.filter { it.sensor.manhattanDistanceTo(p) <= it.beaconDistance }
 					.maxByOrNull { it.sensor.manhattanDistanceTo(p) }
-					?:  return x * 4000000L + y // found it!
+					?: return x * 4000000L + y // found it!
 				// skip along
 				val nx = s.beaconDistance + s.sensor.x - abs(y - s.sensor.y)
 				x = nx + 1
@@ -76,9 +76,9 @@ class Day15(private val maxRange: Int) : BaseSolution<List<Day15.BeaconInfo>, In
 	}
 
 	data class BeaconInfo(
-		val sensor: Point, val beacon: Point
+		val sensor: Point,
+		val beacon: Point,
 	) {
 		val beaconDistance = sensor.manhattanDistanceTo(beacon)
 	}
-
 }

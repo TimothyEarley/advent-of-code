@@ -54,7 +54,7 @@ object Day13 : BaseSolution<List<Pair<Day13.Packet, Day13.Packet>>, Int, Int>() 
 			closedBracket,
 			parser { chain(packet, comma).terms }.map(::ListPacket)
 		)
-		val packet : Parser<Packet> = oneOf(intPacket, listPacket)
+		val packet: Parser<Packet> = oneOf(intPacket, listPacket)
 	}
 
 	sealed interface Packet
@@ -73,7 +73,7 @@ object Day13 : BaseSolution<List<Pair<Day13.Packet, Day13.Packet>>, Int, Int>() 
 	}
 
 	private operator fun Packet.compareTo(right: Packet): Int {
-		return when(this) {
+		return when (this) {
 			is IntPacket -> when (right) {
 				is IntPacket -> this.int.compareTo(right.int)
 				is ListPacket -> ListPacket(listOf(IntPacket(this.int))).compareTo(right)
@@ -90,6 +90,4 @@ object Day13 : BaseSolution<List<Pair<Day13.Packet, Day13.Packet>>, Int, Int>() 
 			}
 		}
 	}
-
 }
-

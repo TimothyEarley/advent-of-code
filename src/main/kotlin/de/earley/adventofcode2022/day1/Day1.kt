@@ -12,9 +12,7 @@ object Day1 : BaseSolution<List<Int>, Int, Int>() {
 			.split { it.isBlank() }
 			.map { oneElf -> oneElf.sumOf { it.toInt() } }
 
-
 	override fun partOne(data: List<Int>): Int = data.max()
 
 	override fun partTwo(data: List<Int>): Int = data.sortedDescending().take(3).sum()
-
 }

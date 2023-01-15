@@ -23,7 +23,7 @@ object Day19 : BaseSolution<List<Day19.Blueprint>, Int, Int>() {
 			ore.toInt(),
 			clay.toInt(),
 			obsidianOre.toInt() to obsidianClay.toInt(),
-			geodeOre.toInt() to geodeClay.toInt(),
+			geodeOre.toInt() to geodeClay.toInt()
 		)
 	}
 
@@ -68,7 +68,6 @@ object Day19 : BaseSolution<List<Day19.Blueprint>, Int, Int>() {
 	}
 
 	private fun State.nextStates(blueprint: Blueprint, maxResources: Resources): Sequence<Pair<State, Int>> {
-
 		val buildOptions = buildList {
 			// Nothing, but if we can build the next tier of robots, we should always do so
 			var canDoNothing = true
@@ -116,9 +115,9 @@ object Day19 : BaseSolution<List<Day19.Blueprint>, Int, Int>() {
 				}
 			}
 
-			if (canDoNothing)
+			if (canDoNothing) {
 				add(this@nextStates)
-
+			}
 		}
 
 		val resourcesThisRound = buildOptions.map {
@@ -127,12 +126,11 @@ object Day19 : BaseSolution<List<Day19.Blueprint>, Int, Int>() {
 				ore = it.ore + oreRobot,
 				clay = it.clay + clayRobot,
 				obsidian = it.obsidian + obsidianRobot,
-				geode = it.geode + geodeRobot,
+				geode = it.geode + geodeRobot
 			) to -(geodeRobot)
 		}
 
 		return resourcesThisRound.asSequence()
-
 	}
 
 	data class State(
@@ -144,15 +142,16 @@ object Day19 : BaseSolution<List<Day19.Blueprint>, Int, Int>() {
 		val oreRobot: Int,
 		val clayRobot: Int,
 		val obsidianRobot: Int,
-		val geodeRobot: Int
+		val geodeRobot: Int,
 	) {
-		operator fun compareTo(other: State): Int = if (other == this) 0
-		else if (time <= other.time && ore >= other.ore && clay >= other.clay &&
-			obsidian >= other.obsidian && geode >= other.geode &&
-			oreRobot >= other.oreRobot && clayRobot >= other.clayRobot &&
-			obsidian >= other.obsidianRobot && geodeRobot >= other.geodeRobot
-		) 1
-		else -1
+		operator fun compareTo(other: State): Int = when {
+			other == this -> 0
+			time <= other.time && ore >= other.ore && clay >= other.clay &&
+				obsidian >= other.obsidian && geode >= other.geode &&
+				oreRobot >= other.oreRobot && clayRobot >= other.clayRobot &&
+				obsidian >= other.obsidianRobot && geodeRobot >= other.geodeRobot -> 1
+			else -> -1
+		}
 	}
 
 	data class Blueprint(
@@ -160,7 +159,7 @@ object Day19 : BaseSolution<List<Day19.Blueprint>, Int, Int>() {
 		val oreRobot: Ore,
 		val clayRobot: Ore,
 		val obsidianRobot: Pair<Ore, Clay>,
-		val geodeRobot: Pair<Ore, Obsidian>
+		val geodeRobot: Pair<Ore, Obsidian>,
 	)
 
 	data class Resources(
@@ -169,7 +168,6 @@ object Day19 : BaseSolution<List<Day19.Blueprint>, Int, Int>() {
 		val obsidian: Obsidian,
 		val geode: Geode,
 	)
-
 }
 
 typealias Ore = Int

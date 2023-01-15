@@ -4,6 +4,7 @@ plugins {
 	kotlin("jvm")
 	id("org.jetbrains.kotlinx.benchmark")
 	id("org.jetbrains.kotlin.plugin.allopen")
+	id("com.diffplug.spotless") version "6.13.0"
 }
 
 repositories {
@@ -34,6 +35,17 @@ kotlin {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs += "-Xcontext-receivers"
+	}
+}
+
+spotless {
+	kotlin {
+		ktlint("0.48.1")
+			.editorConfigOverride(
+				mapOf(
+					"ktlint_standard_trailing-comma-on-call-site" to "disabled"
+				)
+			)
 	}
 }
 

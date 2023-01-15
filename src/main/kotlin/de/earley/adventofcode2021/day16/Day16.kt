@@ -28,7 +28,8 @@ object Day16 : BaseSolution<Packet, Long, Long>() {
 				// operator
 				val lengthId = bitsReader.read(1)
 				OperatorPacket(
-					version, typeToOperator(type),
+					version,
+					typeToOperator(type),
 					when (lengthId) {
 						0 -> {
 							// next 15 bits are total sub-packet length
@@ -70,7 +71,7 @@ sealed interface Packet {
 
 data class LiteralPacket(
 	override val version: Int,
-	val number: Long
+	val number: Long,
 ) : Packet
 
 enum class Operator {
@@ -91,7 +92,7 @@ fun typeToOperator(type: Int): Operator = when (type) {
 data class OperatorPacket(
 	override val version: Int,
 	val type: Operator,
-	val subPackets: List<Packet>
+	val subPackets: List<Packet>,
 ) : Packet
 
 fun Packet.eval(): Long = when (this) {
@@ -113,7 +114,7 @@ class BitsReader private constructor(
 	 * Ignore the first four bits (since I am too
 	 * lazy to compact the array)
 	 */
-	private val backing: ByteArray
+	private val backing: ByteArray,
 ) {
 
 	private var index: Int = 0

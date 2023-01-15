@@ -1,6 +1,10 @@
 package de.earley.adventofcode2022.day14
 
-import de.earley.adventofcode.*
+import de.earley.adventofcode.BaseSolution
+import de.earley.adventofcode.Grid
+import de.earley.adventofcode.Point
+import de.earley.adventofcode.grid
+import de.earley.adventofcode.toMutableGrid
 import de.earley.adventofcode2021.mapToList
 import kotlin.math.max
 import kotlin.math.min
@@ -32,7 +36,6 @@ object Day14 : BaseSolution<List<Day14.RockFormation>, Int, Int>() {
 
 		return runSimulation(floorAdded, Point(500, 0) - adjust)
 	}
-
 
 	private fun createGrid(data: List<RockFormation>, padding: Point): Pair<Point, Grid<CaveContent>> {
 		val minX = min(data.minOf { it.points.minOf(Point::x) }, 500)
@@ -94,12 +97,11 @@ object Day14 : BaseSolution<List<Day14.RockFormation>, Int, Int>() {
 
 	private fun Point.isBetween(from: Point, to: Point) =
 		(x == from.x && x == to.x && from.y <= y && y <= to.y) ||
-				(x == from.x && x == to.x && from.y >= y && y >= to.y) ||
-				(y == from.y && y == to.y && from.x <= x && x <= to.x) ||
-				(y == from.y && y == to.y && from.x >= x && x >= to.x)
+			(x == from.x && x == to.x && from.y >= y && y >= to.y) ||
+			(y == from.y && y == to.y && from.x <= x && x <= to.x) ||
+			(y == from.y && y == to.y && from.x >= x && x >= to.x)
 
 	enum class CaveContent {
 		Rock, Air, Sand
 	}
-
 }

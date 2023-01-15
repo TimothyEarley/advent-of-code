@@ -39,7 +39,7 @@ object Day24 : BaseSolution<List<Instruction>, Long, Long>() {
 		pc: Int,
 		instructions: List<Instruction>,
 		usedInput: Long,
-		seen: MutableSet<Pair<Int, State>>
+		seen: MutableSet<Pair<Int, State>>,
 	): Long? {
 		var currentState = state
 		var i = pc
@@ -95,7 +95,7 @@ data class State(
 	val x: Int,
 	val y: Int,
 	val w: Int,
-	val z: Int
+	val z: Int,
 )
 
 operator fun State.set(x: Variable, value: Int): State = when (x.x) {

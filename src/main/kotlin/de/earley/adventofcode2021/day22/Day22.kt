@@ -34,10 +34,11 @@ object Day22 : BaseSolution<List<RebootStep>, Long, Long>() {
 
 	private fun step(state: List<Region>, rs: RebootStep): List<Region> =
 		state.flatMap { splitOverlap(it, rs.region) }.let {
-			if (rs.on)
+			if (rs.on) {
 				it + rs.region // add the region
-			else
+			} else {
 				it // leave it at the removed
+			}
 		}
 
 	/**
@@ -82,7 +83,7 @@ object Day22 : BaseSolution<List<RebootStep>, Long, Long>() {
 data class Region(
 	val x: IntRange,
 	val y: IntRange,
-	val z: IntRange
+	val z: IntRange,
 )
 
 fun Region.size(): Long = x.length.toLong() * y.length * z.length
@@ -105,5 +106,5 @@ private val IntRange.length: Int
 
 data class RebootStep(
 	val on: Boolean,
-	val region: Region
+	val region: Region,
 )

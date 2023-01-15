@@ -1,14 +1,15 @@
 package de.earley.adventofcode
 
-import java.util.*
+import java.util.PriorityQueue
 
 class Node<T>(
 	val parent: Node<T>?,
 	val value: T,
 	val cost: Int,
-	val heuristic: Int
+	val heuristic: Int,
 ) {
-	override fun toString(): String = "Node(parent=${parent?.hashCode()}, value=$value, cost=$cost, heuristic=$heuristic)"
+	override fun toString(): String =
+		"Node(parent=${parent?.hashCode()}, value=$value, cost=$cost, heuristic=$heuristic)"
 }
 
 fun <T> generalAStarNode(
@@ -18,7 +19,7 @@ fun <T> generalAStarNode(
 	neighbours: T.() -> Sequence<Pair<T, Int>>,
 	useClosed: Boolean,
 	closedCheck: Set<T>.(T) -> Boolean = Set<T>::contains,
-	newNodeCallback: ((Node<T>) -> Unit)? = null
+	newNodeCallback: ((Node<T>) -> Unit)? = null,
 ): Node<T> {
 	val closed = mutableSetOf<T>()
 	val open = PriorityQueue(compareBy<Node<T>> { it.cost + it.heuristic }).apply {
@@ -26,7 +27,7 @@ fun <T> generalAStarNode(
 	}
 
 	while (open.isNotEmpty()) {
-//		println(open)
+// 		println(open)
 
 		val current = open.remove()
 
@@ -60,5 +61,5 @@ fun <T> generalAStar(
 	neighbours: T.() -> Sequence<Pair<T, Int>>,
 	useClosed: Boolean,
 	closedCheck: Set<T>.(T) -> Boolean = Set<T>::contains,
-	newNodeCallback: ((Node<T>) -> Unit)? = null
+	newNodeCallback: ((Node<T>) -> Unit)? = null,
 ): Int = generalAStarNode(from, goal, heuristic, neighbours, useClosed, closedCheck, newNodeCallback).cost

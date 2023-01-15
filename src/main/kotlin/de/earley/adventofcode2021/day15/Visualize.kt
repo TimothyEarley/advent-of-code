@@ -10,7 +10,6 @@ import javax.imageio.ImageIO
 // ffmpeg -framerate 50 -i visualisations/day15/out%06d.png -c:v libx265 Day15vis.mp4
 
 fun main() {
-
 	val grid = Day15.readResource("input.txt").useLines(Day15::parseInput)
 	val bigGrid = grid(grid.width * 5, grid.height * 5) {
 		Day15.tiledGet(grid, 5)(it)
@@ -36,8 +35,9 @@ fun main() {
 	aStar(bigGrid::get, Point(0, 0), Point(bigGrid.width - 1, bigGrid.height - 1)) {
 		val c = visitedColor[(it.cost + it.heuristic) % visitedMod]
 		image.setRGB(it.value.x, it.value.y, c)
-		if (i % 100 == 0)
+		if (i % 100 == 0) {
 			ImageIO.write(image, "png", File(dir, "out${(i / 100).toString().padStart(6, '0')}.png"))
+		}
 		i++
 	}
 	println(i)

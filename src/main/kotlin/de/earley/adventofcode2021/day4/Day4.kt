@@ -13,7 +13,6 @@ typealias Board = Grid<Int>
 typealias MutableBingoBoard = MutableGrid<Int?>
 
 fun MutableBingoBoard.update(number: Int): Boolean {
-
 	val pos = indexOf(number) ?: return false
 
 	this[pos] = null

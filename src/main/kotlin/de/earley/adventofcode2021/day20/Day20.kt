@@ -68,10 +68,10 @@ object Day20 : BaseSolution<Input, Int, Int>() {
 
 data class Input(
 	val replacement: String,
-	val image: Image
+	val image: Image,
 )
 
 data class Image(
 	val data: Grid<Char>,
-	val background: Char
+	val background: Char,
 )

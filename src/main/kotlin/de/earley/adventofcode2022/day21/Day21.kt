@@ -1,7 +1,6 @@
 package de.earley.adventofcode2022.day21
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode2022.day21.Day21.Op.*
 import space.kscience.kmath.functions.ListRationalFunction
 import space.kscience.kmath.functions.ListRationalFunctionSpace
 import space.kscience.kmath.functions.listRationalFunctionSpace
@@ -19,10 +18,10 @@ object Day21 : BaseSolution<Map<String, Day21.Monkey>, Long, Long>() {
 			null -> {
 				val (left, opSymbol, right) = maths.split(" ", limit = 3)
 				val op = when (opSymbol) {
-					"+" -> Plus
-					"-" -> Minus
-					"*" -> Times
-					"/" -> Divide
+					"+" -> Op.Plus
+					"-" -> Op.Minus
+					"*" -> Op.Times
+					"/" -> Op.Divide
 					else -> error("Unknown op $opSymbol")
 				}
 				OpMonkey(name, op, left, right)
@@ -39,7 +38,6 @@ object Day21 : BaseSolution<Map<String, Day21.Monkey>, Long, Long>() {
 
 		@Suppress("UNCHECKED_CAST") // cast is correct, needed for context receivers
 		return with(JBigIntegerField.listRationalFunctionSpace as ListRationalFunctionSpace<BigInteger, Ring<BigInteger>>) {
-
 			val left = root.left(data).evalWithHuman(data, BigInteger::valueOf)
 			val right = root.right(data).evalWithHuman(data, BigInteger::valueOf)
 
@@ -77,17 +75,19 @@ object Day21 : BaseSolution<Map<String, Day21.Monkey>, Long, Long>() {
 		if (name == "humn") {
 			// polynomial where "x", i.e. the human, is one
 			ListRationalFunction(listOf(ring.zero, ring.one))
-		} else when (this) {
-			is NumberMonkey -> ListRationalFunction(listOf(fromLong(number)))
-			is OpMonkey -> with(op) {
-				val leftValue = left(data).evalWithHuman(data, fromLong)
-				val rightValue = right(data).evalWithHuman(data, fromLong)
+		} else {
+			when (this) {
+				is NumberMonkey -> ListRationalFunction(listOf(fromLong(number)))
+				is OpMonkey -> with(op) {
+					val leftValue = left(data).evalWithHuman(data, fromLong)
+					val rightValue = right(data).evalWithHuman(data, fromLong)
 
-				when (op) {
-					Plus -> leftValue + rightValue
-					Minus -> leftValue - rightValue
-					Times -> leftValue * rightValue
-					Divide -> leftValue / rightValue
+					when (op) {
+						Op.Plus -> leftValue + rightValue
+						Op.Minus -> leftValue - rightValue
+						Op.Times -> leftValue * rightValue
+						Op.Divide -> leftValue / rightValue
+					}
 				}
 			}
 		}

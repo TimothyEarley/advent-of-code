@@ -3,8 +3,8 @@ package de.earley.adventofcode2021.day9
 import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
-import de.earley.adventofcode2021.mapToList
 import de.earley.adventofcode.neighbours
+import de.earley.adventofcode2021.mapToList
 
 fun main() = Day9.start()
 

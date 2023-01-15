@@ -20,12 +20,14 @@ object Day5 : BaseSolution<Day5.State, String, String>() {
 			}
 		}
 
-
-		State(Config(config.toList()), ins.map {
-			val r = Regex("move (\\d+) from (\\d+) to (\\d+)")
-			val (count, from, to) = r.matchEntire(it)!!.destructured
-			Instruction(count.toInt(), from.toInt(), to.toInt())
-		})
+		State(
+			Config(config.toList()),
+			ins.map {
+				val r = Regex("move (\\d+) from (\\d+) to (\\d+)")
+				val (count, from, to) = r.matchEntire(it)!!.destructured
+				Instruction(count.toInt(), from.toInt(), to.toInt())
+			}
+		)
 	}
 
 	override fun partOne(data: State): String = data.runInstructions { config, instruction ->
@@ -45,14 +47,12 @@ object Day5 : BaseSolution<Day5.State, String, String>() {
 		Config(mut)
 	}.topCrates()
 
-
 	private fun State.runInstructions(update: (Config, Instruction) -> Config): Config =
 		instructions.fold(config, update)
 
 	data class Config(val stacks: List<Stack>)
 	data class Instruction(val count: Int, val from: Int, val to: Int)
 	data class State(val config: Config, val instructions: List<Instruction>)
-
 
 	private fun Config.topCrates() = stacks.map { it.first() }.joinToString("")
 }

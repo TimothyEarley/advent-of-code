@@ -55,5 +55,5 @@ object Day18 : BaseSolution<Set<Point3>, Int, Int>() {
 	}
 
 	private operator fun Pair<Point3, Point3>.contains(p: Point3): Boolean =
-		p.x in first.x .. second.x && p.y in first.y .. second.y && p.z in first.z .. second.z
+		p.x in first.x..second.x && p.y in first.y..second.y && p.z in first.z..second.z
 }

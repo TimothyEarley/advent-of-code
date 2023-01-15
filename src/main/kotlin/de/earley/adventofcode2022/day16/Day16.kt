@@ -74,7 +74,7 @@ object Day16 : BaseSolution<Map<String, Day16.Valve>, Int, Int>() {
 	data class Valve(
 		val name: String,
 		val flowRate: Int,
-		val tunnels: List<String>
+		val tunnels: List<String>,
 	)
 
 	interface State<SELF : State<SELF>> {
@@ -85,7 +85,7 @@ object Day16 : BaseSolution<Map<String, Day16.Valve>, Int, Int>() {
 		fun nextStates(
 			data: Map<String, Valve>,
 			needToOpen: Set<String>,
-			totalTime: Int
+			totalTime: Int,
 		): Sequence<Pair<SELF, Int>>
 	}
 
@@ -99,7 +99,7 @@ object Day16 : BaseSolution<Map<String, Day16.Valve>, Int, Int>() {
 		override fun nextStates(
 			data: Map<String, Valve>,
 			needToOpen: Set<String>,
-			totalTime: Int
+			totalTime: Int,
 		): Sequence<Pair<StateWithElephant, Int>> =
 			if (open.containsAll(needToOpen)) {
 				// we have opened all that we can
@@ -113,63 +113,64 @@ object Day16 : BaseSolution<Map<String, Day16.Valve>, Int, Int>() {
 						releasePerMinute
 					) to -leftRelease
 				)
-			} else sequence {
-				val valve = data[atValve]!!
-				val elephantValve = data[elephantAtValve]!!
+			} else {
+				sequence {
+					val valve = data[atValve]!!
+					val elephantValve = data[elephantAtValve]!!
 
-				if (atValve in needToOpen && atValve !in open) {
-					if (elephantAtValve != atValve && elephantAtValve in needToOpen && elephantAtValve !in open) {
-						yield(
-							StateWithElephant(
-								minute + 1,
-								atValve,
-								elephantAtValve,
-								open + atValve + elephantAtValve,
-								releasePerMinute + valve.flowRate + elephantValve.flowRate
+					if (atValve in needToOpen && atValve !in open) {
+						if (elephantAtValve != atValve && elephantAtValve in needToOpen && elephantAtValve !in open) {
+							yield(
+								StateWithElephant(
+									minute + 1,
+									atValve,
+									elephantAtValve,
+									open + atValve + elephantAtValve,
+									releasePerMinute + valve.flowRate + elephantValve.flowRate
+								)
 							)
-						)
+						}
+
+						elephantValve.tunnels.forEach { elephantNeighbour ->
+							yield(
+								StateWithElephant(
+									minute + 1,
+									atValve,
+									elephantNeighbour,
+									open + atValve,
+									releasePerMinute + valve.flowRate
+								)
+							)
+						}
 					}
 
-					elephantValve.tunnels.forEach { elephantNeighbour ->
-						yield(
-							StateWithElephant(
-								minute + 1,
-								atValve,
-								elephantNeighbour,
-								open + atValve,
-								releasePerMinute + valve.flowRate
+					valve.tunnels.forEach { neighbour ->
+						if (elephantAtValve in needToOpen && elephantAtValve !in open) {
+							yield(
+								StateWithElephant(
+									minute + 1,
+									neighbour,
+									elephantAtValve,
+									open + elephantAtValve,
+									releasePerMinute + elephantValve.flowRate
+								)
 							)
-						)
-					}
-				}
+						}
 
-				valve.tunnels.forEach { neighbour ->
-					if (elephantAtValve in needToOpen && elephantAtValve !in open) {
-						yield(
-							StateWithElephant(
-								minute + 1,
-								neighbour,
-								elephantAtValve,
-								open + elephantAtValve,
-								releasePerMinute + elephantValve.flowRate
+						elephantValve.tunnels.forEach { elephantNeighbour ->
+							yield(
+								StateWithElephant(
+									minute + 1,
+									neighbour,
+									elephantNeighbour,
+									open,
+									releasePerMinute
+								)
 							)
-						)
+						}
 					}
-
-					elephantValve.tunnels.forEach { elephantNeighbour ->
-						yield(
-							StateWithElephant(
-								minute + 1,
-								neighbour,
-								elephantNeighbour,
-								open,
-								releasePerMinute
-							)
-						)
-					}
-				}
-
-			}.map { it to -releasePerMinute }
+				}.map { it to -releasePerMinute }
+			}
 	}
 
 	data class SingleState(
@@ -182,7 +183,7 @@ object Day16 : BaseSolution<Map<String, Day16.Valve>, Int, Int>() {
 		override fun nextStates(
 			data: Map<String, Valve>,
 			needToOpen: Set<String>,
-			totalTime: Int
+			totalTime: Int,
 		): Sequence<Pair<SingleState, Int>> =
 			if (open.containsAll(needToOpen)) {
 				// we have opened all that we can
@@ -196,18 +197,19 @@ object Day16 : BaseSolution<Map<String, Day16.Valve>, Int, Int>() {
 						releasePerMinute
 					) to -leftRelease
 				)
-			} else sequence {
-				val valve = data[atValve]!!
+			} else {
+				sequence {
+					val valve = data[atValve]!!
 
-				if (atValve in needToOpen && atValve !in open) {
-					val next = openValve(valve.flowRate)
-					yield(next to -releasePerMinute)
+					if (atValve in needToOpen && atValve !in open) {
+						val next = openValve(valve.flowRate)
+						yield(next to -releasePerMinute)
+					}
+
+					valve.tunnels.forEach { neighbour ->
+						yield(goto(neighbour) to -releasePerMinute)
+					}
 				}
-
-				valve.tunnels.forEach { neighbour ->
-					yield(goto(neighbour) to -releasePerMinute)
-				}
-
 			}
 
 		private fun openValve(flow: Int) = SingleState(
@@ -226,5 +228,4 @@ object Day16 : BaseSolution<Map<String, Day16.Valve>, Int, Int>() {
 			releasePerMinute
 		)
 	}
-
 }

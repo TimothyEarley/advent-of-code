@@ -12,14 +12,18 @@ object Day7b : BaseSolution<List<Day7b.CommandExec>, Int, Int>() {
 		input.joinToString("\n").split("$ ").map { it.trim() }.filterNot { it.isBlank() }.map { block ->
 			val lines = block.lines()
 			val command = lines.first().let {
-				if (it == "ls") Ls
-				else if (it.startsWith("cd")) Cd(it.substring(3))
-				else error("Failed to parse command $it")
+				when {
+					it == "ls" -> Ls
+					it.startsWith("cd") -> Cd(it.substring(3))
+					else -> error("Failed to parse command $it")
+				}
 			}
 			val output = lines.drop(1).map {
-				if (it.startsWith("dir")) Dir(it.substring(4))
-				else it.split(" ").let { (size, name) ->
-					FileListing(size.toInt(), name)
+				when {
+					it.startsWith("dir") -> Dir(it.substring(4))
+					else -> it.split(" ").let { (size, name) ->
+						FileListing(size.toInt(), name)
+					}
 				}
 			}
 			CommandExec(command, output)
@@ -37,7 +41,6 @@ object Day7b : BaseSolution<List<Day7b.CommandExec>, Int, Int>() {
 		root.dirSizes().filter { it >= needToDelete }.min()
 	}
 
-
 	private fun createDirTree(data: List<CommandExec>): SizedDir {
 		val root = MutableDirNode(null, Dir("/"), mutableSetOf())
 
@@ -51,8 +54,9 @@ object Day7b : BaseSolution<List<Day7b.CommandExec>, Int, Int>() {
 							val existing = currentDir.children
 								.filterIsInstance<MutableDirNode>()
 								.find { it.dir.name == command.to }
-							if (existing != null) existing
-							else {
+							if (existing != null) {
+								existing
+							} else {
 								val next = MutableDirNode(currentDir, Dir(command.to), mutableSetOf())
 								currentDir.children.add(next)
 								next
@@ -72,7 +76,6 @@ object Day7b : BaseSolution<List<Day7b.CommandExec>, Int, Int>() {
 		}
 		return root.sized() as SizedDir
 	}
-
 
 	sealed interface Command
 	object Ls : Command

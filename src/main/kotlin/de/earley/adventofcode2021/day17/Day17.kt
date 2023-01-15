@@ -59,7 +59,7 @@ object Day17 : BaseSolution<TargetArea, Int, Int>() {
 		position: Point,
 		direction: Point,
 		targetArea: TargetArea,
-		maxY: Int = position.y
+		maxY: Int = position.y,
 	): Int? {
 		if (position.y < targetArea.bottomRight.y) return null
 		if (position in targetArea) return maxY
@@ -75,7 +75,7 @@ object Day17 : BaseSolution<TargetArea, Int, Int>() {
 
 data class TargetArea(
 	val topLeft: Point,
-	val bottomRight: Point
+	val bottomRight: Point,
 ) {
 	operator fun contains(position: Point): Boolean =
 		position.x in topLeft.x..bottomRight.x && position.y in bottomRight.y..topLeft.y

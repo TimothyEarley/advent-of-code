@@ -86,13 +86,13 @@ object Day19 : BaseSolution<List<Scanner>, Int, Int>() {
 
 class Scanner(
 	val id: Int,
-	val beacons: List<Point3>
+	val beacons: List<Point3>,
 )
 
 class PositionedScanner(
-    val id: Int,
-    val position: Point3,
-    val beacons: Set<Point3>
+	val id: Int,
+	val position: Point3,
+	val beacons: Set<Point3>,
 )
 
 typealias Orientation = (Point3) -> Point3

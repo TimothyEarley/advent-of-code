@@ -15,14 +15,13 @@ object Day23 : BaseSolution<State, Int, Int>() {
 
 		return State(
 			lineOne.mapIndexed { index, c -> Amphipod(parseAmphipodType(c), SideRoom(index, 0)) } +
-					lineTwo.mapIndexed { index, c -> Amphipod(parseAmphipodType(c), SideRoom(index, 1)) }
+				lineTwo.mapIndexed { index, c -> Amphipod(parseAmphipodType(c), SideRoom(index, 1)) }
 		)
 	}
 
 	override fun partOne(data: State): Int = findLeastEnergy(data, false)
 
 	override fun partTwo(data: State): Int {
-
 		/*
 		 #D#C#B#A#
   		 #D#B#A#C#
@@ -38,12 +37,11 @@ object Day23 : BaseSolution<State, Int, Int>() {
 			Amphipod(AmphipodType.Desert, SideRoom(0, 2)),
 			Amphipod(AmphipodType.Bronze, SideRoom(1, 2)),
 			Amphipod(AmphipodType.Amber, SideRoom(2, 2)),
-			Amphipod(AmphipodType.Copper, SideRoom(3, 2)),
+			Amphipod(AmphipodType.Copper, SideRoom(3, 2))
 		)
 
 		return findLeastEnergy(State(unfoldedState), true)
 	}
-
 
 	private fun findLeastEnergy(state: State, unfolded: Boolean): Int = generalAStar(
 		state,
@@ -54,28 +52,27 @@ object Day23 : BaseSolution<State, Int, Int>() {
 	)
 
 	private fun State.nextStates(unfolded: Boolean): Sequence<Pair<State, Int>> {
-
 		// 1. prio - can an amphipod reach its final position
 		fun isSettled(ampi: Amphipod) =
 			ampi.position is SideRoom && ampi.position.room == ampi.type.desiredSideRoom &&
-					(
-							if (unfolded) {
-								when (ampi.position.space) {
-									0 -> getAtPosition(ampi.position.copy(space = 1))?.type == ampi.type &&
-											getAtPosition(ampi.position.copy(space = 2))?.type == ampi.type &&
-											getAtPosition(ampi.position.copy(space = 3))?.type == ampi.type
+				(
+					if (unfolded) {
+						when (ampi.position.space) {
+							0 -> getAtPosition(ampi.position.copy(space = 1))?.type == ampi.type &&
+								getAtPosition(ampi.position.copy(space = 2))?.type == ampi.type &&
+								getAtPosition(ampi.position.copy(space = 3))?.type == ampi.type
 
-									1 -> getAtPosition(ampi.position.copy(space = 2))?.type == ampi.type &&
-											getAtPosition(ampi.position.copy(space = 3))?.type == ampi.type
+							1 -> getAtPosition(ampi.position.copy(space = 2))?.type == ampi.type &&
+								getAtPosition(ampi.position.copy(space = 3))?.type == ampi.type
 
-									2 -> getAtPosition(ampi.position.copy(space = 3))?.type == ampi.type
-									3 -> true
-									else -> error("Invalid position")
-								}
-							} else {
-								ampi.position.space == 1 || getAtPosition(ampi.position.copy(space = 1))?.type == ampi.type
-							}
-							)
+							2 -> getAtPosition(ampi.position.copy(space = 3))?.type == ampi.type
+							3 -> true
+							else -> error("Invalid position")
+						}
+					} else {
+						ampi.position.space == 1 || getAtPosition(ampi.position.copy(space = 1))?.type == ampi.type
+					}
+					)
 
 		// 1. prio: move to a final position
 		for (ampi in amphipods) {
@@ -90,7 +87,9 @@ object Day23 : BaseSolution<State, Int, Int>() {
 					.let { it != null && it.type != ampi.type } ||
 				getAtPosition(SideRoom(ampi.type.desiredSideRoom, 3))
 					.let { it != null && it.type != ampi.type }
-			) continue
+			) {
+				continue
+			}
 
 			if (unfolded) {
 				val pos3 = SideRoom(ampi.type.desiredSideRoom, 3)
@@ -150,7 +149,7 @@ object Day23 : BaseSolution<State, Int, Int>() {
 		unfolded: Boolean,
 		from: Position,
 		to: Position,
-		visited: Set<Position> = emptySet()
+		visited: Set<Position> = emptySet(),
 	): Int? {
 		if (from == to) return 0
 
@@ -162,7 +161,7 @@ object Day23 : BaseSolution<State, Int, Int>() {
 				SideRoom(0, 0).takeIf { from.pos == 2 },
 				SideRoom(1, 0).takeIf { from.pos == 4 },
 				SideRoom(2, 0).takeIf { from.pos == 6 },
-				SideRoom(3, 0).takeIf { from.pos == 8 },
+				SideRoom(3, 0).takeIf { from.pos == 8 }
 			)
 
 			is SideRoom -> listOfNotNull(
@@ -181,7 +180,7 @@ object Day23 : BaseSolution<State, Int, Int>() {
 }
 
 class State(
-	val amphipods: List<Amphipod>
+	val amphipods: List<Amphipod>,
 ) {
 
 	private fun symbolAt(p: Position): Char = getAtPosition(p)?.type?.symbol ?: ' '
@@ -193,19 +192,18 @@ class State(
   #${symbolAt(SideRoom(0, 1))}#${symbolAt(SideRoom(1, 1))}#${symbolAt(SideRoom(2, 1))}#${symbolAt(SideRoom(3, 1))}#
   #########
 """
-
 }
 
 class Amphipod(
 	val type: AmphipodType,
-	val position: Position
+	val position: Position,
 )
 
 enum class AmphipodType(val symbol: Char, val desiredSideRoom: Int, val energyPerStep: Int) {
 	Amber('A', 0, 1),
 	Bronze('B', 1, 10),
 	Copper('C', 2, 100),
-	Desert('D', 3, 1000);
+	Desert('D', 3, 1000),
 }
 
 fun parseAmphipodType(c: Char): AmphipodType = when (c) {

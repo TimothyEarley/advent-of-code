@@ -18,7 +18,6 @@ object Day10 : BaseSolution<List<Day10.Instruction>, Int, String>() {
 
 	override fun partOne(data: List<Instruction>): Int = runAndAccumulate(data, Int::plus, 0) { state ->
 		(state.cycle) * if ((state.cycle - 20) % 40 == 0) state.x else 0
-
 	}
 
 	override fun partTwo(data: List<Instruction>): String = "\n" + runAndAccumulate(data, String::plus, "") { state ->
@@ -31,7 +30,7 @@ object Day10 : BaseSolution<List<Day10.Instruction>, Int, String>() {
 		data: List<Instruction>,
 		plus: T.(T) -> T,
 		stateStart: T,
-		addCycle: (State<T>) -> T
+		addCycle: (State<T>) -> T,
 	): T =
 		data.fold(State(stateStart, 1, 1)) { state, instruction ->
 			val newTotal = state.total.plus(addCycle(state))
@@ -54,5 +53,4 @@ object Day10 : BaseSolution<List<Day10.Instruction>, Int, String>() {
 		object Noop : Instruction
 		data class Addx(val v: Int) : Instruction
 	}
-
 }

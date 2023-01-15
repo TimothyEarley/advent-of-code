@@ -24,5 +24,4 @@ object Day4 : BaseSolution<List<Pair<IntRange, IntRange>>, Int, Int>() {
 	}
 
 	private fun IntRange.contains(other: IntRange): Boolean = first <= other.first && other.last <= last
-
 }

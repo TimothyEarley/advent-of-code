@@ -23,5 +23,4 @@ object Day3 : BaseSolution<List<String>, Int, Int>() {
 		.sumOf(::letterScore)
 
 	private fun letterScore(it: Char) = if (it.isUpperCase()) it - 'A' + 27 else it - 'a' + 1
-
 }

@@ -50,13 +50,13 @@ sealed interface SnailfishNumber
 
 private class PairNumber(
 	var left: SnailfishNumber,
-	var right: SnailfishNumber
+	var right: SnailfishNumber,
 ) : SnailfishNumber {
 	override fun toString(): String = "[$left,$right]"
 }
 
 private class RegularNumber(
-	var value: Int
+	var value: Int,
 ) : SnailfishNumber {
 	override fun toString(): String = value.toString()
 }

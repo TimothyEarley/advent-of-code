@@ -17,6 +17,7 @@ object Day17 : BaseSolution<List<Day17.Direction>, Long, Long>() {
 	}
 
 	// flipped from task since our coordinate system has y going up
+	@Suppress("ktlint")
 	private val pieces = listOf(
 		Grid(
 			4, 1, listOf(
@@ -58,13 +59,12 @@ object Day17 : BaseSolution<List<Day17.Direction>, Long, Long>() {
 
 	private fun simulateTetris(
 		iterations: Long,
-		data: List<Direction>
+		data: List<Direction>,
 	): Long {
 		val grid = TetrisGrid(mutableListOf(), 7)
 
 		var shifted = 0L
 		var jetIndex = 0
-
 
 		/*
 		 * We keep a record of previously seen states. Once we find an already seen state
@@ -129,11 +129,10 @@ object Day17 : BaseSolution<List<Day17.Direction>, Long, Long>() {
 			}
 		}
 
-
 		return grid.height + shifted
 	}
 
-	//TODO extract common util function
+	// TODO extract common util function
 	private tailrec fun floodFill(grid: TetrisGrid, visited: Set<Point>, open: Set<Point>): Set<Point> {
 		if (open.isEmpty()) return visited
 
@@ -155,12 +154,12 @@ object Day17 : BaseSolution<List<Day17.Direction>, Long, Long>() {
 		}
 
 	enum class Direction(val point: Point) {
-		Left(Point(-1, 0)), Right(Point(1, 0));
+		Left(Point(-1, 0)), Right(Point(1, 0))
 	}
 
 	class TetrisGrid(
 		private val data: MutableList<MutableList<Boolean>>,
-		val width: Int
+		val width: Int,
 	) {
 		val height: Int
 			get() = data.size
@@ -168,13 +167,15 @@ object Day17 : BaseSolution<List<Day17.Direction>, Long, Long>() {
 		fun key(): String = data.joinToString("") { row -> row.joinToString("") { if (it) "#" else "." } }
 
 		operator fun get(point: Point): Boolean =
-			if (point !in this) false
-			else data[point.y][point.x]
+			if (point !in this) {
+				false
+			} else {
+				data[point.y][point.x]
+			}
 
 		operator fun set(point: Point, value: Boolean) {
 			while (point.y >= data.size) data.add(MutableList(width) { false })
 			data[point.y][point.x] = value
-
 		}
 
 		operator fun contains(point: Point): Boolean =

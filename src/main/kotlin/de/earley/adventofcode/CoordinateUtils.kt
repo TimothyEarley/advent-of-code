@@ -44,11 +44,10 @@ fun Point.isNeighbourOrSameOf(other: Point, diagonal: Boolean = false): Boolean 
 fun Point.manhattanDistanceTo(to: Point): Int = abs(x - to.x) + abs(y - to.y)
 fun Point.manhattanLength(): Int = abs(x) + abs(y)
 
-
 open class Grid<T>(
 	val width: Int,
 	val height: Int,
-	protected open val data: List<T>
+	protected open val data: List<T>,
 ) {
 
 	val indices: Sequence<Point>
@@ -93,7 +92,8 @@ fun <T> Grid<T>.prettyPrint() {
 
 fun <T> grid(width: Int, height: Int, content: (Point) -> T): Grid<T> =
 	Grid(
-		width, height,
+		width,
+		height,
 		List(width * height) {
 			content(Point(it.mod(width), it.floorDiv(width)))
 		}
@@ -104,7 +104,7 @@ fun <A, B> Grid<A>.toMutableGrid(): MutableGrid<B> where A : B = MutableGrid(wid
 class MutableGrid<T>(
 	width: Int,
 	height: Int,
-	override val data: MutableList<T>
+	override val data: MutableList<T>,
 ) : Grid<T>(width, height, data) {
 	operator fun set(x: Int, y: Int, t: T) {
 		data[x + y * width] = t
@@ -118,7 +118,6 @@ class MutableGrid<T>(
 		}
 	}
 }
-
 
 fun List<Point>.toGrid(padding: Point = Point(0, 0)): Grid<Boolean> {
 	val minX = minOf { it.x }
@@ -145,7 +144,7 @@ enum class Direction(val point: Point) {
 	Left(Point(-1, 0)), Right(Point(1, 0)), Up(Point(0, -1)), Down(Point(0, 1));
 
 	companion object {
-		fun parseArrow(c : Char) = when (c) {
+		fun parseArrow(c: Char) = when (c) {
 			'<' -> Left
 			'>' -> Right
 			'^' -> Up
@@ -153,7 +152,7 @@ enum class Direction(val point: Point) {
 			else -> error("Unknown direction $c")
 		}
 
-		fun parseInitial(c : Char) = when (c) {
+		fun parseInitial(c: Char) = when (c) {
 			'L' -> Left
 			'R' -> Right
 			'U' -> Up

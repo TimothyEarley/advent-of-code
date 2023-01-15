@@ -53,10 +53,9 @@ object Day24 : BaseSolution<Day24.Input, Int, Int>() {
 		return pathCost(data, listOf(start, to, start, to))
 	}
 
-
 	private fun pathCost(
 		data: Input,
-		waypoints: List<Point>
+		waypoints: List<Point>,
 	): Int {
 		val blizzardsStorage = BlizzardsStorage(data)
 
@@ -111,18 +110,17 @@ object Day24 : BaseSolution<Day24.Input, Int, Int>() {
 
 	data class State(
 		val position: Point,
-		val time: Int
+		val time: Int,
 	)
 
 	data class Input(
 		val blizzards: List<Blizzard>,
 		val width: Int,
-		val height: Int
+		val height: Int,
 	)
 
 	data class Blizzard(
 		val position: Point,
-		val direction: Direction
+		val direction: Direction,
 	)
-
 }

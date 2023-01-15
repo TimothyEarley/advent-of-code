@@ -37,7 +37,7 @@ object Day20 : BaseSolution<List<Long>, Long, Long>() {
 		val zeroPosition = current.indexOfFirst { it.value == 0L }
 
 		return current[(zeroPosition + 1000) % current.size].value +
-				current[(zeroPosition + 2000) % current.size].value +
-				current[(zeroPosition + 3000) % current.size].value
+			current[(zeroPosition + 2000) % current.size].value +
+			current[(zeroPosition + 3000) % current.size].value
 	}
 }

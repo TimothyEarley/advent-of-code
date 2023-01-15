@@ -16,7 +16,8 @@ object Day12 : BaseSolution<Map<Cave, List<Cave>>, Int, Int>() {
 		input.flatMap {
 			val (from, to) = it.split('-', limit = 2).map(::Cave)
 			listOf(
-				from to to, to to from
+				from to to,
+				to to from
 			)
 		}.groupBy({ it.first }) { it.second }
 
@@ -27,7 +28,7 @@ object Day12 : BaseSolution<Map<Cave, List<Cave>>, Int, Int>() {
 	private fun Map<Cave, List<Cave>>.countPaths(
 		canVisitTwice: Boolean,
 		visited: Set<Cave> = emptySet(),
-		next: Cave = Cave("start")
+		next: Cave = Cave("start"),
 	): Int {
 		// we cannot leave the end
 		if (next.name == "end") return 1

@@ -4,10 +4,9 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.cache
+import de.earley.adventofcode.generalAStar
 import de.earley.adventofcode.manhattanDistanceTo
 import de.earley.adventofcode.neighbours
-import de.earley.adventofcode.generalAStar
-import de.earley.adventofcode.grid
 
 fun main() = Day12.start()
 
@@ -46,7 +45,7 @@ object Day12 : BaseSolution<Grid<Char>, Int, Int>() {
 		return generalAStar(
 			from = end,
 			goal = { it in starts },
-			heuristic = { p : Point -> starts.minOf { p.manhattanDistanceTo(it) } }.cache(),
+			heuristic = { p: Point -> starts.minOf { p.manhattanDistanceTo(it) } }.cache(),
 			neighbours = {
 				neighbours(diagonal = false).filter {
 					checkCanStep(data, it, this)
@@ -62,8 +61,10 @@ object Day12 : BaseSolution<Grid<Char>, Int, Int>() {
 		else -> this
 	} - 'a'
 
-	private fun checkCanStep(data: Grid<Char>, from : Point, to : Point): Boolean =
-		if (from !in data || to !in data) false
-		else data[from]!!.height() + 1 >= data[to]!!.height()
-
+	private fun checkCanStep(data: Grid<Char>, from: Point, to: Point): Boolean =
+		if (from !in data || to !in data) {
+			false
+		} else {
+			data[from]!!.height() + 1 >= data[to]!!.height()
+		}
 }

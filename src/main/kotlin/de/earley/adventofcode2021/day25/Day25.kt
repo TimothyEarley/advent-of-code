@@ -14,7 +14,8 @@ object Day25 : BaseSolution<Grid<SeaCucumber?>, Int, Int>() {
 		val width = l.first().length
 		val height = l.size
 		return Grid(
-			width, height,
+			width,
+			height,
 			l.flatMap {
 				it.map { c ->
 					when (c) {
@@ -73,5 +74,5 @@ object Day25 : BaseSolution<Grid<SeaCucumber?>, Int, Int>() {
 }
 
 data class SeaCucumber(
-	val right: Boolean
+	val right: Boolean,
 )

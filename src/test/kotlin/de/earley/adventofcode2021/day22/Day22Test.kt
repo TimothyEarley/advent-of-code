@@ -12,7 +12,7 @@ class Day22Test : WordSpec({
 			Region(
 				x = 10..20,
 				y = 30..40,
-				z = 50..60,
+				z = 50..60
 			).overlap(
 				Region(
 					x = 0..100,

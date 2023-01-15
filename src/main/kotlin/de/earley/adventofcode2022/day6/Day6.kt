@@ -16,5 +16,4 @@ object Day6 : BaseSolution<String, Int, Int>() {
 		.asSequence()
 		.windowed(size = length, partialWindows = false)
 		.indexOfFirst { it.toSet().size == length } + length
-
 }
