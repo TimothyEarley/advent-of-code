@@ -41,6 +41,7 @@ object Day${day} : BaseSolution<List<String>, Int, Int>() {
 
 }
 EOF
+  idea "$f"
 }
 
 function createTestFile() {
@@ -61,6 +62,7 @@ class Day${day}Test : WordSpec({
 	include(testDay(Day${day}, 0, 0))
 })
 EOF
+  idea "$f"
 }
 
 function createInputFile() {
@@ -83,10 +85,12 @@ function createTestInputFile() {
 function createTaskFile() {
   echo "Creating task file"
 
+  f="src/main/kotlin/de/earley/adventofcode${year}/day${day}/task.md"
   "${curlCommand[@]}" "https://adventofcode.com/${year}/day/{$day}" |
     pup --pre '.day-desc' |
-    pandoc --from=html --to=gfm >src/main/kotlin/de/earley/adventofcode${year}/day${day}/task.md
+    pandoc --from=html --to=gfm >"$f"
 
+  idea "$f"
 }
 
 function main() {
@@ -112,9 +116,6 @@ if [ ! -f "$cookieFile" ]; then
   exit 1
 fi
 
-userAgent=""
-
-# curlCommand="curl -sS --cookie $cookieFile --user-agent github.com/TimothyEarley/advent-of-code"
 cookie=$(cat $cookieFile)
 curlCommand=(curl -sS --user-agent github.com/TimothyEarley/advent-of-code -H "cookie: session=$cookie")
 
