@@ -1,7 +1,7 @@
 package de.earley.adventofcode2022.day17
 
-import de.earley.adventofcode.testDay
 import de.earley.adventofcode.readResource
+import de.earley.adventofcode.testDay
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
 

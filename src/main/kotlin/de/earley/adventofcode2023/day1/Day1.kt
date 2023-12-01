@@ -21,8 +21,7 @@ object Day1 : BaseSolution<List<String>, Int, Int>() {
 
 	override fun partTwo(data: List<String>): Int = data.map { line ->
 		numbers.foldIndexed(line) { i, acc, n ->
-			acc.replace(n, "${n}${i + 1}${n}")
+			acc.replace(n, "${n}${i + 1}$n")
 		}
 	}.let(::partOne)
-
 }
