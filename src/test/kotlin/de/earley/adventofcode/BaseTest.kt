@@ -1,6 +1,5 @@
 package de.earley.adventofcode
 
-import de.earley.adventofcode2021.readResource
 import io.kotest.core.spec.style.wordSpec
 import io.kotest.matchers.shouldBe
 

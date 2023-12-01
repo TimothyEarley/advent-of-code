@@ -1,7 +1,5 @@
 package de.earley.adventofcode
 
-import de.earley.adventofcode2021.readResource
-
 abstract class BaseSolution<In, Out1, Out2> {
 
 	fun start() {

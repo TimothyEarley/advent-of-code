@@ -1,7 +1,7 @@
 package de.earley.adventofcode2021.day7
 
 import de.earley.adventofcode.cache
-import de.earley.adventofcode2021.readResource
+import de.earley.adventofcode.readResource
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.Scope
 import org.openjdk.jmh.annotations.State

@@ -1,7 +1,7 @@
 package de.earley.adventofcode2022.day9
 
 import de.earley.adventofcode.Point
-import de.earley.adventofcode2021.readResource
+import de.earley.adventofcode.readResource
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
