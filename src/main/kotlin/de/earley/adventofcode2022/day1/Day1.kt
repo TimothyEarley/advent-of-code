@@ -1,7 +1,7 @@
 package de.earley.adventofcode2022.day1
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode2021.split
+import de.earley.adventofcode.split
 
 fun main() = Day1.start()
 

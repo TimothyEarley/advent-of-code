@@ -3,7 +3,7 @@ package de.earley.adventofcode2021.day19
 import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Point3
 import de.earley.adventofcode.manhattanTo
-import de.earley.adventofcode2021.split
+import de.earley.adventofcode.split
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 

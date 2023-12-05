@@ -1,7 +1,7 @@
 package de.earley.adventofcode2022.day11
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode2021.split
+import de.earley.adventofcode.split
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min

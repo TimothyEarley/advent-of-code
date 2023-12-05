@@ -2,7 +2,7 @@ package de.earley.adventofcode2021.day23
 
 import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.generalAStar
-import de.earley.adventofcode2021.mapToList
+import de.earley.adventofcode.mapToList
 
 fun main() = Day23.start()
 

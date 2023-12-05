@@ -1,7 +1,7 @@
 package de.earley.adventofcode2022.day2
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode2021.mapToList
+import de.earley.adventofcode.mapToList
 
 fun main() = Day2.start()
 

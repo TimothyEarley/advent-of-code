@@ -1,7 +1,7 @@
 package de.earley.adventofcode2021.day18
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode2021.mapToList
+import de.earley.adventofcode.mapToList
 import kotlin.math.ceil
 
 fun main() = Day18.start()

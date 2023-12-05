@@ -11,7 +11,7 @@ import cc.ekblad.konbini.oneOf
 import cc.ekblad.konbini.parseToEnd
 import cc.ekblad.konbini.parser
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode2021.split
+import de.earley.adventofcode.split
 
 fun main() = Day13.start()
 

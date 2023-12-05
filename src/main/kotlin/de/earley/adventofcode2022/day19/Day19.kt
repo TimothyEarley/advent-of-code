@@ -2,7 +2,7 @@ package de.earley.adventofcode2022.day19
 
 import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.generalAStar
-import de.earley.adventofcode2021.mapToList
+import de.earley.adventofcode.mapToList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking

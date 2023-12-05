@@ -2,7 +2,7 @@ package de.earley.adventofcode2021.day13
 
 import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Point
-import de.earley.adventofcode2021.split
+import de.earley.adventofcode.split
 
 fun main() = Day13.start()
 

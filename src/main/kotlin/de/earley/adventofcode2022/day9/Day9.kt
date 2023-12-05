@@ -4,7 +4,7 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Direction
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.isNeighbourOrSameOf
-import de.earley.adventofcode2021.mapToList
+import de.earley.adventofcode.mapToList
 import java.math.RoundingMode
 
 fun main() = Day9.start()

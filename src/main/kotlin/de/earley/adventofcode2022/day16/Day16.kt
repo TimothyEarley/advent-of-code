@@ -2,7 +2,7 @@ package de.earley.adventofcode2022.day16
 
 import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.generalAStarNode
-import de.earley.adventofcode2021.mapToList
+import de.earley.adventofcode.mapToList
 
 fun main() = Day16.start()
 

@@ -4,7 +4,7 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.grid
-import de.earley.adventofcode2021.split
+import de.earley.adventofcode.split
 
 fun main() = Day20.start()
 

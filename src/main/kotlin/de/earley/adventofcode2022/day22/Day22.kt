@@ -5,7 +5,7 @@ import de.earley.adventofcode.Direction
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.grid
-import de.earley.adventofcode2021.split
+import de.earley.adventofcode.split
 import kotlin.math.sqrt
 
 fun main() = Day22.start()
