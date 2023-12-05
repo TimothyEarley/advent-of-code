@@ -17,7 +17,7 @@ object Day4 : BaseSolution<List<Day4.ScratchCard>, Int, Int>() {
 	}.toList()
 
 	data class ScratchCard(val winning: List<Int>, val have: List<Int>) {
-		val correct : Int = have.count { it in winning }
+		val correct: Int = have.count { it in winning }
 	}
 
 	override fun partOne(data: List<ScratchCard>): Int = data.sumOf { card ->
@@ -27,9 +27,11 @@ object Day4 : BaseSolution<List<Day4.ScratchCard>, Int, Int>() {
 	override fun partTwo(data: List<ScratchCard>): Int = data.foldIndexed(data.map { 1 }) { index, countSoFar, scratchCard ->
 		val myCount = countSoFar[index]
 		countSoFar.mapIndexed { i, v ->
-			if (index + 1 <= i && i <= index + scratchCard.correct) v + myCount
-			else v
+			if (index + 1 <= i && i <= index + scratchCard.correct) {
+				v + myCount
+			} else {
+				v
+			}
 		}
 	}.sum()
-
 }
