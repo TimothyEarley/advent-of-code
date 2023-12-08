@@ -41,5 +41,4 @@ object Day6 : BaseSolution<List<Day6.Race>, Long, Long>() {
 		}
 		return race.waysToWin()
 	}
-
 }

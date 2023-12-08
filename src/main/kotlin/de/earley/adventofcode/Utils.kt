@@ -1,5 +1,9 @@
 package de.earley.adventofcode
 
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
+
 fun <T : Any> T.readResource(name: String) =
 	this::class.java.getResourceAsStream(name)?.bufferedReader()
 		?: error("Failed to read $name for ${this::class.java}")
@@ -31,6 +35,27 @@ fun <A> List<A>.split(splitOn: (A) -> Boolean): List<List<A>> =
 		}
 	}.let { (a, b) -> a.addElement(b) }
 
-
 // see https://youtrack.jetbrains.com/issue/KT-9992 why a + b does not work
 private fun <A> List<List<A>>.addElement(l: List<A>): List<List<A>> = toMutableList().apply { add(l) }
+
+fun lcm(a: Int, b: Int): Int {
+	if (a == 0 || b == 0) return 0
+	val higher = max(abs(a), abs(b))
+	val lower = min(abs(a), abs(b))
+	var lcm = higher
+	while (lcm % lower != 0) {
+		lcm += higher
+	}
+	return lcm
+}
+
+fun lcm(a: Long, b: Long): Long {
+	if (a == 0L || b == 0L) return 0
+	val higher = max(abs(a), abs(b))
+	val lower = min(abs(a), abs(b))
+	var lcm = higher
+	while (lcm % lower != 0L) {
+		lcm += higher
+	}
+	return lcm
+}

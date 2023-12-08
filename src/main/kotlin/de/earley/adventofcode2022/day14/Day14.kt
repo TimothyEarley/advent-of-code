@@ -4,8 +4,8 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.grid
-import de.earley.adventofcode.toMutableGrid
 import de.earley.adventofcode.mapToList
+import de.earley.adventofcode.toMutableGrid
 import kotlin.math.max
 import kotlin.math.min
 

@@ -12,25 +12,30 @@ object Day7 : BaseSolution<List<Day7.Hand>, Long, Long>() {
 	override fun parseInput(input: Sequence<String>): List<Hand> = input.mapToList { line ->
 		val (cards, bid) = line.split(" ", limit = 2)
 
-		Hand(cards.map { when (it) {
-			'T' -> 10
-			'J' -> 11
-			'Q' -> 12
-			'K' -> 13
-			'A' -> 14
-			else -> it.digitToInt()
-		} }, bid.toInt())
+		Hand(
+			cards.map {
+				when (it) {
+					'T' -> 10
+					'J' -> 11
+					'Q' -> 12
+					'K' -> 13
+					'A' -> 14
+					else -> it.digitToInt()
+				}
+			},
+			bid.toInt()
+		)
 	}
 
 	private const val J = 11
 	data class Hand(
 		val cards: List<Card>,
-		val bid: Int
+		val bid: Int,
 	) {
 		private val cardSet = cards.toSet()
 		val cardsWithLowJoker = cards.map { if (it == J) 0 else it }
 
-		val type : Int = when {
+		val type: Int = when {
 			cards.all { it == cards.first() } -> 7 // five of a kind
 			cardSet.size == 2 && cardSet.any { c -> cards.count { it == c } == 4 } -> 6 // four of a kind
 			cardSet.size == 2 && cardSet.any { c -> cards.count { it == c } == 3 } -> 5 // full house
@@ -47,7 +52,6 @@ object Day7 : BaseSolution<List<Day7.Hand>, Long, Long>() {
 		return sorted.mapIndexed { index, h -> (index + 1) * h.bid.toLong() }.sum()
 	}
 
-
 	override fun partTwo(data: List<Hand>): Long {
 		val sorted = data
 			.map { hand -> hand.jokerVariation() }
@@ -63,9 +67,8 @@ object Day7 : BaseSolution<List<Day7.Hand>, Long, Long>() {
 		// and actually the highest count card
 		val highestCount = cardsWithoutJoker.toSet().maxBy { c -> cardsWithoutJoker.count { it == c } }
 		return Hand(
-			cardsWithoutJoker + List(jokerCount) { highestCount }, bid
+			cardsWithoutJoker + List(jokerCount) { highestCount },
+			bid
 		)
 	}
-
 }
-

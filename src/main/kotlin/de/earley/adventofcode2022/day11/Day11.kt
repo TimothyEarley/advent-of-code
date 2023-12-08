@@ -1,10 +1,8 @@
 package de.earley.adventofcode2022.day11
 
 import de.earley.adventofcode.BaseSolution
+import de.earley.adventofcode.lcm
 import de.earley.adventofcode.split
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
 
 fun main() = Day11.start()
 
@@ -81,17 +79,6 @@ object Day11 : BaseSolution<List<Day11.Monkey>, Int, Long>() {
 		}
 
 		return monkeys.map { it.inspectionCount }.sortedDescending().take(2).reduce(Long::times)
-	}
-
-	fun lcm(a: Int, b: Int): Int {
-		if (a == 0 || b == 0) return 0
-		val higher = max(abs(a), abs(b))
-		val lower = min(abs(a), abs(b))
-		var lcm = higher
-		while (lcm % lower != 0) {
-			lcm += higher
-		}
-		return lcm
 	}
 
 	data class Monkey(
