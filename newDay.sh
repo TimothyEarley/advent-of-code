@@ -31,13 +31,13 @@ import de.earley.adventofcode.BaseSolution
 
 fun main() = Day${day}.start()
 
-object Day${day} : BaseSolution<List<String>, Int, Int>() {
+object Day${day} : BaseSolution<List<String>, Long, Long>() {
 
 	override fun parseInput(input: Sequence<String>): List<String> = input.toList()
 
-	override fun partOne(data: List<String>): Int = 0
+	override fun partOne(data: List<String>): Long = 0
 
-	override fun partTwo(data: List<String>): Int = 0
+	override fun partTwo(data: List<String>): Long = 0
 
 }
 EOF
@@ -80,6 +80,7 @@ function createTestInputFile() {
   f="src/test/resources/de/earley/adventofcode${year}/day${day}/testInput.txt"
   mkdir -p "$(dirname "$f")"
   touch "$f"
+  idea "$f"
 }
 
 function createTaskFile() {
@@ -89,8 +90,6 @@ function createTaskFile() {
   "${curlCommand[@]}" "https://adventofcode.com/${year}/day/{$day}" |
     pup --pre '.day-desc' |
     pandoc --from=html --to=gfm >"$f"
-
-  idea "$f"
 }
 
 function main() {
