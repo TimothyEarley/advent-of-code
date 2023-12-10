@@ -20,7 +20,7 @@ fun <T> generalAStarNode(
 	useClosed: Boolean,
 	closedCheck: Set<T>.(T) -> Boolean = Set<T>::contains,
 	newNodeCallback: ((Node<T>) -> Unit)? = null,
-): Node<T> {
+): Node<T>? {
 	val closed = mutableSetOf<T>()
 	val open = PriorityQueue(compareBy<Node<T>> { it.cost + it.heuristic }).apply {
 		add(Node(null, from, 0, heuristic(from)))
@@ -51,7 +51,7 @@ fun <T> generalAStarNode(
 		}
 	}
 
-	error("No path found!")
+	return null
 }
 
 fun <T> generalAStar(
@@ -62,4 +62,4 @@ fun <T> generalAStar(
 	useClosed: Boolean,
 	closedCheck: Set<T>.(T) -> Boolean = Set<T>::contains,
 	newNodeCallback: ((Node<T>) -> Unit)? = null,
-): Int = generalAStarNode(from, goal, heuristic, neighbours, useClosed, closedCheck, newNodeCallback).cost
+): Int? = generalAStarNode(from, goal, heuristic, neighbours, useClosed, closedCheck, newNodeCallback)?.cost

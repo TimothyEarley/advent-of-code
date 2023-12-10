@@ -60,7 +60,7 @@ object Day16 : BaseSolution<Map<String, Day16.Valve>, Int, Int>() {
 			},
 			neighbours = { nextStates(data, needToOpen, simTime) },
 			useClosed = true
-		)
+		)!!
 
 		return if (result.parent!!.value.minute == simTime - 1) {
 			// if we had a parent, use that

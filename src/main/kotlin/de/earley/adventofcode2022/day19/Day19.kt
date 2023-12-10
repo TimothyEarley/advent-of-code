@@ -64,7 +64,7 @@ object Day19 : BaseSolution<List<Day19.Blueprint>, Int, Int>() {
 			},
 			useClosed = true,
 			neighbours = { nextStates(blueprint, maxResources) }
-		)
+		)!!
 	}
 
 	private fun State.nextStates(blueprint: Blueprint, maxResources: Resources): Sequence<Pair<State, Int>> {

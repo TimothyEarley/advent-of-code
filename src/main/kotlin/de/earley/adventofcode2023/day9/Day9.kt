@@ -14,8 +14,11 @@ object Day9 : BaseSolution<List<List<Int>>, Long, Long>() {
 	}
 
 	private fun List<Int>.diffTillZeros(): List<List<Int>> =
-		if (this.all { it == 0 }) listOf(this)
-		else listOf(this) + this.zipWithNext { a, b -> b - a }.diffTillZeros()
+		if (this.all { it == 0 }) {
+			listOf(this)
+		} else {
+			listOf(this) + this.zipWithNext { a, b -> b - a }.diffTillZeros()
+		}
 
 	override fun partTwo(data: List<List<Int>>): Long = data.sumOf { line ->
 		line.diffTillZeros()
@@ -24,5 +27,4 @@ object Day9 : BaseSolution<List<List<Int>>, Long, Long>() {
 			.fold(0L) { acc, i -> i - acc }
 			.toLong()
 	}
-
 }

@@ -32,7 +32,7 @@ object Day12 : BaseSolution<Grid<Char>, Int, Int>() {
 				}.map { it to 1 }
 			},
 			useClosed = true
-		)
+		)!!
 	}
 
 	override fun partTwo(data: Grid<Char>): Int {
@@ -52,7 +52,7 @@ object Day12 : BaseSolution<Grid<Char>, Int, Int>() {
 				}.map { it to 1 }
 			},
 			useClosed = true
-		)
+		)!!
 	}
 
 	private fun Char.height(): Int = when (this) {

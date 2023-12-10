@@ -49,7 +49,7 @@ object Day23 : BaseSolution<State, Int, Int>() {
 		{ 0 },
 		{ nextStates(unfolded) },
 		false
-	)
+	)!!
 
 	private fun State.nextStates(unfolded: Boolean): Sequence<Pair<State, Int>> {
 		// 1. prio - can an amphipod reach its final position

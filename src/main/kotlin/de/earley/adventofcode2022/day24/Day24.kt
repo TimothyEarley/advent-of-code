@@ -79,7 +79,7 @@ object Day24 : BaseSolution<Day24.Input, Int, Int>() {
 							State(it, time + 1) to 1
 						}
 				}
-			)
+			)!!
 		}
 	}
 

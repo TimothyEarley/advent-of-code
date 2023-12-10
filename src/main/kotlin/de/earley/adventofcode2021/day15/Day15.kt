@@ -51,4 +51,4 @@ fun aStar(grid: (Point) -> Int?, from: Point, to: Point, newNodeCallback: ((Node
 		{ neighbours().mapNotNull { n -> grid(n)?.let { n to it } } },
 		true,
 		newNodeCallback = newNodeCallback
-	)
+	)!!

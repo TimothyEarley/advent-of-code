@@ -21,6 +21,7 @@ data class Point(val x: Int, val y: Int) {
 	operator fun minus(other: Point): Point = Point(x - other.x, y - other.y)
 	operator fun plus(other: Point): Point = Point(x + other.x, y + other.y)
 	operator fun div(by: Int): Point = Point(x / by, y / by)
+	operator fun times(i: Int): Point = Point(x * i, y * i)
 	fun divRound(by: Int, round: Double.() -> Int): Point =
 		Point((x / by.toDouble()).round(), (y / by.toDouble()).round())
 }
