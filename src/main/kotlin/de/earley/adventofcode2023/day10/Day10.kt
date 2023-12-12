@@ -13,11 +13,15 @@ fun main() = Day10.start()
 object Day10 : BaseSolution<Grid<Day10.Pipe>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): Grid<Pipe> = input.toList().let { lines ->
-		Grid(lines.first().length, lines.size, lines.flatMap { line ->
-			line.toCharArray().map { c ->
-				Pipe.entries.find { it.symbol == c } ?: error("Not found: $c")
-			}.toList()
-		})
+		Grid(
+			lines.first().length,
+			lines.size,
+			lines.flatMap { line ->
+				line.toCharArray().map { c ->
+					Pipe.entries.find { it.symbol == c } ?: error("Not found: $c")
+				}.toList()
+			}
+		)
 	}
 
 	enum class Pipe(val symbol: Char) {
@@ -69,9 +73,11 @@ object Day10 : BaseSolution<Grid<Day10.Pipe>, Int, Int>() {
 	override fun partTwo(data: Grid<Pipe>): Int {
 		val loop = loopFromStart(data)
 		// Shoelace Formula: https://en.wikipedia.org/wiki/Shoelace_formula
-		val area = abs(loop.indices.sumOf { i ->
-			loop[i].x * (loop.getOrElse(i + 1) { loop.first() }.y - loop.getOrElse(i - 1) { loop.last() }.y)
-		} / 2.0)
+		val area = abs(
+			loop.indices.sumOf { i ->
+				loop[i].x * (loop.getOrElse(i + 1) { loop.first() }.y - loop.getOrElse(i - 1) { loop.last() }.y)
+			} / 2.0
+		)
 		// Pick's theorem: https://en.wikipedia.org/wiki/Pick%27s_theorem
 		val interior = area + 1 - loop.size / 2.0
 

@@ -11,9 +11,13 @@ fun main() = Day11(1000000).start()
 class Day11(private val expansion: Int) : BaseSolution<Grid<Boolean>, Long, Long>() {
 
 	override fun parseInput(input: Sequence<String>): Grid<Boolean> = input.toList().let { l ->
-		Grid(l.first().length, l.size, l.flatMap { line ->
-			line.map { it == '#' }
-		})
+		Grid(
+			l.first().length,
+			l.size,
+			l.flatMap { line ->
+				line.map { it == '#' }
+			}
+		)
 	}
 
 	override fun partOne(data: Grid<Boolean>): Long = solve(data, 2)
@@ -22,11 +26,11 @@ class Day11(private val expansion: Int) : BaseSolution<Grid<Boolean>, Long, Long
 
 	private fun solve(data: Grid<Boolean>, expansion: Int): Long {
 		val expandColumns = (0 ..< data.width).filter { x ->
-			(0 ..< data.height).all { y -> ! data[x, y]!! }
+			(0 ..< data.height).all { y -> !data[x, y]!! }
 		}.toSet()
 
 		val expandRows = (0 ..< data.height).filter { y ->
-			(0 ..< data.width).all { x -> ! data[x, y]!! }
+			(0 ..< data.width).all { x -> !data[x, y]!! }
 		}.toSet()
 
 		val galaxies = data.pointValues()
@@ -44,5 +48,4 @@ class Day11(private val expansion: Int) : BaseSolution<Grid<Boolean>, Long, Long
 				}
 		}
 	}
-
 }
