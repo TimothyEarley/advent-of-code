@@ -79,6 +79,9 @@ open class Grid<T>(
 	fun indexOf(t: T): Point? = data.indexOf(t).takeIf { it != -1 }?.let(this::indexToPoint)
 
 	fun <B> map(f: (T) -> B): Grid<B> = Grid(width, height, data.map(f))
+
+	fun getColumn(x: Int): List<T> = List(height) { y -> get(x, y)!! }
+	fun getRow(y: Int): List<T> = List(width) { x -> get(x, y)!! }
 }
 
 fun <T> Grid<T>.prettyPrint() {
