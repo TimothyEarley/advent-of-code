@@ -4,6 +4,7 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Direction
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.neighbours
+import de.earley.adventofcode.runUntil
 
 fun main() = Day3.start()
 

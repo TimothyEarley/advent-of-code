@@ -59,3 +59,8 @@ fun lcm(a: Long, b: Long): Long {
 	}
 	return lcm
 }
+
+
+tailrec fun <T> runUntil(current : T, condEnd: (T) -> Boolean, next: (T) -> T) : T =
+	if (condEnd(current)) current
+	else runUntil(next(current), condEnd, next)

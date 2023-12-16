@@ -4,6 +4,7 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Direction
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
+import de.earley.adventofcode.runUntil
 import de.earley.adventofcode.toMutableGrid
 
 fun main() = Day16.start()
@@ -24,11 +25,10 @@ object Day16 : BaseSolution<Grid<Day16.Tile>, Long, Long>() {
 	}
 
 	private fun energizedTiles(data: Grid<Tile>, start: Beam): Long {
-		var beams = listOf(start)
 		val cache = data.map { false to emptySet<Beam>() }.toMutableGrid()
 
-		while (beams.isNotEmpty()) {
-			beams = beams.flatMap { beam ->
+		runUntil(listOf(start), { it.isEmpty() }) {
+			it.flatMap { beam ->
 				val next = beam.p + beam.d.point
 
 				when (data[next]) {
@@ -36,7 +36,7 @@ object Day16 : BaseSolution<Grid<Day16.Tile>, Long, Long>() {
 					Tile.MirrorSlash -> listOf(
 						when (beam.d) {
 							Direction.Left -> beam.copy(p = next, d = Direction.Down)
-							Direction.Right -> beam.copy(p = next, d = Direction.Up)
+							Direction.Right -> beam.copy(p = next, d = Direction.Up)F
 							Direction.Up -> beam.copy(p = next, d = Direction.Right)
 							Direction.Down -> beam.copy(p = next, d = Direction.Left)
 						}
