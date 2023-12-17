@@ -11,8 +11,8 @@ fun main() = Day16.start()
 
 object Day16 : BaseSolution<Grid<Day16.Tile>, Long, Long>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<Tile> = input.toList().let {  lines ->
-		Grid(lines.first().length, lines.size, lines.flatMap { line -> line.map { c  -> Tile.entries.find { it.symbol == c }!! } })
+	override fun parseInput(input: Sequence<String>): Grid<Tile> = input.toList().let { lines ->
+		Grid(lines.first().length, lines.size, lines.flatMap { line -> line.map { c -> Tile.entries.find { it.symbol == c }!! } })
 	}
 
 	enum class Tile(val symbol: Char) {
@@ -36,7 +36,7 @@ object Day16 : BaseSolution<Grid<Day16.Tile>, Long, Long>() {
 					Tile.MirrorSlash -> listOf(
 						when (beam.d) {
 							Direction.Left -> beam.copy(p = next, d = Direction.Down)
-							Direction.Right -> beam.copy(p = next, d = Direction.Up)F
+							Direction.Right -> beam.copy(p = next, d = Direction.Up)
 							Direction.Up -> beam.copy(p = next, d = Direction.Right)
 							Direction.Down -> beam.copy(p = next, d = Direction.Left)
 						}
@@ -98,5 +98,4 @@ object Day16 : BaseSolution<Grid<Day16.Tile>, Long, Long>() {
 			yield(Beam(Point(x, data.height), Direction.Up))
 		}
 	}.maxOf { energizedTiles(data, it) }
-
 }

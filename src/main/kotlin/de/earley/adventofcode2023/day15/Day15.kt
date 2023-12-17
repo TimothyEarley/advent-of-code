@@ -17,7 +17,7 @@ object Day15 : BaseSolution<List<String>, Long, Long>() {
 		hash(it).toLong()
 	}
 
-	private tailrec fun hash(s : String, current : Int = 0): Int {
+	private tailrec fun hash(s: String, current: Int = 0): Int {
 		if (s.isEmpty()) return current
 		val ascii = s.first().code
 		val next = ((current + ascii) * 17).rem(256)
@@ -54,5 +54,4 @@ object Day15 : BaseSolution<List<String>, Long, Long>() {
 			}
 		}
 	}
-
 }

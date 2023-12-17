@@ -163,5 +163,7 @@ enum class Direction(val point: Point) {
 			'D' -> Down
 			else -> error("Unknown direction $c")
 		}
+
+		fun fromPoint(p: Point): Direction? = Direction.entries.find { it.point == p }
 	}
 }

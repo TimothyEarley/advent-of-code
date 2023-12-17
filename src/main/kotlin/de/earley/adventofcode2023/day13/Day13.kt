@@ -34,15 +34,17 @@ object Day13 : BaseSolution<List<Grid<Boolean>>, Long, Long>() {
 		}
 	}
 
-	private fun <T> reflectsAlong(i : Int, total: Int, getColOrRow: (Int) -> List<T>, smudge: Boolean): Boolean {
-		val leftOrUp = 0 .. i
+	private fun <T> reflectsAlong(i: Int, total: Int, getColOrRow: (Int) -> List<T>, smudge: Boolean): Boolean {
+		val leftOrUp = 0..i
 		val rightOrDown = (i + 1) ..< total
 
 		var smudged = !smudge
 		val isReflection = leftOrUp.reversed().zip(rightOrDown).all { (i0, i1) ->
 			when (getColOrRow(i0).zip(getColOrRow(i1)).count { it.first != it.second }) {
 				0 -> true
-				1 -> if (smudged) false else {
+				1 -> if (smudged) {
+					false
+				} else {
 					smudged = true
 					true
 				}
@@ -55,6 +57,4 @@ object Day13 : BaseSolution<List<Grid<Boolean>>, Long, Long>() {
 	override fun partTwo(data: List<Grid<Boolean>>): Long = data.sumOf { grid ->
 		reflectionValue(grid, true)
 	}
-
-
 }

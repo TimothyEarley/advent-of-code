@@ -4,7 +4,8 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.MutableGrid
 import de.earley.adventofcode.toMutableGrid
-import de.earley.adventofcode2023.day14.Day14.Type.*
+import de.earley.adventofcode2023.day14.Day14.Type.Empty
+import de.earley.adventofcode2023.day14.Day14.Type.MovingRock
 
 fun main() = Day14.start()
 
@@ -21,14 +22,14 @@ object Day14 : BaseSolution<Grid<Day14.Type>, Long, Long>() {
 	enum class Type(val symbol: Char) {
 		MovingRock('O'),
 		FixedRock('#'),
-		Empty('.')
+		Empty('.'),
 	}
 
 	override fun partOne(data: Grid<Type>): Long {
 		return data.toMutableGrid().tiltNorth().sumLoad()
 	}
 
-	private fun  MutableGrid<Type>.tiltNorth(): MutableGrid<Type> {
+	private fun MutableGrid<Type>.tiltNorth(): MutableGrid<Type> {
 		for (y in 0 ..< height) {
 			for (x in 0 ..< width) {
 				if (this[x, y] == MovingRock) {
@@ -44,7 +45,7 @@ object Day14 : BaseSolution<Grid<Day14.Type>, Long, Long>() {
 		}
 		return this
 	}
-	private fun  MutableGrid<Type>.tiltWest(): MutableGrid<Type> {
+	private fun MutableGrid<Type>.tiltWest(): MutableGrid<Type> {
 		for (x in 0 ..< width) {
 			for (y in 0 ..< height) {
 				if (this[x, y] == MovingRock) {
@@ -60,7 +61,7 @@ object Day14 : BaseSolution<Grid<Day14.Type>, Long, Long>() {
 		}
 		return this
 	}
-	private fun  MutableGrid<Type>.tiltSouth(): MutableGrid<Type> {
+	private fun MutableGrid<Type>.tiltSouth(): MutableGrid<Type> {
 		for (y in height - 1 downTo 0) {
 			for (x in 0 ..< width) {
 				if (this[x, y] == MovingRock) {
@@ -76,7 +77,7 @@ object Day14 : BaseSolution<Grid<Day14.Type>, Long, Long>() {
 		}
 		return this
 	}
-	private fun  MutableGrid<Type>.tiltEast(): MutableGrid<Type> {
+	private fun MutableGrid<Type>.tiltEast(): MutableGrid<Type> {
 		for (x in width - 1 downTo 0) {
 			for (y in 0 ..< height) {
 				if (this[x, y] == MovingRock) {
@@ -124,5 +125,4 @@ object Day14 : BaseSolution<Grid<Day14.Type>, Long, Long>() {
 
 		return g.sumLoad()
 	}
-
 }

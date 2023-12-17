@@ -10,6 +10,8 @@ class Node<T>(
 ) {
 	override fun toString(): String =
 		"Node(parent=${parent?.hashCode()}, value=$value, cost=$cost, heuristic=$heuristic)"
+
+	fun toPath(): List<T> = (parent?.toPath() ?: emptyList()) + this.value
 }
 
 fun <T> generalAStarNode(
