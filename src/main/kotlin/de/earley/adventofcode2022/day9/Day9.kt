@@ -13,7 +13,7 @@ object Day9 : BaseSolution<List<Day9.Motion>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): List<Motion> = input.mapToList {
 		val (d, s) = it.split(" ")
-		Motion(Direction.parseInitial(d.single()), s.toInt())
+		Motion(Direction.parseLetter(d.single()), s.toInt())
 	}
 
 	override fun partOne(data: List<Motion>): Int =

@@ -41,7 +41,7 @@ object Day${day} : BaseSolution<List<String>, Long, Long>() {
 
 }
 EOF
-  idea "$f"
+  idea-ce "$f"
 }
 
 function createTestFile() {
@@ -62,7 +62,7 @@ class Day${day}Test : WordSpec({
 	include(testDay(Day${day}, 0, 0))
 })
 EOF
-  idea "$f"
+  idea-ce "$f"
 }
 
 function createInputFile() {
@@ -80,7 +80,7 @@ function createTestInputFile() {
   f="src/test/resources/de/earley/adventofcode${year}/day${day}/testInput.txt"
   mkdir -p "$(dirname "$f")"
   touch "$f"
-  idea "$f"
+  idea-ce "$f"
 }
 
 function createTaskFile() {

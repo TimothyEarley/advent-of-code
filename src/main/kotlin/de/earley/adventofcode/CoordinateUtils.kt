@@ -45,6 +45,11 @@ fun Point.isNeighbourOrSameOf(other: Point, diagonal: Boolean = false): Boolean 
 fun Point.manhattanDistanceTo(to: Point): Int = abs(x - to.x) + abs(y - to.y)
 fun Point.manhattanLength(): Int = abs(x) + abs(y)
 
+data class LongPoint(val x : Long, val y : Long) {
+	operator fun plus(other: Point): LongPoint =
+		LongPoint(x + other.x, y + other.y)
+}
+
 open class Grid<T>(
 	val width: Int,
 	val height: Int,
@@ -156,7 +161,7 @@ enum class Direction(val point: Point) {
 			else -> error("Unknown direction $c")
 		}
 
-		fun parseInitial(c: Char) = when (c) {
+		fun parseLetter(c: Char) = when (c) {
 			'L' -> Left
 			'R' -> Right
 			'U' -> Up
