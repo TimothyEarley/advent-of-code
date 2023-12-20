@@ -42,14 +42,14 @@ object Day19 : BaseSolution<Pair<WorkflowMap, List<Day19.Part>>, Long, Long>() {
 		val check: Char,
 		val op: Op,
 		val value: Int,
-		val destination: String
+		val destination: String,
 	) : Rule
 
 	data class EndRule(val destination: String) : Rule
 
 	enum class Op(val compare: (Int, Int) -> Boolean) {
 		Less({ a, b -> a < b }),
-		Greater({ a, b -> a > b })
+		Greater({ a, b -> a > b }),
 	}
 
 	data class Part(
@@ -74,9 +74,11 @@ object Day19 : BaseSolution<Pair<WorkflowMap, List<Day19.Part>>, Long, Long>() {
 					return when (val rule = rules[i++]) {
 						is EndRule -> accepts(part, rule.destination)
 						is CheckRule ->
-							if (rule.applies(part))
+							if (rule.applies(part)) {
 								accepts(part, rule.destination)
-							else continue
+							} else {
+								continue
+							}
 					}
 				}
 			}
@@ -187,6 +189,4 @@ object Day19 : BaseSolution<Pair<WorkflowMap, List<Day19.Part>>, Long, Long>() {
 			}
 		}
 	}
-
 }
-

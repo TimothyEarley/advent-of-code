@@ -19,7 +19,7 @@ object Day18 : BaseSolution<List<Day18.Line>, Long, Long>() {
 	data class Line(
 		val direction: Direction,
 		val steps: Int,
-		val colour: String
+		val colour: String,
 	)
 
 	override fun partOne(data: List<Line>): Long = area(data)
@@ -41,7 +41,7 @@ object Day18 : BaseSolution<List<Day18.Line>, Long, Long>() {
 
 		// Pick's theorem: https://en.wikipedia.org/wiki/Pick%27s_theorem
 		// area + 1 - perimeter/2 + perimeter = area + 1 + perimeter/2
-		return area.toLong() + 1 + perimeter/2
+		return area.toLong() + 1 + perimeter / 2
 	}
 
 	override fun partTwo(data: List<Line>): Long = area(
@@ -58,5 +58,4 @@ object Day18 : BaseSolution<List<Day18.Line>, Long, Long>() {
 			Line(dir, distHex.toInt(16), it.colour)
 		}
 	)
-
 }
