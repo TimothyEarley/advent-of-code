@@ -78,6 +78,7 @@ benchmark {
 			warmups = 2
 			iterations = 5
 			iterationTime = 3
+			iterationTimeUnit = "s"
 			mode = "AverageTime"
 			outputTimeUnit = "MICROSECONDS"
 		}

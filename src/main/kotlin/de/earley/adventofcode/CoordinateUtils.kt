@@ -85,6 +85,14 @@ open class Grid<T>(
 
 	fun <B> map(f: (T) -> B): Grid<B> = Grid(width, height, data.map(f))
 
+	fun <B> mapIndexed(f: (Point, T) -> B): Grid<B> = Grid(
+		width,
+		height,
+		data.mapIndexed { index, t ->
+			f(Point(index.mod(width), index.floorDiv(width)), t)
+		}
+	)
+
 	fun getColumn(x: Int): List<T> = List(height) { y -> get(x, y)!! }
 	fun getRow(y: Int): List<T> = List(width) { x -> get(x, y)!! }
 }
