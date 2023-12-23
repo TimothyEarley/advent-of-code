@@ -1,6 +1,7 @@
 package de.earley.adventofcode2023.day23
 
 import de.earley.adventofcode.BaseSolution
+import de.earley.adventofcode.Direction
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.neighbours
@@ -22,41 +23,13 @@ object Day23 : BaseSolution<Grid<Day23.Tile>, Long, Long>() {
 	}
 
 	override fun partOne(data: Grid<Tile>): Long {
-		val start = data.pointValues().first { it.second == Tile.Path }.first
 		val end = data.pointValues().last { it.second == Tile.Path }.first
-
-		return longestPath(start, end, data)
-	}
-
-	private fun longestPath(current: Point, end: Point, data: Grid<Tile>): Long {
-		val f = DeepRecursiveFunction<Pair<Point, Set<Point>>, Long> { (current, visited) ->
-			if (current == end) {
-				return@DeepRecursiveFunction 0
-			}
-			val newVisited = visited + current
-			val nexts = when (data[current]!!) {
-				Tile.Path -> current.neighbours()
-				Tile.Forest -> sequenceOf()
-				Tile.SlopeDown -> sequenceOf(current.copy(y = current.y + 1))
-				Tile.SlopeRight -> sequenceOf(current.copy(x = current.x + 1))
-				Tile.SlopeLeft -> sequenceOf(current.copy(x = current.x - 1))
-				Tile.SlopeUp -> sequenceOf(current.copy(y = current.y - 1))
-			}
-				.filter { it in data }
-				.filter { data[it] != Tile.Forest }
-				.filter { it !in visited }
-				.toList()
-
-			return@DeepRecursiveFunction nexts.maxOfOrNull { 1 + callRecursive(it to newVisited) } ?: Long.MIN_VALUE
-		}
-
-		return f(current to emptySet())
+		return data.toGraph(true).longestPath(end)
 	}
 
 	override fun partTwo(data: Grid<Tile>): Long {
-		val startNode = data.toGraph()
 		val end = data.pointValues().last { it.second == Tile.Path }.first
-		return longestPath2(startNode, end, emptySet()) - 1
+		return data.toGraph(false).longestPath(end)
 	}
 
 	private class Node(
@@ -64,53 +37,51 @@ object Day23 : BaseSolution<Grid<Day23.Tile>, Long, Long>() {
 		val neighbours: MutableSet<Pair<Node, Int>>,
 	)
 
-	private fun Grid<Tile>.toGraph(): Node {
+	private fun Point.pathNeighbours(data: Grid<Tile>, slopes: Boolean): Sequence<Point> =
+		(if (slopes)
+			when (data[this]) {
+				Tile.Path -> neighbours()
+				Tile.Forest, null -> sequenceOf()
+				Tile.SlopeDown -> sequenceOf(this + Direction.Down.point)
+				Tile.SlopeRight -> sequenceOf(this + Direction.Right.point)
+				Tile.SlopeLeft -> sequenceOf(this + Direction.Left.point)
+				Tile.SlopeUp -> sequenceOf(this + Direction.Up.point)
+			}
+		else neighbours())
+			.filter { data[it] != Tile.Forest }
+
+	private fun Grid<Tile>.toGraph(slopes: Boolean): Node {
 		val start = pointValues().first { it.second == Tile.Path }.first
 		val end = pointValues().last { it.second == Tile.Path }.first
-		val nodes = mutableMapOf<Point, Node>()
-		val visited: MutableSet<Point> = mutableSetOf()
 
-		class Arg(
-			val current: Point,
-			val previous: Node,
-			val distance: Int,
-		)
-
-		val traverse = DeepRecursiveFunction<Arg, Unit> { arg ->
-			visited.add(arg.current)
-			val nexts = arg.current.neighbours()
-				.filter { it in this@toGraph }
-				.filter { this@toGraph[it] != Tile.Forest }
-				.filter { it !in visited }
-				.toList()
-
-			if (nexts.size == 1 && arg.current != end) {
-				callRecursive(Arg(nexts.single(), arg.previous, arg.distance + 1))
-			} else {
-				// this is a junction (or end)
-				val node = nodes.getOrPut(arg.current) { Node(arg.current, mutableSetOf()) }
-				node.neighbours.add(arg.previous to arg.distance)
-				arg.previous.neighbours.add(node to arg.distance)
-				nexts.forEach {
-					callRecursive(Arg(it, node, 1))
-				}
+		val nodes: Map<Point, Node> = this.pointValues()
+			.filter { (p, tile) ->
+				p == start || p == end || (tile == Tile.Path && p.pathNeighbours(this, slopes).count() >= 3)
 			}
+			.associate { it.first to Node(it.first, mutableSetOf()) }
+
+		tailrec fun toNextJunction(current: Point, prev: Point, distance: Int): Pair<Node, Int>? =
+			if (current in nodes.keys) nodes[current]!! to distance
+			else {
+				val next = current.pathNeighbours(this, slopes).singleOrNull { it != prev }
+				if (next == null) null else toNextJunction(next, current, distance + 1)
+			}
+
+		nodes.forEach { (p, node) ->
+			// travel along the paths to next junction
+			p.pathNeighbours(this, slopes)
+				.mapNotNull { toNextJunction(it, p, 1) }
+				.forEach {
+					node.neighbours.add(it)
+				}
 		}
 
-		val startNode = Node(start, mutableSetOf())
-		nodes[start] = startNode
-		traverse(Arg(start, startNode, 1))
-
-		return startNode
+		return nodes[start]!!
 	}
 
-	private fun longestPath2(current: Node, end: Point, visited: Set<Node>): Long =
-		if (current.point == end) {
-			0
-		} else {
-			current.neighbours
-				.filter { it.first !in visited }
-				.maxOfOrNull { it.second + longestPath2(it.first, end, visited + it.first) }
-				?: Long.MIN_VALUE
-		}
+	private fun Node.longestPath(end: Point, visited: Set<Node> = emptySet()): Long =
+		if (point == end) 0 else neighbours
+			.filter { it.first !in visited }
+			.maxOfOrNull { it.second + it.first.longestPath(end, visited + it.first) }
+			?: Long.MIN_VALUE
 }
