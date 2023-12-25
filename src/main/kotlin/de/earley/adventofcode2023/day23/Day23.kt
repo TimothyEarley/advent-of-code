@@ -38,16 +38,20 @@ object Day23 : BaseSolution<Grid<Day23.Tile>, Long, Long>() {
 	)
 
 	private fun Point.pathNeighbours(data: Grid<Tile>, slopes: Boolean): Sequence<Point> =
-		(if (slopes)
-			when (data[this]) {
-				Tile.Path -> neighbours()
-				Tile.Forest, null -> sequenceOf()
-				Tile.SlopeDown -> sequenceOf(this + Direction.Down.point)
-				Tile.SlopeRight -> sequenceOf(this + Direction.Right.point)
-				Tile.SlopeLeft -> sequenceOf(this + Direction.Left.point)
-				Tile.SlopeUp -> sequenceOf(this + Direction.Up.point)
+		(
+			if (slopes) {
+				when (data[this]) {
+					Tile.Path -> neighbours()
+					Tile.Forest, null -> sequenceOf()
+					Tile.SlopeDown -> sequenceOf(this + Direction.Down.point)
+					Tile.SlopeRight -> sequenceOf(this + Direction.Right.point)
+					Tile.SlopeLeft -> sequenceOf(this + Direction.Left.point)
+					Tile.SlopeUp -> sequenceOf(this + Direction.Up.point)
+				}
+			} else {
+				neighbours()
 			}
-		else neighbours())
+			)
 			.filter { data[it] != Tile.Forest }
 
 	private fun Grid<Tile>.toGraph(slopes: Boolean): Node {
@@ -61,8 +65,9 @@ object Day23 : BaseSolution<Grid<Day23.Tile>, Long, Long>() {
 			.associate { it.first to Node(it.first, mutableSetOf()) }
 
 		tailrec fun toNextJunction(current: Point, prev: Point, distance: Int): Pair<Node, Int>? =
-			if (current in nodes.keys) nodes[current]!! to distance
-			else {
+			if (current in nodes.keys) {
+				nodes[current]!! to distance
+			} else {
 				val next = current.pathNeighbours(this, slopes).singleOrNull { it != prev }
 				if (next == null) null else toNextJunction(next, current, distance + 1)
 			}
@@ -80,8 +85,12 @@ object Day23 : BaseSolution<Grid<Day23.Tile>, Long, Long>() {
 	}
 
 	private fun Node.longestPath(end: Point, visited: Set<Node> = emptySet()): Long =
-		if (point == end) 0 else neighbours
-			.filter { it.first !in visited }
-			.maxOfOrNull { it.second + it.first.longestPath(end, visited + it.first) }
-			?: Long.MIN_VALUE
+		if (point == end) {
+			0
+		} else {
+			neighbours
+				.filter { it.first !in visited }
+				.maxOfOrNull { it.second + it.first.longestPath(end, visited + it.first) }
+				?: Long.MIN_VALUE
+		}
 }

@@ -57,7 +57,6 @@ object Day25 : BaseSolution<Map<String, List<String>>, Long, Long>() {
 					if (fillLeft.intersect(fillRight).isEmpty() && (fillLeft.union(fillRight) == keys)) {
 						return fillLeft.size.toLong() * fillRight.size
 					}
-
 				}
 			}
 		}
@@ -65,7 +64,7 @@ object Day25 : BaseSolution<Map<String, List<String>>, Long, Long>() {
 		error("No solution found")
 	}
 
-	private fun order(it: (Pair<String, String>)) : Pair<String, String> =
+	private fun order(it: (Pair<String, String>)): Pair<String, String> =
 		if (it.first < it.second) it else (it.second to it.first)
 
 	private fun Map<String, List<String>>.complete(): Map<String, List<String>> =
@@ -77,10 +76,11 @@ object Day25 : BaseSolution<Map<String, List<String>>, Long, Long>() {
 		open: Set<String>,
 		map: Map<String, List<String>>,
 		removed: List<Pair<String, String>>,
-		seen: Set<String>
+		seen: Set<String>,
 	): Set<String> =
-		if (open.isEmpty()) seen
-		else {
+		if (open.isEmpty()) {
+			seen
+		} else {
 			val first = open.first()
 			val rest = open.drop(1)
 			val next = map[first]!!
@@ -90,5 +90,4 @@ object Day25 : BaseSolution<Map<String, List<String>>, Long, Long>() {
 		}
 
 	override fun partTwo(data: Map<String, List<String>>): Long = 0
-
 }

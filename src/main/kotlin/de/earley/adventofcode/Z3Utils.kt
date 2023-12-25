@@ -23,11 +23,10 @@ context(Context)
 infix fun <R : Sort> Expr<R>.eq(other: Expr<R>): Expr<BoolSort>? =
 	mkEq(this, other)
 
-
 context(Context)
 val Long.real: RatNum
 	get() = mkReal(this)
 
-operator fun Model.get(x : Expr<RealSort>): BigDecimal = (getConstInterp(x) as RatNum).let {
+operator fun Model.get(x: Expr<RealSort>): BigDecimal = (getConstInterp(x) as RatNum).let {
 	it.bigIntNumerator.toBigDecimal().divide(it.bigIntDenominator.toBigDecimal())
 }

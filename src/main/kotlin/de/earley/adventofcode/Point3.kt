@@ -58,11 +58,10 @@ fun Point3.axis(): Int = when {
 
 fun Point3.manhattanTo(other: Point3): Int = abs(x - other.x) + abs(y - other.y) + abs(z - other.z)
 
-
 data class LongPoint3(
 	val x: Long,
 	val y: Long,
-	val z: Long
+	val z: Long,
 ) {
 	companion object {
 		fun parse(s: String): LongPoint3 =

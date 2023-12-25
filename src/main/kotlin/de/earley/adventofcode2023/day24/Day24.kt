@@ -17,7 +17,7 @@ fun main() = Day24(200000000000000, 400000000000000).start()
 
 class Day24(
 	searchMin: Long,
-	searchMax: Long
+	searchMax: Long,
 ) : BaseSolution<List<Day24.Hailstone>, Long, Long>() {
 
 	private val searchRange = searchMin.toDouble()..searchMax.toDouble()
@@ -29,7 +29,7 @@ class Day24(
 
 	data class Hailstone(
 		val position: LongPoint3,
-		val velocity: LongPoint3
+		val velocity: LongPoint3,
 	) {
 		/*
 		 x = p.x + v.x * t ==> t = (x - p.x) / v.x
@@ -57,7 +57,6 @@ class Day24(
 		val x = (d - c) / (a - b)
 		val y = a * (d - c) / (a - b) + c
 
-
 		val inRange = x in searchRange && y in searchRange
 		val inFutureH1 = when (h1.velocity.x.sign) {
 			-1 -> x < h1.position.x
@@ -74,7 +73,6 @@ class Day24(
 	}
 
 	override fun partTwo(data: List<Hailstone>): Long = with(Context()) {
-
 		val solver = mkSolver()
 
 		val x = mkRealConst("x")
@@ -102,8 +100,4 @@ class Day24(
 			}
 		}
 	}
-
 }
-
-
-
