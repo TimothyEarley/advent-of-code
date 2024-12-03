@@ -6,46 +6,45 @@ import de.earley.adventofcode.readResource
 
 fun main() = Day3.start()
 
-sealed interface Instruction
-data class Mul(val x: Int, val y: Int) : Instruction
-object Do : Instruction
-object Dont : Instruction
+object Day3 : BaseSolution<List<Day3.Instruction>, Long, Long>() {
 
-object Day3 : BaseSolution<List<Instruction>, Long, Long>() {
+    override fun parseInput(input: Sequence<String>): List<Instruction> = input.joinToString("\n").let { line ->
+        val regex = "(?:mul\\((\\d{1,3}),(\\d{1,3})\\))|(?:don't\\(\\))|(?:do\\(\\))".toRegex()
+        regex.findAll(line).mapToList { match ->
+            when (val f = match.value.substringBefore('(')) {
+                "mul" -> {
+                    val (x, y) = match.destructured
+                    Mul(x.toInt(), y.toInt())
+                }
 
-	override fun parseInput(input: Sequence<String>): List<Instruction> = input
-		.joinToString("\n").let { line ->
-		val regex = "(?:mul\\((\\d{1,3}),(\\d{1,3})\\))|(?:don't\\(\\))|(?:do\\(\\))".toRegex()
-		regex.findAll(line).mapToList { r ->
-			if (r.value.startsWith("m")) {
-				val (x, y) = r.destructured
-				Mul(x.toInt(), y.toInt())
-			} else if (r.value.startsWith("don't")) {
-				Dont
-			} else if (r.value.startsWith("do(")) {
-				Do
-			} else error("Err")
-		}
-	}
+                "do" -> Do
+                "don't" -> Dont
+                else -> error("Unknown function $f")
+            }
+        }
+    }
 
-	override fun partOne(data: List<Instruction>): Long = data.sumOf {
-		when (it) {
-			is Mul -> it.x * it.y.toLong()
-			Do -> 0
-			Dont -> 0
-		}
-	}
+    sealed interface Instruction
+    data class Mul(val x: Int, val y: Int) : Instruction {
+        val result: Long = x * y.toLong()
+    }
 
-	override fun partTwo(data: List<Instruction>): Long = data
-		.also { println(it) }
-		.fold(
-		0L to true
-	) { (r, enable) , ins->
-		when (ins) {
-			Do -> r to true
-			Dont -> r to false
-			is Mul -> if (enable) (r + ins.x * ins.y) to enable else r to enable
-		}
-	}.first
+    data object Do : Instruction
+    data object Dont : Instruction
 
+    override fun partOne(data: List<Instruction>): Long = data.sumOf {
+        when (it) {
+            is Mul -> it.result
+            else -> 0
+        }
+    }
+
+    override fun partTwo(data: List<Instruction>): Long = data
+        .fold(0L to true) { (r, enable), ins ->
+            when (ins) {
+                Do -> r to true
+                Dont -> r to false
+                is Mul -> if (enable) (r + ins.result) to true else r to false
+            }
+        }.first
 }
