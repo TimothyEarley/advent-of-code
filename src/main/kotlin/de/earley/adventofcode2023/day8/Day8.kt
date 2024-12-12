@@ -49,7 +49,7 @@ object Day8 : BaseSolution<Day8.Data, Int, Long>() {
 		val start = data.map.keys.filter { it.endsWith("A") }.toSet()
 		// each goes through a sequence of Zs at certain intervals
 		// since there is a finite amount of Zs, it must repeat at some point
-		// MASSIVE assumption: each reaches exactly one ...Z and the A-Z cyle and Z-Z cycles have the same length
+		// MASSIVE assumption: each reaches exactly one ...Z and the A-Z cycle and Z-Z cycles have the same length
 		val reachedAfter = start.map {
 			it.cyclesTo(0, data) { c -> c.endsWith("Z") }
 				.toLong()

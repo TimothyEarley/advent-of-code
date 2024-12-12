@@ -218,8 +218,6 @@ sealed interface Position
 data class Hall(val pos: Int) : Position
 data class SideRoom(val room: Int, val space: Int) : Position
 
-fun Amphipod.isCorrectRoom(pos: Position) = pos is SideRoom && pos.space == this.type.desiredSideRoom
-
 fun State.isSolved(): Boolean =
 	amphipods.all {
 		when (it.type) {

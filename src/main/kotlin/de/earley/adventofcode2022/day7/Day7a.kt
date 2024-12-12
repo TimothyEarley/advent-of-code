@@ -72,7 +72,7 @@ object Day7a : BaseSolution<List<Day7a.CommandExec>, Int, Int>() {
 	}
 
 	sealed interface Command
-	object Ls : Command
+	data object Ls : Command
 	data class Cd(val to: String) : Command
 
 	data class CommandExec(val command: Command, val result: List<Listing>)

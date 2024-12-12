@@ -36,7 +36,6 @@ object Day19 : BaseSolution<List<Day19.Blueprint>, Int, Int>() {
 			}.sumOf { it.await() }
 	}
 
-	@OptIn(ExperimentalTime::class)
 	override fun partTwo(data: List<Blueprint>): Int = measureTimedValue {
 		data.take(3)
 			.map { mostGeodesCollected(it, 32) }

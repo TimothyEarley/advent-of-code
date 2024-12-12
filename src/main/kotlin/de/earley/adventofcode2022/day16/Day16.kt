@@ -39,7 +39,7 @@ object Day16 : BaseSolution<Map<String, Day16.Valve>, Int, Int>() {
 		val simTime = time + 1
 		val needToOpen = data.entries.filter { it.value.flowRate > 0 }.map { it.key }.toSet()
 
-		val result = generalAStarNode<T>(
+		val result = generalAStarNode(
 			from = start,
 			goal = { it.minute == simTime },
 			heuristic = { s ->

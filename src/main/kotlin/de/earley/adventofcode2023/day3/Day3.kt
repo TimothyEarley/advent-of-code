@@ -14,7 +14,7 @@ object Day3 : BaseSolution<Grid<Char>, Int, Int>() {
 
 	override fun partOne(data: Grid<Char>): Int = data.pointValues().sumOf { (p, c) ->
 		when {
-			!c.isDigit() -> 0.toInt()
+			!c.isDigit() -> 0
 			// we have a digit, check if first digit in number
 			data[p + Direction.Left.point]?.isDigit() == true -> 0
 			// we are the start of a number

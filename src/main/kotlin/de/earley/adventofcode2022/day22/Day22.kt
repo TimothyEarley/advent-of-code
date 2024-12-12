@@ -292,7 +292,7 @@ object Day22 : BaseSolution<Day22.Input, Int, Int>() {
 	)
 
 	sealed interface MovementCommand
-	object TurnLeft : MovementCommand
-	object TurnRight : MovementCommand
+	data object TurnLeft : MovementCommand
+	data object TurnRight : MovementCommand
 	data class Walk(val steps: Int) : MovementCommand
 }

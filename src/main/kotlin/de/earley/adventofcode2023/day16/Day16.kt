@@ -28,8 +28,8 @@ object Day16 : BaseSolution<Grid<Day16.Tile>, Long, Long>() {
 	private fun energizedTiles(data: Grid<Tile>, start: Beam): Long {
 		val cache = data.map { false to emptySet<Beam>() }.toMutableGrid()
 
-		runUntil(listOf(start), { it.isEmpty() }) {
-			it.flatMap { beam ->
+		runUntil(listOf(start), { it.isEmpty() }) { beams ->
+			beams.flatMap { beam ->
 				val next = beam.p + beam.d.point
 
 				when (data[next]) {

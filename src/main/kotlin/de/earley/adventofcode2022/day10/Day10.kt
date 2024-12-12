@@ -50,7 +50,7 @@ object Day10 : BaseSolution<List<Day10.Instruction>, Int, String>() {
 	data class State<T>(val total: T, val cycle: Int, val x: Int)
 
 	sealed interface Instruction {
-		object Noop : Instruction
+		data object Noop : Instruction
 		data class Addx(val v: Int) : Instruction
 	}
 }

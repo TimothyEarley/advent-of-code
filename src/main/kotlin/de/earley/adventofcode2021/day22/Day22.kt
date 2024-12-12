@@ -25,12 +25,12 @@ object Day22 : BaseSolution<List<RebootStep>, Long, Long>() {
 	}
 
 	override fun partOne(data: List<RebootStep>): Long =
-		data.fold(emptyList<Region>(), this::step)
+		data.fold(emptyList(), this::step)
 			.map { Region(it.x.coerce(-50, 50), it.y.coerce(-50, 50), it.z.coerce(-50, 50)) }
 			.sumOf(Region::size)
 
 	override fun partTwo(data: List<RebootStep>): Long =
-		data.fold(emptyList<Region>(), this::step).sumOf(Region::size)
+		data.fold(emptyList(), this::step).sumOf(Region::size)
 
 	private fun step(state: List<Region>, rs: RebootStep): List<Region> =
 		state.flatMap { splitOverlap(it, rs.region) }.let {

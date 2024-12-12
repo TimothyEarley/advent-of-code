@@ -19,7 +19,7 @@ object Day2 : BaseSolution<List<Day2.Command>, Int, Int>() {
 				"forward" -> Direction.FORWARD
 				"up" -> Direction.UP
 				"down" -> Direction.DOWN
-				else -> error("Unkown direction $d")
+				else -> error("Unknown direction $d")
 			}
 			Command(dir, a.toInt())
 		}

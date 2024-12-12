@@ -4,10 +4,8 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Point3
 import de.earley.adventofcode.manhattanTo
 import de.earley.adventofcode.split
-import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-@OptIn(ExperimentalTime::class)
 fun main() {
 	println("Time: " + measureTime { Day19.start() })
 }
@@ -17,8 +15,8 @@ object Day19 : BaseSolution<List<Scanner>, Int, Int>() {
 	override fun parseInput(input: Sequence<String>): List<Scanner> =
 		input.toList()
 			.split { it.isBlank() }
-			.mapIndexed { i, it ->
-				Scanner(i, it.drop(1).map(Point3.Companion::parse))
+			.mapIndexed { _, it ->
+				Scanner(it.drop(1).map(Point3.Companion::parse))
 			}
 
 	override fun partOne(data: List<Scanner>): Int = solvePosition(data).flatMap { it.beacons }.toSet().size
@@ -34,7 +32,7 @@ object Day19 : BaseSolution<List<Scanner>, Int, Int>() {
 	private fun solvePosition(scanners: List<Scanner>): List<PositionedScanner> {
 		// fix scanner 0 to be at (0, 0) global with x, y, z facing the correct way
 		val base = scanners.first()
-		val baseFixed = PositionedScanner(base.id, Point3(0, 0, 0), base.beacons.toSet())
+		val baseFixed = PositionedScanner(Point3(0, 0, 0), base.beacons.toSet())
 
 		val solvedScanners = mutableListOf(baseFixed)
 		val open = scanners.drop(1).toMutableList()
@@ -71,7 +69,6 @@ object Day19 : BaseSolution<List<Scanner>, Int, Int>() {
 							it + scannerRelativeToBase
 						}
 						return PositionedScanner(
-							other.id,
 							scannerRelativeToBase,
 							transformed
 						)
@@ -85,12 +82,10 @@ object Day19 : BaseSolution<List<Scanner>, Int, Int>() {
 }
 
 class Scanner(
-	val id: Int,
 	val beacons: List<Point3>,
 )
 
 class PositionedScanner(
-	val id: Int,
 	val position: Point3,
 	val beacons: Set<Point3>,
 )

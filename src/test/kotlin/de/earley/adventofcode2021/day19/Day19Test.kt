@@ -11,7 +11,6 @@ class Day19Test : WordSpec({
 	"configurations" should {
 
 		val scanner = Scanner(
-			-1,
 			listOf(
 				Point3(-1, -1, 1),
 				Point3(-2, -2, 2),

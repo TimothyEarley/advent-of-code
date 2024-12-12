@@ -18,7 +18,7 @@ object Day8 : BaseSolution<Grid<Char?>, Long, Long>() {
 	}
 
 	override fun partOne(data: Grid<Char?>): Long {
-		var antiNodes = mutableSetOf<Point>()
+		val antiNodes = mutableSetOf<Point>()
 
 		data.pointValues()
 			.filter { it.second != null }
@@ -40,7 +40,7 @@ object Day8 : BaseSolution<Grid<Char?>, Long, Long>() {
 	}
 
 	override fun partTwo(data: Grid<Char?>): Long {
-		var antiNodes = mutableSetOf<Point>()
+		val antiNodes = mutableSetOf<Point>()
 
 		data.pointValues()
 			.filter { it.second != null }

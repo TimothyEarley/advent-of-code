@@ -80,7 +80,7 @@ object Day17 : BaseSolution<List<Day17.Direction>, Long, Long>() {
 		var iteration = -1L
 		while (++iteration < iterations) {
 			if (useSeen) {
-				val key = SeenKey(grid.key(), (iteration % pieces.size).toInt(), (jetIndex % data.size).toInt())
+				val key = SeenKey(grid.key(), (iteration % pieces.size).toInt(), jetIndex % data.size)
 				when (val prev = seen[key]) {
 					null -> seen[key] = SeenState(shifted, iteration)
 					else -> {
