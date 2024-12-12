@@ -31,8 +31,11 @@ object Day22 : BaseSolution<List<Day22.Brick>, Int, Int>() {
 		val grounded: Boolean,
 	)
 
-	override fun partOne(data: List<Brick>): Int = settleBricks(data).values.count {
-		it.supporting.isEmpty()
+	override fun partOne(data: List<Brick>): Int {
+		val settled = settleBricks(data)
+		return settled.count { brick ->
+			brick.value.supporting.all { (settled[it]!!.supportedBy - brick.key).isNotEmpty() }
+		}
 	}
 
 	private fun settleBricks(data: List<Brick>): Map<Name, BrickStructure> {
