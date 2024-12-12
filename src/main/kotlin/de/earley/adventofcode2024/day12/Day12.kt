@@ -4,6 +4,7 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Direction
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
+import de.earley.adventofcode.floodFill
 import de.earley.adventofcode.neighbours
 import de.earley.adventofcode.toGrid
 import de.earley.adventofcode.toMutableGrid
@@ -27,7 +28,7 @@ object Day12 : BaseSolution<Grid<Char>, Long, Long>() {
 		var result = 0L
 		for (p in grid.indices) {
 			if (done[p] == true) continue
-			val region = floodfill(grid, p)
+			val region = floodFill(grid, p)
 			region.forEach {
 				done[it] = true
 			}
@@ -37,19 +38,9 @@ object Day12 : BaseSolution<Grid<Char>, Long, Long>() {
 		return result
 	}
 
-	private fun floodfill(grid: Grid<Char>, from: Point): Set<Point> {
+	private fun floodFill(grid: Grid<Char>, from: Point): Set<Point> {
 		val type = grid[from]!!
-		val open = mutableSetOf(from)
-		val visited = mutableSetOf<Point>()
-		while (open.isNotEmpty()) {
-			val next = open.first()
-			open.remove(next)
-			visited += next
-			open += next.neighbours(false)
-				.filter { it !in visited }
-				.filter { grid[it] == type }
-		}
-		return visited
+		return grid.floodFill(from) { it == type }
 	}
 
 	private fun Set<Point>.perimeter(): Long = sumOf { p ->

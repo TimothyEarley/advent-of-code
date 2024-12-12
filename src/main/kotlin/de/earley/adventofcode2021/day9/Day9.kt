@@ -3,6 +3,7 @@ package de.earley.adventofcode2021.day9
 import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
+import de.earley.adventofcode.floodFill
 import de.earley.adventofcode.mapToList
 import de.earley.adventofcode.neighbours
 
@@ -26,7 +27,7 @@ object Day9 : BaseSolution<Heightmap, Int, Int>() {
 
 	override fun partTwo(data: Heightmap): Int {
 		val basins = data.localMinima().map {
-			data.floodFillBasin(emptySet(), setOf(it)).size
+			data.floodFillBasin(it).size
 		}.sortedDescending()
 
 		return basins.take(3).reduce(Int::times)
@@ -38,14 +39,7 @@ object Day9 : BaseSolution<Heightmap, Int, Int>() {
 		}.mapToList { it.first }
 	}
 
-	private tailrec fun Heightmap.floodFillBasin(visited: Set<Point>, open: Set<Point>): Set<Point> {
-		if (open.isEmpty()) return visited
-
-		val next = open.first()
-		val newOpens: List<Point> = next.neighbours().filter {
-			it in this && get(it) != 9 && it !in visited
-		}.toList()
-
-		return floodFillBasin(visited + next, open - next + newOpens)
+	private fun Heightmap.floodFillBasin(from: Point): Set<Point> {
+		return floodFill(from) { it != 9 }
 	}
 }

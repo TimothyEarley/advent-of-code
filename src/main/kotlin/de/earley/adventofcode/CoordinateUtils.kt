@@ -122,6 +122,20 @@ fun <T> List<String>.toGrid(f: (Char) -> T): Grid<T> {
 	return Grid(this.first().length, this.size, this.flatMap { it.map(f) })
 }
 
+fun <T> Grid<T>.floodFill(from: Point, condition: (T) -> Boolean): Set<Point> {
+	val open = mutableSetOf(from)
+	val visited = mutableSetOf<Point>()
+	while (open.isNotEmpty()) {
+		val next = open.first()
+		open.remove(next)
+		visited += next
+		open += next.neighbours(false)
+			.filter { it in this }
+			.filter { it !in visited }
+			.filter { condition(this[it]!!) }
+	}
+	return visited
+}
 
 fun <A, B> Grid<A>.toMutableGrid(): MutableGrid<B> where A : B = MutableGrid(width, height, values().toMutableList())
 
