@@ -3,6 +3,7 @@ package de.earley.adventofcode2023.day14
 import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.MutableGrid
+import de.earley.adventofcode.toGrid
 import de.earley.adventofcode.toMutableGrid
 import de.earley.adventofcode2023.day14.Day14.Type.Empty
 import de.earley.adventofcode2023.day14.Day14.Type.MovingRock
@@ -11,12 +12,8 @@ fun main() = Day14.start()
 
 object Day14 : BaseSolution<Grid<Day14.Type>, Long, Long>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<Type> = input.toList().let { list ->
-		Grid(
-			list.first().length,
-			list.size,
-			list.flatMap { line -> line.map { c -> Type.entries.find { it.symbol == c }!! } }
-		)
+	override fun parseInput(input: Sequence<String>): Grid<Type> = input.toGrid { c ->
+		Type.entries.find { it.symbol == c }!!
 	}
 
 	enum class Type(val symbol: Char) {

@@ -5,15 +5,14 @@ import de.earley.adventofcode.Direction
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.neighbours
+import de.earley.adventofcode.toGrid
 import de.earley.adventofcode.toMutableGrid
 
 fun main() = Day12.start()
 
 object Day12 : BaseSolution<Grid<Char>, Long, Long>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<Char> = input.toList().let { lines ->
-		Grid(lines.first().length, lines.size, lines.flatMap(String::toList))
-	}
+	override fun parseInput(input: Sequence<String>): Grid<Char> = input.toGrid { it }
 
 	override fun partOne(data: Grid<Char>): Long = sumRegions(data) {
 		it.size * it.perimeter()

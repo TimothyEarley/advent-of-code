@@ -4,24 +4,16 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Direction
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
-import de.earley.adventofcode.grid
 import de.earley.adventofcode.neighbours
+import de.earley.adventofcode.toGrid
 import kotlin.math.abs
 
 fun main() = Day10.start()
 
 object Day10 : BaseSolution<Grid<Day10.Pipe>, Int, Int>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<Pipe> = input.toList().let { lines ->
-		Grid(
-			lines.first().length,
-			lines.size,
-			lines.flatMap { line ->
-				line.toCharArray().map { c ->
-					Pipe.entries.find { it.symbol == c } ?: error("Not found: $c")
-				}.toList()
-			}
-		)
+	override fun parseInput(input: Sequence<String>): Grid<Pipe> = input.toGrid { c ->
+		Pipe.entries.find { it.symbol == c } ?: error("Not found: $c")
 	}
 
 	enum class Pipe(val symbol: Char) {

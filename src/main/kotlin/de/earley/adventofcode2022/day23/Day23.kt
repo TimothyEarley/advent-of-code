@@ -1,7 +1,6 @@
 package de.earley.adventofcode2022.day23
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.toGrid
 
@@ -9,15 +8,12 @@ fun main() = Day23.start()
 
 object Day23 : BaseSolution<List<Point>, Int, Int>() {
 
-	override fun parseInput(input: Sequence<String>): List<Point> = input.toList().let { lines ->
-		val data = lines.flatMap { it.toCharArray().toList() }
-		val grid = Grid<Char>(lines[0].length, lines.size, data)
-
-		grid.pointValues()
+	override fun parseInput(input: Sequence<String>): List<Point> =
+		input.toGrid { it }
+			.pointValues()
 			.filter { it.second == '#' }
 			.map { it.first }
 			.toList()
-	}
 
 	override fun partOne(data: List<Point>): Int =
 		(0 until 10).fold(data) { acc, i ->

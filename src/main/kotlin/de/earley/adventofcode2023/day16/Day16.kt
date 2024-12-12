@@ -5,14 +5,15 @@ import de.earley.adventofcode.Direction
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.runUntil
+import de.earley.adventofcode.toGrid
 import de.earley.adventofcode.toMutableGrid
 
 fun main() = Day16.start()
 
 object Day16 : BaseSolution<Grid<Day16.Tile>, Long, Long>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<Tile> = input.toList().let { lines ->
-		Grid(lines.first().length, lines.size, lines.flatMap { line -> line.map { c -> Tile.entries.find { it.symbol == c }!! } })
+	override fun parseInput(input: Sequence<String>): Grid<Tile> = input.toGrid { c ->
+		Tile.entries.find { it.symbol == c }!!
 	}
 
 	enum class Tile(val symbol: Char) {

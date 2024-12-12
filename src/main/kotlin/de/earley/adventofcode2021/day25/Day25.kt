@@ -3,30 +3,20 @@ package de.earley.adventofcode2021.day25
 import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
+import de.earley.adventofcode.toGrid
 import de.earley.adventofcode.toMutableGrid
 
 fun main() = Day25.start()
 
 object Day25 : BaseSolution<Grid<SeaCucumber?>, Int, Int>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<SeaCucumber?> {
-		val l = input.toList()
-		val width = l.first().length
-		val height = l.size
-		return Grid(
-			width,
-			height,
-			l.flatMap {
-				it.map { c ->
-					when (c) {
-						'>' -> SeaCucumber(true)
-						'v' -> SeaCucumber(false)
-						'.' -> null
-						else -> error("")
-					}
-				}
-			}
-		)
+	override fun parseInput(input: Sequence<String>): Grid<SeaCucumber?> = input.toGrid { c ->
+		when (c) {
+			'>' -> SeaCucumber(true)
+			'v' -> SeaCucumber(false)
+			'.' -> null
+			else -> error("")
+		}
 	}
 
 	override fun partOne(data: Grid<SeaCucumber?>): Int {

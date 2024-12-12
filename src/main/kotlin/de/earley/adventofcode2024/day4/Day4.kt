@@ -4,14 +4,13 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.neighbours
+import de.earley.adventofcode.toGrid
 
 fun main() = Day4.start()
 
 object Day4 : BaseSolution<Grid<Char>, Long, Long>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<Char> = input.toList().let { lines ->
-		Grid(lines.first().length, lines.size, lines.flatMap { it.toList() }.toList())
-	}
+	override fun parseInput(input: Sequence<String>): Grid<Char> = input.toGrid { it }
 
 	override fun partOne(data: Grid<Char>): Long = data.pointValues().sumOf { (p, v) ->
 		if (v == 'X') {

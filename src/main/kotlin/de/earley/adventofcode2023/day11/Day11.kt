@@ -2,6 +2,7 @@ package de.earley.adventofcode2023.day11
 
 import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
+import de.earley.adventofcode.toGrid
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -10,14 +11,8 @@ fun main() = Day11(1000000).start()
 
 class Day11(private val expansion: Int) : BaseSolution<Grid<Boolean>, Long, Long>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<Boolean> = input.toList().let { l ->
-		Grid(
-			l.first().length,
-			l.size,
-			l.flatMap { line ->
-				line.map { it == '#' }
-			}
-		)
+	override fun parseInput(input: Sequence<String>): Grid<Boolean> = input.toGrid {
+		it == '#'
 	}
 
 	override fun partOne(data: Grid<Boolean>): Long = solve(data, 2)

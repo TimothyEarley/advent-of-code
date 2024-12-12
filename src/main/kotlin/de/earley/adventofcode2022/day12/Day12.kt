@@ -7,17 +7,13 @@ import de.earley.adventofcode.cache
 import de.earley.adventofcode.generalAStar
 import de.earley.adventofcode.manhattanDistanceTo
 import de.earley.adventofcode.neighbours
+import de.earley.adventofcode.toGrid
 
 fun main() = Day12.start()
 
 object Day12 : BaseSolution<Grid<Char>, Int, Int>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<Char> {
-		val l = input.toList()
-		val width = l.first().length
-		val height = l.size
-		return Grid(width, height, l.flatMap { it.toList() })
-	}
+	override fun parseInput(input: Sequence<String>): Grid<Char> = input.toGrid { it }
 
 	override fun partOne(data: Grid<Char>): Int {
 		val start = data.indexOf('S')!!

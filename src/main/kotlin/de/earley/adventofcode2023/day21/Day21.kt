@@ -4,6 +4,7 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.neighbours
+import de.earley.adventofcode.toGrid
 import space.kscience.kmath.functions.ListPolynomial
 import space.kscience.kmath.functions.asFunctionOver
 import space.kscience.kmath.misc.toIntExact
@@ -16,21 +17,13 @@ data class Day21(
 	val actualSteps: Long = 26501365,
 ) : BaseSolution<Grid<Day21.Tile>, Long, Long>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<Tile> = input.toList().let { lines ->
-		Grid(
-			lines.first().length,
-			lines.size,
-			lines.flatMap { line ->
-				line.map { c ->
-					when (c) {
-						'.' -> Tile.Empty
-						'S' -> Tile.Start
-						'#' -> Tile.Rock
-						else -> error("")
-					}
-				}
-			}
-		)
+	override fun parseInput(input: Sequence<String>): Grid<Tile> = input.toGrid { c ->
+		when (c) {
+			'.' -> Tile.Empty
+			'S' -> Tile.Start
+			'#' -> Tile.Rock
+			else -> error("")
+		}
 	}
 
 	enum class Tile {

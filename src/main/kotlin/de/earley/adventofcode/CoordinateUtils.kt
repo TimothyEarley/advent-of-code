@@ -116,6 +116,13 @@ fun <T> grid(width: Int, height: Int, content: (Point) -> T): Grid<T> =
 		}
 	)
 
+fun <T> Sequence<String>.toGrid(f: (Char) -> T): Grid<T> = toList().toGrid(f)
+
+fun <T> List<String>.toGrid(f: (Char) -> T): Grid<T> {
+	return Grid(this.first().length, this.size, this.flatMap { it.map(f) })
+}
+
+
 fun <A, B> Grid<A>.toMutableGrid(): MutableGrid<B> where A : B = MutableGrid(width, height, values().toMutableList())
 
 class MutableGrid<T>(

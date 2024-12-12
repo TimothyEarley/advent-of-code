@@ -5,17 +5,16 @@ import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.grid
 import de.earley.adventofcode.split
+import de.earley.adventofcode.toGrid
 
 fun main() = Day20.start()
 
 object Day20 : BaseSolution<Input, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): Input = input.toList().split { it.isBlank() }.let { (rep, grid) ->
-		val width = grid.first().length
-		val height = grid.size
 		Input(
 			rep.single(),
-			Image(Grid(width, height, grid.flatMap { it.toList() }), '.')
+			Image(grid.toGrid { it }, '.')
 		)
 	}
 

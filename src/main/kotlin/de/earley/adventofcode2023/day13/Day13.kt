@@ -3,6 +3,7 @@ package de.earley.adventofcode2023.day13
 import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.split
+import de.earley.adventofcode.toGrid
 
 fun main() = Day13.start()
 
@@ -11,7 +12,7 @@ object Day13 : BaseSolution<List<Grid<Boolean>>, Long, Long>() {
 	override fun parseInput(input: Sequence<String>): List<Grid<Boolean>> = input.toList().split {
 		it.isBlank()
 	}.map { pattern ->
-		Grid(pattern.first().length, pattern.size, pattern.flatMap { line -> line.map { it == '#' } })
+		pattern.toGrid { it == '#' }
 	}
 
 	override fun partOne(data: List<Grid<Boolean>>): Long = data.sumOf { grid ->

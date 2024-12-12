@@ -7,18 +7,15 @@ import de.earley.adventofcode.Point
 import de.earley.adventofcode.generalAStar
 import de.earley.adventofcode.manhattanDistanceTo
 import de.earley.adventofcode.neighbours
+import de.earley.adventofcode.toGrid
 import de.earley.adventofcode2021.modStart1
 
 fun main() = Day15.start()
 
 object Day15 : BaseSolution<Grid<Int>, Int, Int>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<Int> {
-		val l = input.toList()
-		val width = l.first().length
-		val height = l.size
-		return Grid(width, height, l.flatMap { it.toList().map(Char::digitToInt) })
-	}
+	override fun parseInput(input: Sequence<String>): Grid<Int> =
+		input.toGrid { it.digitToInt() }
 
 	override fun partOne(data: Grid<Int>): Int =
 		aStar(data::get, Point(0, 0), Point(data.width - 1, data.height - 1))

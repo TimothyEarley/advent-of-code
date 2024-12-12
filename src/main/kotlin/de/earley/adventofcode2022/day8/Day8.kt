@@ -4,16 +4,13 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.manhattanDistanceTo
+import de.earley.adventofcode.toGrid
 
 fun main() = Day8.start()
 
 object Day8 : BaseSolution<Grid<Int>, Int, Int>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<Int> =
-		input.toList()
-			.let { list ->
-				Grid(list.first().length, list.size, list.flatMap { it.map(Char::digitToInt) })
-			}
+	override fun parseInput(input: Sequence<String>): Grid<Int> = input.toGrid(Char::digitToInt)
 
 	override fun partOne(data: Grid<Int>): Int = data.indices.count { p ->
 		Point.cardinals().any { dir -> checkDir(p, data, dir).first }

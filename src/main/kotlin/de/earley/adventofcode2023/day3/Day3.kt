@@ -4,17 +4,14 @@ import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.Direction
 import de.earley.adventofcode.Grid
 import de.earley.adventofcode.neighbours
+import de.earley.adventofcode.toGrid
 
 fun main() = Day3.start()
 
 object Day3 : BaseSolution<Grid<Char>, Int, Int>() {
 
-	override fun parseInput(input: Sequence<String>): Grid<Char> = input.toList().let {
-		val w = it.first().length
-		val h = it.size
-		val a: List<Char> = it.flatMap { it.toCharArray().toList() }
-		Grid(w, h, a)
-	}
+	override fun parseInput(input: Sequence<String>): Grid<Char> = input.toGrid { it }
+
 	override fun partOne(data: Grid<Char>): Int = data.pointValues().sumOf { (p, c) ->
 		when {
 			!c.isDigit() -> 0.toInt()

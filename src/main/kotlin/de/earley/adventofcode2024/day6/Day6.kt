@@ -19,8 +19,7 @@ object Day6 : BaseSolution<Day6.Input, Long, Long>() {
 
 	data class State(val pos: Point, val dir: Direction)
 
-	override fun parseInput(input: Sequence<String>): Input
-		= input.toList().let { lines ->
+	override fun parseInput(input: Sequence<String>): Input = input.toList().let { lines ->
 		var start: State? = null
 		val grid = Grid(lines.first().length, lines.size, lines.flatMapIndexed { y, line ->
 			line.mapIndexed { x, char ->
@@ -73,6 +72,7 @@ object Day6 : BaseSolution<Day6.Input, Long, Long>() {
 						Direction.Down -> Direction.Left
 					}
 				)
+
 				Space.Empty, null -> State(
 					state.pos + state.dir.point,
 					state.dir

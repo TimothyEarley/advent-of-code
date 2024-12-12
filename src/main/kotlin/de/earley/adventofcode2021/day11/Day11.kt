@@ -5,6 +5,7 @@ import de.earley.adventofcode.Grid
 import de.earley.adventofcode.MutableGrid
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.neighbours
+import de.earley.adventofcode.toGrid
 import de.earley.adventofcode.toMutableGrid
 
 fun main() = Day11.start()
@@ -12,7 +13,7 @@ fun main() = Day11.start()
 object Day11 : BaseSolution<Grid<Int>, Int, Int>() {
 
 	override fun parseInput(input: Sequence<String>): Grid<Int> =
-		Grid(10, 10, input.flatMap { it.toList().map(Char::digitToInt) }.toList())
+		input.toGrid { it.digitToInt() }
 
 	override fun partOne(data: Grid<Int>): Int = runSimulation(data).take(100).sum()
 
