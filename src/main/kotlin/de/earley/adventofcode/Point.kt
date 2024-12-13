@@ -47,4 +47,9 @@ fun Point.manhattanLength(): Int = abs(x) + abs(y)
 data class LongPoint(val x: Long, val y: Long) {
 	operator fun plus(other: Point): LongPoint =
 		LongPoint(x + other.x, y + other.y)
+
+	operator fun times(n: Int): LongPoint = LongPoint(x * n, y * n)
+	operator fun times(n: Long): LongPoint = LongPoint(x * n, y * n)
+	operator fun plus(other: LongPoint): LongPoint = LongPoint(x + other.x, y + other.y)
+	operator fun plus(n: Long): LongPoint = LongPoint(x + n, y + n)
 }
