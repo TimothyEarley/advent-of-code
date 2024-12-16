@@ -20,40 +20,42 @@ fun <T> generalAStarNode(
 	heuristic: (T) -> Int,
 	neighbours: T.() -> Sequence<Pair<T, Int>>,
 	useClosed: Boolean,
-	closedCheck: Set<T>.(T) -> Boolean = Set<T>::contains,
 	newNodeCallback: ((Node<T>) -> Unit)? = null,
-): Node<T>? {
-	val closed = mutableSetOf<T>()
+): Sequence<Node<T>> = sequence {
+	val closed = mutableMapOf<T, Int>()
 	val open = PriorityQueue(compareBy<Node<T>> { it.cost + it.heuristic }).apply {
 		add(Node(null, from, 0, heuristic(from)))
 	}
+	var min = Int.MAX_VALUE
 
 	while (open.isNotEmpty()) {
-// 		println(open)
-
 		val current = open.remove()
 
-		// if (useClosed) closed.add(current.value)
+		// don't revisit closed nodes (works if the heuristic is admissible and consistent)
+		if (useClosed) {
+			if (closed.contains(current.value) && closed[current.value]!! < current.cost) continue
+			closed[current.value] = current.cost
+		}
 
 		if (goal(current.value)) {
-			return current
+			if (current.cost <= min) {
+				// new (equal) best
+				min = current.cost
+				yield(current)
+			} else {
+				// the next best is worse than what we have already
+				return@sequence
+			}
 		}
 
 		// expand neighbours
 		for ((next, costToEnter) in current.value.neighbours()) {
-			// don't revisit closed nodes (the heuristic is admissible and consistent)
-			if (useClosed) {
-				if (closed.closedCheck(next)) continue
-				closed.add(next)
-			}
-
-			val newNode = Node(current, next, current.cost + costToEnter, heuristic(next))
+			val nextCost = current.cost + costToEnter
+			val newNode = Node(current, next, nextCost, heuristic(next))
 			newNodeCallback?.invoke(newNode)
 			open.add(newNode)
 		}
 	}
-
-	return null
 }
 
 fun <T> generalAStar(
@@ -62,6 +64,5 @@ fun <T> generalAStar(
 	heuristic: (T) -> Int,
 	neighbours: T.() -> Sequence<Pair<T, Int>>,
 	useClosed: Boolean,
-	closedCheck: Set<T>.(T) -> Boolean = Set<T>::contains,
 	newNodeCallback: ((Node<T>) -> Unit)? = null,
-): Int? = generalAStarNode(from, goal, heuristic, neighbours, useClosed, closedCheck, newNodeCallback)?.cost
+): Int? = generalAStarNode(from, goal, heuristic, neighbours, useClosed, newNodeCallback).firstOrNull()?.cost

@@ -33,7 +33,7 @@ object Day25 : BaseSolution<Map<String, List<String>>, Long, Long>() {
 						.map { it to 1 }
 				},
 				false,
-			)!!.toPath()
+			).first().toPath()
 
 			pathA.zipWithNext().map(::order).forEach { b ->
 				val pathB = generalAStarNode(
@@ -47,7 +47,7 @@ object Day25 : BaseSolution<Map<String, List<String>>, Long, Long>() {
 							.map { it to 1 }
 					},
 					false,
-				)!!.toPath()
+				).first().toPath()
 
 				pathB.zipWithNext().map(::order).forEach { c ->
 
