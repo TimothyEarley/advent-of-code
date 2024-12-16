@@ -46,6 +46,5 @@ fun aStar(grid: (Point) -> Int?, from: Point, to: Point, newNodeCallback: ((Node
 		{ it == to },
 		{ it.manhattanDistanceTo(to) },
 		{ neighbours().mapNotNull { n -> grid(n)?.let { n to it } } },
-		true,
 		newNodeCallback = newNodeCallback
 	)!!

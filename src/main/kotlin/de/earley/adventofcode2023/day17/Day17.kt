@@ -46,8 +46,7 @@ object Day17 : BaseSolution<Grid<Int>, Long, Long>() {
 							RecentPath(current + it.point, it, if (it == dir) timesMoved + 1 else 1) to data[current + it.point]!!
 						}
 				}
-			},
-			true
+			}
 		)!!.toLong()
 	}
 

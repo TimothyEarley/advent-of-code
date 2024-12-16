@@ -19,7 +19,6 @@ fun <T> generalAStarNode(
 	goal: (T) -> Boolean,
 	heuristic: (T) -> Int,
 	neighbours: T.() -> Sequence<Pair<T, Int>>,
-	useClosed: Boolean,
 	newNodeCallback: ((Node<T>) -> Unit)? = null,
 ): Sequence<Node<T>> = sequence {
 	val closed = mutableMapOf<T, Int>()
@@ -31,11 +30,9 @@ fun <T> generalAStarNode(
 	while (open.isNotEmpty()) {
 		val current = open.remove()
 
-		// don't revisit closed nodes (works if the heuristic is admissible and consistent)
-		if (useClosed) {
-			if (closed.contains(current.value) && closed[current.value]!! < current.cost) continue
-			closed[current.value] = current.cost
-		}
+		// don't revisit closed nodes (works if the heuristic is admissible and consistent) -> e.g. constant 0
+		if (closed.contains(current.value) && closed[current.value]!! < current.cost) continue
+		closed[current.value] = current.cost
 
 		if (goal(current.value)) {
 			if (current.cost <= min) {
@@ -63,6 +60,5 @@ fun <T> generalAStar(
 	goal: (T) -> Boolean,
 	heuristic: (T) -> Int,
 	neighbours: T.() -> Sequence<Pair<T, Int>>,
-	useClosed: Boolean,
 	newNodeCallback: ((Node<T>) -> Unit)? = null,
-): Int? = generalAStarNode(from, goal, heuristic, neighbours, useClosed, newNodeCallback).firstOrNull()?.cost
+): Int? = generalAStarNode(from, goal, heuristic, neighbours, newNodeCallback).firstOrNull()?.cost

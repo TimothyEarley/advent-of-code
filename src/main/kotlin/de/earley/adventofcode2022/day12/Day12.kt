@@ -26,8 +26,7 @@ object Day12 : BaseSolution<Grid<Char>, Int, Int>() {
 				neighbours(diagonal = false).filter {
 					checkCanStep(data, this, it)
 				}.map { it to 1 }
-			},
-			useClosed = true
+			}
 		)!!
 	}
 
@@ -46,8 +45,7 @@ object Day12 : BaseSolution<Grid<Char>, Int, Int>() {
 				neighbours(diagonal = false).filter {
 					checkCanStep(data, it, this)
 				}.map { it to 1 }
-			},
-			useClosed = true
+			}
 		)!!
 	}
 

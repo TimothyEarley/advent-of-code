@@ -47,8 +47,7 @@ object Day23 : BaseSolution<State, Int, Int>() {
 		state,
 		{ it.isSolved() },
 		{ 0 },
-		{ nextStates(unfolded) },
-		false
+		{ nextStates(unfolded) }
 	)!!
 
 	private fun State.nextStates(unfolded: Boolean): Sequence<Pair<State, Int>> {

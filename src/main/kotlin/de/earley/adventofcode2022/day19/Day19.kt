@@ -61,7 +61,6 @@ object Day19 : BaseSolution<List<Day19.Blueprint>, Int, Int>() {
 				val time = totalTime - it.time
 				-(time * it.geodeRobot + time * (time - 1) / 2)
 			},
-			useClosed = true,
 			neighbours = { nextStates(blueprint, maxResources) }
 		)!!
 	}

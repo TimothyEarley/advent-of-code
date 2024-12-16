@@ -31,8 +31,7 @@ object Day25 : BaseSolution<Map<String, List<String>>, Long, Long>() {
 						.asSequence()
 						.filter { (it to this) != a && (this to it) != a }
 						.map { it to 1 }
-				},
-				false,
+				}
 			).first().toPath()
 
 			pathA.zipWithNext().map(::order).forEach { b ->
@@ -45,8 +44,7 @@ object Day25 : BaseSolution<Map<String, List<String>>, Long, Long>() {
 							.asSequence()
 							.filter { (it to this) != a && (this to it) != a && (it to this) != b && (this to it) != b }
 							.map { it to 1 }
-					},
-					false,
+					}
 				).first().toPath()
 
 				pathB.zipWithNext().map(::order).forEach { c ->

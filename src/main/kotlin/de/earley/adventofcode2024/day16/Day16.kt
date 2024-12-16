@@ -63,7 +63,6 @@ object Day16 : BaseSolution<Day16.Input, Long, Long>() {
 		from = State(data.start, Direction.Right),
 		goal = { it.pos == data.end },
 		heuristic = { it.pos.manhattanDistanceTo(data.end) },
-		useClosed = true,
 		neighbours = {
 			sequence {
 				when (dir) {

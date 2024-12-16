@@ -67,7 +67,6 @@ object Day24 : BaseSolution<Day24.Input, Int, Int>() {
 				from = State(from, currentTime),
 				goal = { it.position == to },
 				heuristic = { it.position.manhattanDistanceTo(to) },
-				useClosed = true,
 				neighbours = {
 					(position.neighbours() + position)
 						.filter {

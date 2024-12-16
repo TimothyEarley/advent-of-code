@@ -58,8 +58,7 @@ object Day16 : BaseSolution<Map<String, Day16.Valve>, Int, Int>() {
 
 				-(currentFlowTotal + canOpenFlow)
 			},
-			neighbours = { nextStates(data, needToOpen, simTime) },
-			useClosed = true
+			neighbours = { nextStates(data, needToOpen, simTime) }
 		).first()
 
 		return if (result.parent!!.value.minute == simTime - 1) {
