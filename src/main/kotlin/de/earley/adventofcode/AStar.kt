@@ -31,7 +31,7 @@ fun <T> generalAStarNode(
 		val current = open.remove()
 
 		// don't revisit closed nodes (works if the heuristic is admissible and consistent) -> e.g. constant 0
-		if (closed.contains(current.value) && closed[current.value]!! < current.cost) continue
+		if (closed.contains(current.value) && closed[current.value]!! <= current.cost) continue
 		closed[current.value] = current.cost
 
 		if (goal(current.value)) {
