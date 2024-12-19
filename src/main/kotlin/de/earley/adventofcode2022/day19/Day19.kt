@@ -1,13 +1,11 @@
 package de.earley.adventofcode2022.day19
 
 import de.earley.adventofcode.BaseSolution
-import de.earley.adventofcode.generalAStar
+import de.earley.adventofcode.generalAStarNode
 import de.earley.adventofcode.mapToList
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTimedValue
+import kotlin.math.ceil
 
 fun main() = Day19.start()
 
@@ -17,154 +15,127 @@ object Day19 : BaseSolution<List<Day19.Blueprint>, Int, Int>() {
 		"Blueprint (\\d+): Each ore robot costs (\\d+) ore. Each clay robot costs (\\d+) ore. Each obsidian robot costs (\\d+) ore and (\\d+) clay. Each geode robot costs (\\d+) ore and (\\d+) obsidian.".toRegex()
 
 	override fun parseInput(input: Sequence<String>): List<Blueprint> = input.mapToList {
-		val (id, ore, clay, obsidianOre, obsidianClay, geodeOre, geodeClay) = regex.matchEntire(it)!!.destructured
+		val (id, ore, clay, obsidianOre, obsidianClay, geodeOre, geodeObsidian) = regex.matchEntire(it)!!.destructured
 		Blueprint(
 			id.toInt(),
-			ore.toInt(),
-			clay.toInt(),
-			obsidianOre.toInt() to obsidianClay.toInt(),
-			geodeOre.toInt() to geodeClay.toInt()
+			Resources(ore = ore.toInt()),
+			Resources(ore = clay.toInt()),
+			Resources(ore = obsidianOre.toInt(), clay = obsidianClay.toInt()),
+			Resources(ore = geodeOre.toInt(), obsidian = geodeObsidian.toInt())
 		)
 	}
 
 	override fun partOne(data: List<Blueprint>): Int = runBlocking(Dispatchers.Default) {
-		data
-			.map {
-				async {
-					it.id * mostGeodesCollected(it, 24)
-				}
-			}.sumOf { it.await() }
+		data.sumOf {
+			it.id * mostGeodesCollected(it, 24)
+		}
 	}
 
-	override fun partTwo(data: List<Blueprint>): Int = measureTimedValue {
-		data.take(3)
-			.map { mostGeodesCollected(it, 32) }
-			.fold(1, Int::times)
-	}.let {
-		println(it.duration)
-		it.value
-	}
+	override fun partTwo(data: List<Blueprint>): Int =
+	data.take(3)
+		.map { mostGeodesCollected(it, 32) }
+		.fold(1, Int::times)
 
 	private fun mostGeodesCollected(blueprint: Blueprint, totalTime: Int): Int {
-		val maxResources = Resources(
-			maxOf(blueprint.oreRobot, blueprint.clayRobot, blueprint.obsidianRobot.first, blueprint.geodeRobot.first),
-			maxOf(blueprint.obsidianRobot.second),
-			maxOf(blueprint.geodeRobot.second),
-			Int.MAX_VALUE
-		)
-
-		return -generalAStar(
-			from = State(0, 0, 0, 0, 0, 1, 0, 0, 0),
-			goal = { it.time == totalTime },
-			heuristic = {
-				// the best possible we can do is to create one geode robot every time step
-				val time = totalTime - it.time
-				-(time * it.geodeRobot + time * (time - 1) / 2)
-			},
-			neighbours = { nextStates(blueprint, maxResources) }
-		)!!
+		return -generalAStarNode(
+			from = State(
+				totalTime,
+				Resources(0, 0, 0, 0),
+				1,
+				0,
+				0,
+				0
+			),
+			goal = { it.minutesLeft == 0 },
+			heuristic = { - it.maxNewGeodeProduction() },
+			neighbours = {
+				nextStates(blueprint)
+			}
+		).first().cost
 	}
 
-	private fun State.nextStates(blueprint: Blueprint, maxResources: Resources): Sequence<Pair<State, Int>> {
-		val buildOptions = buildList {
-			// Nothing, but if we can build the next tier of robots, we should always do so
-			var canDoNothing = true
+	private fun State.maxNewGeodeProduction(): Int {
+		// the best possible we can do is to create one geode robot every time step
+		return (0 until minutesLeft - 1).sumOf { it + this.geodeRobot }
+	}
 
-			/*
-			 * Heuristics:
-			 * - It is always better to build a robot type we don't have yet instead of none
-			 * - It is always better to build a geode robot than any other robot
-			 * - If we have enough robots to fulfill any need per round, don't build any more of that
-			 */
-
-			// Geode Robot
-			if (ore >= blueprint.geodeRobot.first && obsidian >= blueprint.geodeRobot.second) {
-				add(
-					copy(
-						ore = ore - blueprint.geodeRobot.first,
-						obsidian = obsidian - blueprint.geodeRobot.second,
-						geodeRobot = geodeRobot + 1
-					)
-				)
-				if (geodeRobot == 0) canDoNothing = false
-			} else {
-				// Obsidian Robot
-				if (ore >= blueprint.obsidianRobot.first && clay >= blueprint.obsidianRobot.second && obsidianRobot < maxResources.obsidian) {
-					add(
-						copy(
-							ore = ore - blueprint.obsidianRobot.first,
-							clay = clay - blueprint.obsidianRobot.second,
-							obsidianRobot = obsidianRobot + 1
-						)
-					)
-					if (obsidianRobot == 0) canDoNothing = false
-				}
-
-				// Clay Robot
-				if (canDoNothing && ore >= blueprint.clayRobot && clayRobot < maxResources.clay) {
-					add(copy(ore = ore - blueprint.clayRobot, clayRobot = clayRobot + 1))
-					if (clayRobot == 0) canDoNothing = false
-				}
-
-				// Ore Robot
-				if (ore >= blueprint.oreRobot && oreRobot < maxResources.clay) {
-					add(copy(ore = ore - blueprint.oreRobot, oreRobot = oreRobot + 1))
-					if (oreRobot == 0) canDoNothing = false
-				}
-			}
-
-			if (canDoNothing) {
-				add(this@nextStates)
-			}
+	private fun State.nextStates(blueprint: Blueprint): Sequence<Pair<State, Int>> = sequence {
+		if (blueprint.maxResources.ore > oreRobot) {
+			yield(next(blueprint.oreRobot).copy(oreRobot = oreRobot + 1))
 		}
-
-		val resourcesThisRound = buildOptions.map {
-			it.copy(
-				time = time + 1,
-				ore = it.ore + oreRobot,
-				clay = it.clay + clayRobot,
-				obsidian = it.obsidian + obsidianRobot,
-				geode = it.geode + geodeRobot
-			) to -(geodeRobot)
+		if (blueprint.maxResources.clay > clayRobot) {
+			yield(next(blueprint.clayRobot).copy(clayRobot = clayRobot + 1))
 		}
+		if (blueprint.maxResources.obsidian > obsidianRobot) {
+			yield(next(blueprint.obsidianRobot).copy(obsidianRobot = obsidianRobot + 1))
+		}
+		yield(next(blueprint.geodeRobot).copy(geodeRobot = geodeRobot + 1))
+	}.filter {
+		it.minutesLeft >= 0
+	}.map {
+		it to -(geodeRobot * (this.minutesLeft - it.minutesLeft))
+	}
 
-		return resourcesThisRound.asSequence()
+	private fun State.next(built: Resources): State {
+		val minutes = timeToBuilt(built)
+		return State(
+			minutesLeft = minutesLeft - minutes,
+			resources = Resources(
+				ore = resources.ore + oreRobot * minutes - built.ore,
+				clay = resources.clay + clayRobot * minutes - built.clay,
+				obsidian = resources.obsidian + obsidianRobot * minutes - built.obsidian,
+				geode = resources.geode + geodeRobot * minutes - built.geode,
+			),
+			oreRobot = oreRobot,
+			clayRobot = clayRobot,
+			obsidianRobot = obsidianRobot,
+			geodeRobot = geodeRobot
+		)
+	}
+
+	private fun State.timeToBuilt(buildingResources: Resources): Int {
+		return maxOf(
+			timeForResource(resources.ore, buildingResources.ore, oreRobot),
+			timeForResource(resources.clay, buildingResources.clay, clayRobot),
+			timeForResource(resources.obsidian, buildingResources.obsidian, obsidianRobot),
+			timeForResource(resources.geode, buildingResources.geode, geodeRobot),
+		) + 1
+	}
+
+	private fun timeForResource(inStock: Int, demand: Int, robots: Int): Int {
+		val needed = (demand - inStock).coerceAtLeast(0)
+		return ceil(needed / robots.toFloat()).toInt()
 	}
 
 	data class State(
-		val time: Int,
-		val ore: Ore,
-		val clay: Clay,
-		val obsidian: Obsidian,
-		val geode: Geode,
+		val minutesLeft: Int,
+		val resources: Resources,
 		val oreRobot: Int,
 		val clayRobot: Int,
 		val obsidianRobot: Int,
 		val geodeRobot: Int,
-	) {
-		operator fun compareTo(other: State): Int = when {
-			other == this -> 0
-			time <= other.time && ore >= other.ore && clay >= other.clay &&
-				obsidian >= other.obsidian && geode >= other.geode &&
-				oreRobot >= other.oreRobot && clayRobot >= other.clayRobot &&
-				obsidian >= other.obsidianRobot && geodeRobot >= other.geodeRobot -> 1
-			else -> -1
-		}
-	}
+	)
 
 	data class Blueprint(
 		val id: Int,
-		val oreRobot: Ore,
-		val clayRobot: Ore,
-		val obsidianRobot: Pair<Ore, Clay>,
-		val geodeRobot: Pair<Ore, Obsidian>,
-	)
+		val oreRobot: Resources,
+		val clayRobot: Resources,
+		val obsidianRobot: Resources,
+		val geodeRobot: Resources,
+	) {
+		val maxResources: Resources = Resources(
+			maxOf(oreRobot.ore, clayRobot.ore, obsidianRobot.ore, geodeRobot.ore),
+			maxOf(oreRobot.clay, clayRobot.clay, obsidianRobot.clay, geodeRobot.clay),
+			maxOf(oreRobot.obsidian, clayRobot.obsidian, obsidianRobot.obsidian, geodeRobot.obsidian),
+			Int.MAX_VALUE
+		)
+	}
 
 	data class Resources(
-		val ore: Ore,
-		val clay: Clay,
-		val obsidian: Obsidian,
-		val geode: Geode,
+		val ore: Ore = 0,
+		val clay: Clay = 0,
+		val obsidian: Obsidian = 0,
+		val geode: Geode = 0,
 	)
 }
 
