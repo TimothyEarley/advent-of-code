@@ -80,5 +80,6 @@ object Day16 : BaseSolution<Day16.Input, Long, Long>() {
 				if (data.grid[next] == Type.AIR) yield(copy(pos = next) to 1)
 			}
 		},
+		strict = false
 	)
 }
