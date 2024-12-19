@@ -67,16 +67,22 @@ object Day19 : BaseSolution<List<Day19.Blueprint>, Int, Int>() {
 	}
 
 	private fun State.nextStates(blueprint: Blueprint): Sequence<State> = sequence {
-		if (blueprint.maxResources.ore > robots.ore) {
-			yield(next(blueprint.oreRobot))
+		// if we can build a geode robot now, do it
+		if (timeToBuilt(blueprint.geodeRobot.needs) == 1) {
+			yield(next(blueprint.geodeRobot))
+		} else {
+			// otherwise build what is needed
+			if (blueprint.maxResources.ore > robots.ore) {
+				yield(next(blueprint.oreRobot))
+			}
+			if (blueprint.maxResources.clay > robots.clay) {
+				yield(next(blueprint.clayRobot))
+			}
+			if (blueprint.maxResources.obsidian > robots.obsidian) {
+				yield(next(blueprint.obsidianRobot))
+			}
+			yield(next(blueprint.geodeRobot))
 		}
-		if (blueprint.maxResources.clay > robots.clay) {
-			yield(next(blueprint.clayRobot))
-		}
-		if (blueprint.maxResources.obsidian > robots.obsidian) {
-			yield(next(blueprint.obsidianRobot))
-		}
-		yield(next(blueprint.geodeRobot))
 	}.filter {
 		it.minutesLeft >= 0
 	}
