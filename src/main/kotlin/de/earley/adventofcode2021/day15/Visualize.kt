@@ -3,6 +3,7 @@ package de.earley.adventofcode2021.day15
 import de.earley.adventofcode.Point
 import de.earley.adventofcode.grid
 import de.earley.adventofcode.readResource
+import space.kscience.kmath.misc.toIntExact
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
@@ -33,7 +34,7 @@ fun main() {
 
 	var i = 0
 	aStar(bigGrid::get, Point(0, 0), Point(bigGrid.width - 1, bigGrid.height - 1)) {
-		val c = visitedColor[(it.cost + it.heuristic) % visitedMod]
+		val c = visitedColor[(it.cost + it.heuristic).toIntExact() % visitedMod]
 		image.setRGB(it.value.x, it.value.y, c)
 		if (i % 100 == 0) {
 			ImageIO.write(image, "png", File(dir, "out${(i / 100).toString().padStart(6, '0')}.png"))

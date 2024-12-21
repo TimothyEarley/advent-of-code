@@ -1,12 +1,13 @@
 package de.earley.adventofcode
 
+import space.kscience.kmath.misc.toIntExact
 import java.util.PriorityQueue
 
 class Node<T>(
 	val parent: Node<T>?,
 	val value: T,
-	val cost: Int,
-	val heuristic: Int,
+	val cost: Long,
+	val heuristic: Long,
 ) {
 	override fun toString(): String =
 		"Node(parent=${parent?.hashCode()}, value=$value, cost=$cost, heuristic=$heuristic)"
@@ -22,12 +23,29 @@ fun <T> generalAStarNode(
 	newNodeCallback: ((Node<T>) -> Unit)? = null,
 	// if false, we try more paths (this changes the amount of paths, but not the best cost)
 	strict: Boolean = true,
+): Sequence<Node<T>> = generalAStarNodeLong(
+	from = from,
+	goal = goal,
+	heuristic = { heuristic(it).toLong() },
+	neighbours = { neighbours().map { it.first to it.second.toLong()} },
+	newNodeCallback = newNodeCallback,
+	strict = strict
+)
+
+fun <T> generalAStarNodeLong(
+	from: T,
+	goal: (T) -> Boolean,
+	heuristic: (T) -> Long,
+	neighbours: T.() -> Sequence<Pair<T, Long>>,
+	newNodeCallback: ((Node<T>) -> Unit)? = null,
+	// if false, we try more paths (this changes the amount of paths, but not the best cost)
+	strict: Boolean = true,
 ): Sequence<Node<T>> = sequence {
-	val closed = mutableMapOf<T, Int>()
+	val closed = mutableMapOf<T, Long>()
 	val open = PriorityQueue(compareBy<Node<T>> { it.cost + it.heuristic }).apply {
 		add(Node(null, from, 0, heuristic(from)))
 	}
-	var min = Int.MAX_VALUE
+	var min = Long.MAX_VALUE
 
 	while (open.isNotEmpty()) {
 		val current = open.remove()
@@ -66,4 +84,4 @@ fun <T> generalAStar(
 	heuristic: (T) -> Int,
 	neighbours: T.() -> Sequence<Pair<T, Int>>,
 	newNodeCallback: ((Node<T>) -> Unit)? = null,
-): Int? = generalAStarNode(from, goal, heuristic, neighbours, newNodeCallback).firstOrNull()?.cost
+): Int? = generalAStarNode(from, goal, heuristic, neighbours, newNodeCallback).firstOrNull()?.cost?.toIntExact()

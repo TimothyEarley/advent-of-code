@@ -3,6 +3,7 @@ package de.earley.adventofcode2022.day16
 import de.earley.adventofcode.BaseSolution
 import de.earley.adventofcode.generalAStarNode
 import de.earley.adventofcode.mapToList
+import space.kscience.kmath.misc.toIntExact
 
 fun main() = Day16.start()
 
@@ -67,7 +68,7 @@ object Day16 : BaseSolution<Map<String, Day16.Valve>, Int, Int>() {
 		} else {
 			// we skipped some, so in fact the last node is correct
 			-result.cost
-		}
+		}.toIntExact()
 	}
 
 	data class Valve(
