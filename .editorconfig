@@ -1,4 +1,4 @@
-[{*.kt, *.kts}]
+[{*.kt,*.kts}]
 indent_style = tab
 
 # no start imports

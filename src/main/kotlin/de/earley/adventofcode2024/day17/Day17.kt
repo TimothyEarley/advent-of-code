@@ -119,7 +119,7 @@ object Day17 : BaseSolution<Day17.Input, String, Long>() {
 		return@with findMinimum(equations, a)
 	}
 
-	context(Context)
+	context(_: Context)
 	private fun findMinimum(equations: List<Expr<BoolSort>>, a : BitVecExpr): Long {
 		// find any solution
 		var max = solutionSmallerThan(equations, a, Long.MAX_VALUE)!!
@@ -137,11 +137,11 @@ object Day17 : BaseSolution<Day17.Input, String, Long>() {
 		return max
 	}
 
-	context(Context)
+	context(ctx: Context)
 	private fun solutionSmallerThan(equations: List<Expr<BoolSort>>, a : BitVecExpr, max: Long): Long? {
-		val solver = mkSolver().apply {
+		val solver = ctx.mkSolver().apply {
 			equations.forEach { add(it) }
-			add(mkBVULT(a, max.bv(BIT_SIZE)))
+			add(ctx.mkBVULT(a, max.bv(BIT_SIZE)))
 		}
 		return when (solver.check()) {
 			Status.SATISFIABLE -> (solver.model.getConstInterp(a) as BitVecNum).long
@@ -176,7 +176,7 @@ object Day17 : BaseSolution<Day17.Input, String, Long>() {
 		else -> error("Invalid operand $operand")
 	}
 
-	context(Context)
+	context(_: Context)
 	private fun Instruction.step(operand: Int, state: SymbolicState): SymbolicState = when (this) {
 		Instruction.adv -> state.inc().regA(dv(state, operand))
 		Instruction.bxl -> state.inc().regB(state.regB xor operand.toLong().bv(BIT_SIZE))
@@ -195,13 +195,13 @@ object Day17 : BaseSolution<Day17.Input, String, Long>() {
 		Instruction.cdv -> state.inc().regC(dv(state, operand))
 	}
 
-	context(Context)
+	context(ctx: Context)
 	private fun dv(state: SymbolicState, operand: Int): SymbolicNum =
-		mkBVASHR(state.regA, comboValue(operand, state))
+		ctx.mkBVASHR(state.regA, comboValue(operand, state))
 
-	context(Context)
+	context(ctx: Context)
 	private fun comboValue(operand: Int, state: SymbolicState): SymbolicNum = when (operand) {
-		0, 1, 2, 3 -> mkBV(operand, BIT_SIZE)
+		0, 1, 2, 3 -> ctx.mkBV(operand, BIT_SIZE)
 		4 -> state.regA
 		5 -> state.regB
 		6 -> state.regC

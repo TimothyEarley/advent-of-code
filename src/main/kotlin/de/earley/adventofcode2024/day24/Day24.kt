@@ -49,9 +49,9 @@ object Day24 : BaseSolution<Day24.Input, Long, String>() {
 		val state = data.initial.toMutableMap()
 		val remainingGates = data.gates.toMutableList()
 		while (remainingGates.isNotEmpty()) {
-			val next = remainingGates.filter {
+			val next = remainingGates.first {
 				it.inputs.all { it in state.keys }
-			}.first()
+			}
 			remainingGates.remove(next)
 			val result = when (next.op) {
 				Op.AND -> next.inputs.fold(true) { acc, s -> acc && state[s]!! }

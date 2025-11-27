@@ -13,32 +13,32 @@ import com.microsoft.z3.RealSort
 import com.microsoft.z3.Sort
 import java.math.BigDecimal
 
-context(Context)
+context(ctx: Context)
 operator fun <R : ArithSort> ArithExpr<R>.times(other: Expr<out R>): Expr<R> =
-	mkMul(this, other)
+	ctx.mkMul(this, other)
 
-context(Context)
+context(ctx: Context)
 operator fun <R : ArithSort> ArithExpr<R>.plus(other: Expr<out R>): Expr<R> =
-	mkAdd(this, other)
+	ctx.mkAdd(this, other)
 
-context(Context)
+context(ctx: Context)
 infix fun Expr<BitVecSort>.xor(other: Expr<BitVecSort>): Expr<BitVecSort> =
-	mkBVXOR(this, other)
+	ctx.mkBVXOR(this, other)
 
-context(Context)
+context(ctx: Context)
 infix fun Expr<BitVecSort>.and(other: Expr<BitVecSort>): Expr<BitVecSort> =
-	mkBVAND(this, other)
+	ctx.mkBVAND(this, other)
 
-context(Context)
+context(ctx: Context)
 infix fun <R : Sort> Expr<R>.eq(other: Expr<R>): Expr<BoolSort> =
-	mkEq(this, other)
+	ctx.mkEq(this, other)
 
-context(Context)
+context(ctx: Context)
 val Long.real: RatNum
-	get() = mkReal(this)
+	get() = ctx.mkReal(this)
 
-context(Context)
-fun Long.bv(size: Int): BitVecNum = mkBV(this, size)
+context(ctx: Context)
+fun Long.bv(size: Int): BitVecNum = ctx.mkBV(this, size)
 
 operator fun Model.get(x: Expr<RealSort>): BigDecimal = (getConstInterp(x) as RatNum).let {
 	it.bigIntNumerator.toBigDecimal().divide(it.bigIntDenominator.toBigDecimal())

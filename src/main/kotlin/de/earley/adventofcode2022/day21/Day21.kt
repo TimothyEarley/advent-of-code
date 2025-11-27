@@ -36,7 +36,7 @@ object Day21 : BaseSolution<Map<String, Day21.Monkey>, Long, Long>() {
 	override fun partTwo(data: Map<String, Monkey>): Long {
 		val root = data["root"] as OpMonkey
 
-		@Suppress("UNCHECKED_CAST") // cast is correct, needed for context receivers
+		@Suppress("UNCHECKED_CAST") // cast is correct, needed for context parameters
 		return with(JBigIntegerField.listRationalFunctionSpace as ListRationalFunctionSpace<BigInteger, Ring<BigInteger>>) {
 			val left = root.left(data).evalWithHuman(data, BigInteger::valueOf)
 			val right = root.right(data).evalWithHuman(data, BigInteger::valueOf)
@@ -70,23 +70,24 @@ object Day21 : BaseSolution<Map<String, Day21.Monkey>, Long, Long>() {
 		}
 	}
 
-	context(ListRationalFunctionSpace<C, Ring<C>>)
+	context(space: ListRationalFunctionSpace<C, Ring<C>>)
 	private fun <C> Monkey.evalWithHuman(data: Map<String, Monkey>, fromLong: (Long) -> C): ListRationalFunction<C> =
 		if (name == "humn") {
 			// polynomial where "x", i.e. the human, is one
-			ListRationalFunction(listOf(ring.zero, ring.one))
+			space.ListRationalFunction(listOf(space.ring.zero, space.ring.one))
 		} else {
 			when (this) {
-				is NumberMonkey -> ListRationalFunction(listOf(fromLong(number)))
+				is NumberMonkey -> space.ListRationalFunction(listOf(fromLong(number)))
 				is OpMonkey -> with(op) {
 					val leftValue = left(data).evalWithHuman(data, fromLong)
 					val rightValue = right(data).evalWithHuman(data, fromLong)
-
-					when (op) {
-						Op.Plus -> leftValue + rightValue
-						Op.Minus -> leftValue - rightValue
-						Op.Times -> leftValue * rightValue
-						Op.Divide -> leftValue / rightValue
+					with(space) {
+						when (op) {
+							Op.Plus -> leftValue + rightValue
+							Op.Minus -> leftValue - rightValue
+							Op.Times -> leftValue * rightValue
+							Op.Divide -> leftValue / rightValue
+						}
 					}
 				}
 			}

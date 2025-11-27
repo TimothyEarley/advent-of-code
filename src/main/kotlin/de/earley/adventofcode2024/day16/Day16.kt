@@ -51,7 +51,7 @@ object Day16 : BaseSolution<Day16.Input, Long, Long>() {
 		val dir: Direction
 	)
 
-	override fun partOne(data: Input): Long = getPaths(data).first().cost.toLong()
+	override fun partOne(data: Input): Long = getPaths(data).first().cost
 	override fun partTwo(data: Input): Long {
 		val paths = getPaths(data).flatMap { it.toPath() }.map { it.pos }.toSet()
 		return data.grid.pointValues()

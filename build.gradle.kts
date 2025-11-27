@@ -22,7 +22,7 @@ dependencies {
 	implementation("cc.ekblad.konbini:konbini:_")
 	implementation(KotlinX.coroutines.core)
 	implementation("space.kscience:kmath-polynomial:_")
-	implementation("tools.aqua:z3-turnkey:4.12.2.1")
+	implementation("tools.aqua:z3-turnkey:_")
 }
 
 tasks.test {
@@ -31,13 +31,11 @@ tasks.test {
 
 kotlin {
 	jvmToolchain {
-		languageVersion.set(JavaLanguageVersion.of("21"))
+		languageVersion.set(JavaLanguageVersion.of("25"))
 	}
-}
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs += "-Xcontext-receivers"
+	compilerOptions {
+		freeCompilerArgs.add("-Xcontext-parameters")
 	}
 }
 

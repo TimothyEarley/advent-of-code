@@ -26,7 +26,7 @@ object Day25 : BaseSolution<Day25.Input, Long, Long>() {
 			}
 		}
 		.map { grid ->
-			if (grid.get(0, 0) == true) {
+			if (grid[0, 0] == true) {
 				// lock
 				val heights = (0..<grid.width).map { x ->
 					(0..<grid.height).first { y -> grid[x, y] == false } - 1

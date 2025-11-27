@@ -25,6 +25,5 @@ object Day9 : BaseSolution<List<List<Int>>, Long, Long>() {
 			.map { it.first() }
 			.reversed()
 			.fold(0L) { acc, i -> i - acc }
-			.toLong()
 	}
 }
