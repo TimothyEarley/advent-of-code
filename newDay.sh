@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-year="2024"
+year="2025"
 
 set -euo pipefail
 
