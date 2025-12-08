@@ -47,6 +47,11 @@ data class Point3(
 
 fun Point3.manhattanTo(other: Point3): Int = abs(x - other.x) + abs(y - other.y) + abs(z - other.z)
 
+fun Point3.distanceSquared(other: Point3): Long =
+	(x - other.x).toLong() * (x - other.x).toLong() +
+	(y - other.y).toLong() * (y - other.y).toLong() +
+	(z - other.z).toLong() * (z - other.z).toLong()
+
 data class LongPoint3(
 	val x: Long,
 	val y: Long,
