@@ -66,3 +66,12 @@ tailrec fun <T> runUntil(current: T, condEnd: (T) -> Boolean, next: (T) -> T): T
 	} else {
 		runUntil(next(current), condEnd, next)
 	}
+
+
+/**
+ * Creates all unique pairs of two elements, not with themselves
+ */
+fun <T> List<T>.pairs(): List<Pair<T, T>> = indices.flatMap { i ->
+	val a = this[i]
+	(i + 1..lastIndex).map { a to this[it] }
+}
