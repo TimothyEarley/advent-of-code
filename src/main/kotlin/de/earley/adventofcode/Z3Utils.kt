@@ -7,6 +7,7 @@ import com.microsoft.z3.BitVecSort
 import com.microsoft.z3.BoolSort
 import com.microsoft.z3.Context
 import com.microsoft.z3.Expr
+import com.microsoft.z3.IntNum
 import com.microsoft.z3.Model
 import com.microsoft.z3.RatNum
 import com.microsoft.z3.RealSort
@@ -34,8 +35,17 @@ infix fun <R : Sort> Expr<R>.eq(other: Expr<R>): Expr<BoolSort> =
 	ctx.mkEq(this, other)
 
 context(ctx: Context)
+infix fun <R : ArithSort> Expr<R>.ge(other: Expr<R>): Expr<BoolSort> =
+	ctx.mkGe(this, other)
+
+
+context(ctx: Context)
 val Long.real: RatNum
 	get() = ctx.mkReal(this)
+
+context(ctx: Context)
+val Int.int: IntNum
+	get() = ctx.mkInt(this)
 
 context(ctx: Context)
 fun Long.bv(size: Int): BitVecNum = ctx.mkBV(this, size)
