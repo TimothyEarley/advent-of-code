@@ -20,12 +20,12 @@ object Day23 : BaseSolution<Grid<Day23.Tile>, Long, Long>() {
 	}
 
 	override fun partOne(data: Grid<Tile>): Long {
-		val end = data.pointValues().last { it.second == Tile.Path }.first
+		val end = data.pointValues().last { it.value == Tile.Path }.point
 		return data.toGraph(true).longestPath(end)
 	}
 
 	override fun partTwo(data: Grid<Tile>): Long {
-		val end = data.pointValues().last { it.second == Tile.Path }.first
+		val end = data.pointValues().last { it.value == Tile.Path }.point
 		return data.toGraph(false).longestPath(end)
 	}
 
@@ -52,14 +52,14 @@ object Day23 : BaseSolution<Grid<Day23.Tile>, Long, Long>() {
 			.filter { data[it] != Tile.Forest }
 
 	private fun Grid<Tile>.toGraph(slopes: Boolean): Node {
-		val start = pointValues().first { it.second == Tile.Path }.first
-		val end = pointValues().last { it.second == Tile.Path }.first
+		val start = pointValues().first { it.value == Tile.Path }.point
+		val end = pointValues().last { it.value == Tile.Path }.point
 
 		val nodes: Map<Point, Node> = this.pointValues()
 			.filter { (p, tile) ->
 				p == start || p == end || (tile == Tile.Path && p.pathNeighbours(this, slopes).count() >= 3)
 			}
-			.associate { it.first to Node(it.first, mutableSetOf()) }
+			.associate { it.point to Node(it.point, mutableSetOf()) }
 
 		tailrec fun toNextJunction(current: Point, prev: Point, distance: Int): Pair<Node, Int>? =
 			if (current in nodes.keys) {

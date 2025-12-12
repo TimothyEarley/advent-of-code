@@ -76,10 +76,19 @@ object Day12 : BaseSolution<Day12.Input, Int, Long>() {
 		}
 
 	override fun partOne(data: Input): Int = data.regions.count { region ->
-		val regionGrid = grid(region.width, region.length) { false }.toMutableGrid()
 		val availableTiles = region.width * region.length
-		val tiles = region.count.mapIndexed { i, v -> v * data.gifts[i].data.pointValues().count { it.second } }.sum()
-		availableTiles >= tiles && canPlace(data.gifts, region.count.toIntArray(), regionGrid)
+		val neededTiles =
+			region.count.mapIndexed { i, v -> v * data.gifts[i].data.pointValues().count { it.value } }.sum()
+		val numberOfGifts = region.count.sum()
+		when {
+			availableTiles < neededTiles -> false // not enough
+			(region.width / 3) * (region.length / 3) >= numberOfGifts -> true // plenty for each to get its own 3x3
+			else -> canPlace(
+				data.gifts,
+				region.count.toIntArray(),
+				grid(region.width, region.length) { false }.toMutableGrid()
+			)
+		}
 	}
 
 	private fun canPlace(shapes: List<Shape>, shapesToPlace: IntArray, region: MutableGrid<Boolean>): Boolean {
@@ -89,25 +98,22 @@ object Day12 : BaseSolution<Day12.Input, Int, Long>() {
 		val current = shapes[shapeIndexToPlace]
 		shapesToPlace[shapeIndexToPlace]--
 
-		val result =
-			region.pointValues()
-				.filter { (_, v) -> !v }
-				.any { (p, _) ->
-					current.variants.any { shapeToPlace ->
-						val pointsToPlace = shapeToPlace.pointValues()
-							.filter { (_, v) -> v }
-							.map {
-								it.first + p
-							}
-						val canPlace = pointsToPlace.none { region[it] ?: true }
-						if (canPlace) {
-							pointsToPlace.forEach { point -> region[point] = true }
-							val result = canPlace(shapes, shapesToPlace, region)
-							pointsToPlace.forEach { point -> region[point] = false }
-							result
-						} else false
-					}
+		val result = region.pointValues()
+			.filter { (_, v) -> !v }
+			.any { (p, _) ->
+				current.variants.any { shapeToPlace ->
+					val pointsToPlace = shapeToPlace.pointValues()
+						.filter { (_, v) -> v }
+						.map { it.point + p }
+					val canPlace = pointsToPlace.none { region[it] ?: true }
+					if (canPlace) {
+						pointsToPlace.forEach { point -> region[point] = true }
+						val result = canPlace(shapes, shapesToPlace, region)
+						pointsToPlace.forEach { point -> region[point] = false }
+						result
+					} else false
 				}
+			}
 
 		shapesToPlace[shapeIndexToPlace]++
 		return result

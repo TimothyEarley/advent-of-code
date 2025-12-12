@@ -43,7 +43,7 @@ object Day10 : BaseSolution<Grid<Day10.Pipe>, Int, Int>() {
 	}
 
 	private fun loopFromStart(data: Grid<Pipe>): List<Point> {
-		val start = data.pointValues().find { it.second == Pipe.Start }!!.first
+		val start = data.pointValues().find { it.value == Pipe.Start }!!.point
 		val next = start.neighbours().find {
 			start in (data[it]?.connected(it) ?: emptyList())
 		}!!

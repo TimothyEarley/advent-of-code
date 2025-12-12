@@ -92,8 +92,8 @@ object Day14 : BaseSolution<Grid<Day14.Type>, Long, Long>() {
 	}
 
 	private fun Grid<Type>.sumLoad(): Long = pointValues()
-		.filter { it.second == MovingRock }
-		.sumOf { height - it.first.y }
+		.filter { it.value == MovingRock }
+		.sumOf { height - it.point.y }
 		.toLong()
 
 	private fun MutableGrid<Type>.cycle(): MutableGrid<Type> = tiltNorth().tiltWest().tiltSouth().tiltEast()

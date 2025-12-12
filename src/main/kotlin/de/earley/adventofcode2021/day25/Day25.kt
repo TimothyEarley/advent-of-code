@@ -35,23 +35,23 @@ object Day25 : BaseSolution<Grid<SeaCucumber?>, Int, Int>() {
 		var moved = false
 
 		val rights = g.pointValues()
-			.filter { it.second?.right == true }
-			.filter { g[wrap(it.first + Point(1, 0))] == null }
+			.filter { it.value?.right == true }
+			.filter { g[wrap(it.point + Point(1, 0))] == null }
 			.toList()
 		for (r in rights) {
 			moved = true
-			g[wrap(r.first + Point(1, 0))] = g[r.first]
-			g[r.first] = null
+			g[wrap(r.point + Point(1, 0))] = g[r.point]
+			g[r.point] = null
 		}
 
 		val downs = g.pointValues()
-			.filter { it.second?.right == false }
-			.filter { g[wrap(it.first + Point(0, 1))] == null }
+			.filter { it.value?.right == false }
+			.filter { g[wrap(it.point+ Point(0, 1))] == null }
 			.toList()
 		for (d in downs) {
 			moved = true
-			g[wrap(d.first + Point(0, 1))] = g[d.first]
-			g[d.first] = null
+			g[wrap(d.point + Point(0, 1))] = g[d.point]
+			g[d.point] = null
 		}
 
 		return g.takeIf { moved }

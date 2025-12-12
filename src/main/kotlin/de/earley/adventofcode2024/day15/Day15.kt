@@ -70,8 +70,8 @@ object Day15 : BaseSolution<Day15.Input, Long, Long>() {
 	}
 
 	private fun gpsOfBoxes(end: Input) = end.warehouse.pointValues()
-		.filter { it.second == Type.BOX || it.second == Type.LEFT_BOX }
-		.sumOf { it.first.x.toLong() + it.first.y * 100 }
+		.filter { it.value == Type.BOX || it.value == Type.LEFT_BOX }
+		.sumOf { it.point.x.toLong() + it.point.y * 100 }
 
 	private fun runInstructions(data: Input) =
 		data.instructions.fold(data) { current, instruction ->

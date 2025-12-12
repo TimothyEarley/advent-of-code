@@ -29,8 +29,8 @@ class Day11(private val expansion: Int) : BaseSolution<Grid<Boolean>, Long, Long
 		}.toSet()
 
 		val galaxies = data.pointValues()
-			.filter { it.second }
-			.map { it.first }
+			.filter { it.value }
+			.map { it.point }
 
 		return galaxies.sumOf { a ->
 			galaxies.filter { it.x > a.x || (it.x == a.x && it.y > a.y) }

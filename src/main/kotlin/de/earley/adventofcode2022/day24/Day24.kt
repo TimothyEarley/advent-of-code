@@ -33,7 +33,7 @@ object Day24 : BaseSolution<Day24.Input, Int, Int>() {
 		}
 
 		Input(
-			grid.pointValues().filter { it.second != null }.map { it.second!! }.toList(),
+			grid.pointValues().filter { it.value != null }.map { it.value!! }.toList(),
 			width,
 			height
 		)

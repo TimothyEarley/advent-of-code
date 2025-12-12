@@ -11,8 +11,8 @@ object Day23 : BaseSolution<List<Point>, Int, Int>() {
 	override fun parseInput(input: Sequence<String>): List<Point> =
 		input.toGrid { it }
 			.pointValues()
-			.filter { it.second == '#' }
-			.map { it.first }
+			.filter { it.value == '#' }
+			.map { it.point }
 			.toList()
 
 	override fun partOne(data: List<Point>): Int =

@@ -56,7 +56,7 @@ class Day20(private val saving: Int) : BaseSolution<Day20.Input, Int, Int>() {
 		val toEnd = calculateDistanceGrid(data)
 		return data.grid.pointValues()
 			.flatMap { p ->
-				data.grid.pointValues().map { p.first to it.first }
+				data.grid.pointValues().map { p.point to it.point }
 			}.filter { (p1, p2) ->
 				data.grid[p1] == Type.Track && data.grid[p2] == Type.Track
 			}.filter { (p1, p2) ->

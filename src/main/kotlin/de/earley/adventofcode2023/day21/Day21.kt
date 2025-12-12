@@ -31,7 +31,7 @@ data class Day21(
 	}
 
 	override fun partOne(data: Grid<Tile>): Long =
-		(1..steps).fold(setOf(data.pointValues().find { it.second == Tile.Start }!!.first)) { acc, _ ->
+		(1..steps).fold(setOf(data.pointValues().find { it.value == Tile.Start }!!.point)) { acc, _ ->
 			acc.next(data)
 		}.size.toLong()
 
@@ -43,7 +43,7 @@ data class Day21(
 			.toSet()
 
 	override fun partTwo(data: Grid<Tile>): Long {
-		val start = data.pointValues().find { it.second == Tile.Start }!!.first
+		val start = data.pointValues().find { it.value == Tile.Start }!!.point
 
 		// S is in the center, rows/cols from S are clear, outside is clear
 		// => the answer function is a quadratic equation

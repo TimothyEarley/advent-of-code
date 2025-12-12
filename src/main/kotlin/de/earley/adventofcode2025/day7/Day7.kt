@@ -21,7 +21,7 @@ object Day7 : BaseSolution<Grid<Day7.Tile>, Long, Long>() {
 	} }
 
 	override fun partOne(data: Grid<Tile>): Long {
-		val start = data.pointValues().first { it.second == Tile.Start }.first
+		val start = data.pointValues().first { it.value == Tile.Start }.point
 		var splits = 0L
 
 		(0 .. data.height).fold(setOf(start.x)) { beams, y ->
@@ -41,7 +41,7 @@ object Day7 : BaseSolution<Grid<Day7.Tile>, Long, Long>() {
 	}
 
 	override fun partTwo(data: Grid<Tile>): Long {
-		val start = data.pointValues().first { it.second == Tile.Start }.first
+		val start = data.pointValues().first { it.value == Tile.Start }.point
 		val cache = mutableMapOf<Point, Long>()
 
 		fun recurse(p : Point) : Long = cache.getOrPut(p) {

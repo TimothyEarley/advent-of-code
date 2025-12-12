@@ -55,7 +55,7 @@ object Day16 : BaseSolution<Day16.Input, Long, Long>() {
 	override fun partTwo(data: Input): Long {
 		val paths = getPaths(data).flatMap { it.toPath() }.map { it.pos }.toSet()
 		return data.grid.pointValues()
-			.count { it.first in paths }
+			.count { it.point in paths }
 			.toLong()
 	}
 

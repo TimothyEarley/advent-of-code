@@ -112,7 +112,7 @@ object Day17 : BaseSolution<List<Day17.Direction>, Long, Long>() {
 					position = droppedPosition
 				} else {
 					// land
-					piece.pointValues().filter { it.second }.forEach { (p, _) ->
+					piece.pointValues().filter { it.value }.forEach { (p, _) ->
 						grid[p + position] = true
 					}
 
@@ -147,8 +147,8 @@ object Day17 : BaseSolution<List<Day17.Direction>, Long, Long>() {
 
 	private fun intersects(piece: Grid<Boolean>, grid: TetrisGrid, offset: Point): Boolean = piece
 		.pointValues()
-		.filter { it.second }
-		.map { it.first + offset }
+		.filter { it.value }
+		.map { it.point + offset }
 		.any {
 			it.x < 0 || it.x >= grid.width || it.y < 0 || grid[it]
 		}

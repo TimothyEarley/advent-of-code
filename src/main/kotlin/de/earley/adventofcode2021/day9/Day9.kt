@@ -36,7 +36,7 @@ object Day9 : BaseSolution<Heightmap, Int, Int>() {
 	private fun Heightmap.localMinima(): List<Point> {
 		return pointValues().filter { (p, v) ->
 			(p.neighbours().all { v < (get(it) ?: 9) })
-		}.mapToList { it.first }
+		}.mapToList { it.point }
 	}
 
 	private fun Heightmap.floodFillBasin(from: Point): Set<Point> {

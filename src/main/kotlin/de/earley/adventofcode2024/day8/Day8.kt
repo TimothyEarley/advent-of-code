@@ -21,10 +21,10 @@ object Day8 : BaseSolution<Grid<Char?>, Long, Long>() {
 		val antiNodes = mutableSetOf<Point>()
 
 		data.pointValues()
-			.filter { it.second != null }
+			.filter { it.value != null }
 			.forEach { (p1, char) ->
 				// find others with char
-				data.pointValues().filter { it.first != p1 && it.second == char }
+				data.pointValues().filter { it.point != p1 && it.value == char }
 					.forEach { (p2, _) ->
 						val d = p2 - p1
 						val antiOne = p1 - d
@@ -43,10 +43,10 @@ object Day8 : BaseSolution<Grid<Char?>, Long, Long>() {
 		val antiNodes = mutableSetOf<Point>()
 
 		data.pointValues()
-			.filter { it.second != null }
+			.filter { it.value != null }
 			.forEach { (p1, char) ->
 				// find others with char
-				data.pointValues().filter { it.first != p1 && it.second == char }
+				data.pointValues().filter { it.point != p1 && it.value == char }
 					.forEach { (p2, _) ->
 						val d = p2 - p1
 						runUntil(p1, { !data.contains(it) }) {
